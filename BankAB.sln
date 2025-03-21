@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAB", "BankAB\BankAB.csproj", "{35BD5F3E-DC71-4261-8070-0ED7141AD270}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{76873BD3-6361-4340-992A-487A6760ADD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{074BDC2B-BC9B-4F48-B833-2F52FD256D28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35BD5F3E-DC71-4261-8070-0ED7141AD270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BD5F3E-DC71-4261-8070-0ED7141AD270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BD5F3E-DC71-4261-8070-0ED7141AD270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BD5F3E-DC71-4261-8070-0ED7141AD270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76873BD3-6361-4340-992A-487A6760ADD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76873BD3-6361-4340-992A-487A6760ADD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76873BD3-6361-4340-992A-487A6760ADD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76873BD3-6361-4340-992A-487A6760ADD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{074BDC2B-BC9B-4F48-B833-2F52FD256D28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{074BDC2B-BC9B-4F48-B833-2F52FD256D28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{074BDC2B-BC9B-4F48-B833-2F52FD256D28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{074BDC2B-BC9B-4F48-B833-2F52FD256D28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
