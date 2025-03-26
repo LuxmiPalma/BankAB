@@ -25,7 +25,7 @@ namespace BankAB.Pages
         }
         public List<CustomerViewModel> Customers { get; set; }
 
-        public void OnGet(string sortColumn)
+        public void OnGet(string sortColumn,string sortOrder)
         {
             var query = _dbContext.Customers
                 .Select(s => new CustomerViewModel
@@ -35,13 +35,24 @@ namespace BankAB.Pages
                     City = s.City,
                     Country = s.Country
                 });
+            if (sortColumn == "Name")
+                if (sortOrder == "asc")
+                    query = query.OrderBy(s => s.Name);
+                else if (sortOrder == "desc")
+                    query = query.OrderByDescending(s => s.Name);
 
             if (sortColumn == "Country")
-                query = query.OrderBy(s => s.Country);
-            else if (sortColumn == "Name")
-                query = query.OrderBy(s => s.Name);
-            else if (sortColumn == "City")
-                query = query.OrderBy(s => s.City);
+                if (sortOrder == "asc")
+                    query = query.OrderBy(s => s.Country);
+                else if (sortOrder == "desc")
+                    query = query.OrderByDescending(s => s.Country);
+
+            if (sortColumn == "City")
+                if (sortOrder == "asc")
+                    query = query.OrderBy(s => s.City);
+                else if (sortOrder == "desc")
+                    query = query.OrderByDescending(s => s.City);
+
 
             Customers = query.ToList();
 
