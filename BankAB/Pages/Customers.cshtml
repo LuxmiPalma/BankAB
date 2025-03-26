@@ -1,0 +1,32 @@
+﻿@page
+@model BankAB.Pages.CustomersModel
+@{
+}
+
+<h1>All Customers</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Surname</th>
+            <th scope="col">City</th>
+            <th scope="col">Country</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var cus in Model.Customers)
+        {
+            <tr>
+                <td>@cus.Id</td>
+                <td>@cus.Name</td>
+                <td>@cus.City</td>
+                <td>@cus.Country</td>
+                <td><a asp-page="/Customer" asp-route-id="@cus.Id" class="btn btn-primary">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
