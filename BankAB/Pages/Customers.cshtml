@@ -9,9 +9,57 @@
     <thead>
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Surname</th>
-            <th scope="col">City</th>
-            <th scope="col">Country</th>
+            <th scope="col">
+                Surname
+                <a asp-page="/Customerss"
+                   asp-route-sortColumn="Surname"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Surname"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+
+
+            </th>
+            <th scope="col">City
+
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="city"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="City"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+
+            </th>
+            <th scope="col">Country
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Country"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Customers"
+                   asp-route-sortColumn="Country"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+
+            </th>
             <th></th>
         </tr>
     </thead>

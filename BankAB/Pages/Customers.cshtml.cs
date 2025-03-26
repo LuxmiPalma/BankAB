@@ -25,16 +25,29 @@ namespace BankAB.Pages
         }
         public List<CustomerViewModel> Customers { get; set; }
 
-        public void OnGet()
+        public void OnGet(string sortColumn)
         {
-            Customers = _dbContext.Customers
+            var query = _dbContext.Customers
                 .Select(s => new CustomerViewModel
                 {
                     Id = s.CustomerId,
                     Name = s.Surname,
                     City = s.City,
                     Country = s.Country
-                }).ToList();
+                });
+
+            if (sortColumn == "Country")
+                query = query.OrderBy(s => s.Country);
+            else if (sortColumn == "Name")
+                query = query.OrderBy(s => s.Name);
+            else if (sortColumn == "City")
+                query = query.OrderBy(s => s.City);
+
+            Customers = query.ToList();
+
+
+
+
 
 
 
