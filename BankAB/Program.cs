@@ -19,6 +19,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<DataInitializer>();
 
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
