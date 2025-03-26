@@ -27,7 +27,9 @@ namespace Services
                 Select(c => new CustomerDTO
                 {
                     CustomerId = c.CustomerId,
-                    Givenname = c.Givenname
+                    Givenname = c.Givenname,
+                    NationalId= c.NationalId,
+
                 }).
                 ToList();
         }

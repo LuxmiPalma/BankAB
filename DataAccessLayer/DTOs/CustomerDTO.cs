@@ -10,5 +10,7 @@ namespace DataAccessLayer.DTOs
     {
         public int CustomerId { get; set; }
         public string Givenname { get; set; }
+        public string? NationalId { get; set; }
+
     }
 }
