@@ -35,7 +35,7 @@ namespace BankAB.Pages
                     City = s.City,
                     Country = s.Country
                 });
-            if (sortColumn == "Name")
+            if (sortColumn == "Surname")
                 if (sortOrder == "asc")
                     query = query.OrderBy(s => s.Name);
                 else if (sortOrder == "desc")
