@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models;
+using Services;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +20,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<DataInitializer>();
-
+// Lägg till min CustomerService
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

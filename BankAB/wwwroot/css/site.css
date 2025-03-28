@@ -29,3 +29,61 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+
+
+
+.login-container {
+    min-height: 100vh;
+}
+
+.login-left {
+    background: url('/images/login-bg.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.login-form {
+    padding: 3rem;
+}
+
+.form-floating input,
+.form-floating label {
+    color: #333;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+}
+
+.btn-primary {
+    background-color: #06b6d4;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #0891b2;
+    }
+
+.login-links a {
+    font-size: 0.9rem;
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+    .login-links a:hover {
+        text-decoration: underline;
+    }
+
+@media (max-width: 767px) {
+    .login-form {
+        padding: 2rem 1.5rem;
+    }
+}
+.login-form-wrapper {
+    background-color: #f2f3f3;
+}
+.login-body {
+    background-color: #f2f3f3; 
+}

@@ -1,75 +1,138 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>@ViewData["Title"] - BankAB</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- FlexStart Template CSS Files -->
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="~/assets/css/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BankAB.styles.css" asp-append-version="true" />
+
     @*Fontawesome CDN*@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
           integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">BankAB</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Customers">Customers</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark"
-                                   asp-area=""
-                                   asp-page="/Privacy">Privacy</a>
-                            </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity"
-                                   asp-page="/Account/Register">Register</a>
-                            </li>
+@* <body> *@
+    <body class="@ViewData["BodyClass"]">
+      <div class="d-flex flex-column min-vh-100">
 
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
+          <!-- ======= Top Utility Navbar ======= -->
+    <div class=" py-3 border-bottom fixed-top" style="z-index: 1040;background-color: #76A5AF;">
+    <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
+        <div class="medium text-white d-flex gap-3">
+            <a href="/NewMember" class="text-decoration-none text-white">New Member Info</a>
+            <a href="/Careers" class="text-decoration-none text-white">Careers</a>
+            <a href="/Rates" class="text-decoration-none text-white">Rates</a>
+            <a href="/ATMs" class="text-decoration-none text-white">ATMs</a>
+            <a href="/Help" class="text-decoration-none text-white">Help</a>
+        </div>
+        <div class="d-flex  align-items-center">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-sm"
+                   style="background-color: #bae6fd; color: #000; box-shadow: 0 0.5rem 1rem rgba(186, 230, 253, 0.5);"
+                   asp-area="Identity" asp-page="/Account/Login">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Log in
+                </a>
+            }
+            else
+            {
+                <partial name="_LoginPartial" />
+            }
+        </div>
+    </div>
+</div>
+<!-- ======= Main Header ======= -->
+
+<header id="header" class="header d-flex align-items-center fixed-top" style="top: 90px;"> <!-- added style -->
+
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center">
+            <img src="~/assets/img/logo.png" alt="BankAB Logo" />
+            <h1 class="sitename ms-2">NextGen Bank</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a asp-page="/Index">Home</a></li>
+
+               @if (User.IsInRole("Admin"))
+               {
+                    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Customers">Customers</a>
+        </li>
+        <li>
+            <a class="nav-link text-dark" asp-page="/Privacy">Privacy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+               }
+                        
+                                      
+                 <li><a asp-page="/Index">Bank</a></li>
+                 <li><a asp-page="/Index">Borrow</a></li>
+                 <li><a asp-page="/Index">Invest</a></li>
+                 <li><a asp-page="/Index">About</a></li>
+
+
+                
+            </ul>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        <!-- Right side: Search + Auth buttons -->
+        <div class="d-flex align-items-center gap-2">
+            <!-- Search bar -->
+            <form class="d-flex" method="get" action="/Search">
+                <input class="form-control form-control-sm" type="search" placeholder="Sök..." name="query" />
+                <button class="btn btn-sm btn-outline-primary ms-1" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+
+            
+
+    <a class="btn btn-sm ms-1"
+       style="background-color: #bae6fd; color: #000; box-shadow: 0 0.5rem 1rem rgba(186, 230, 253, 0.5);"
+       asp-area="Identity" asp-page="/Account/Register">
+        <i class="bi bi-person-plus me-1"></i> Become a customer
+    </a>
+           
+        </div>
+    </div>
+</header>
+
+    <!-- ======= Main Content ======= -->
+<main id="main" class="flex-grow-1" style="margin-top: 180px;">
+      @RenderBody()
+    </main>
+
+    <!-- ======= Footer  ======= -->
+    <footer class="footer mt-auto bg-light text-muted">
+      <div class="container text-center py-3">
+        &copy; 2025 - <strong>BankAB</strong> - <a asp-page="/Privacy">Privacy</a>
+      </div>
+    </footer>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - BankAB - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- FlexStart JS Files -->
+    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/vendor/aos/aos.js"></script>
+    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/assets/js/main.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
