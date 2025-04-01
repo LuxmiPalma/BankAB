@@ -13,72 +13,78 @@
     <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
     <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
     <link href="~/assets/css/main.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+
 
     @*Fontawesome CDN*@
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 
 @* <body> *@
-    <body class="@ViewData["BodyClass"]">
-      <div class="d-flex flex-column min-vh-100">
+<body class="@ViewData["BodyClass"]">
+    <div class="d-flex flex-column min-vh-100">
 
-          <!-- ======= Top Utility Navbar ======= -->
-    <div class=" py-3 border-bottom fixed-top" style="z-index: 1040;background-color: #76A5AF;">
-    <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
-        <div class="medium text-white d-flex gap-3">
-            <a href="/NewMember" class="text-decoration-none text-white">New Member Info</a>
-            <a href="/Careers" class="text-decoration-none text-white">Careers</a>
-            <a href="/Rates" class="text-decoration-none text-white">Rates</a>
-            <a href="/ATMs" class="text-decoration-none text-white">ATMs</a>
-            <a href="/Help" class="text-decoration-none text-white">Help</a>
+        <!-- ======= Top Utility Navbar ======= -->
+        <div class=" py-3 border-bottom fixed-top" style="z-index: 1040;background-color: #76A5AF;">
+            <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
+                <div class="medium text-white d-flex gap-3">
+                    <a href="/NewMember" class="text-decoration-none text-white">New Member Info</a>
+                    <a href="/Careers" class="text-decoration-none text-white">Careers</a>
+                    <a href="/Rates" class="text-decoration-none text-white">Rates</a>
+                    <a href="/ATMs" class="text-decoration-none text-white">ATMs</a>
+                    <a href="/Help" class="text-decoration-none text-white">Help</a>
+                </div>
+                <div class="d-flex  align-items-center">
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-sm"
+                        style="background-color: #bae6fd; color: #000; box-shadow: 0 0.5rem 1rem rgba(186, 230, 253, 0.5);"
+                        asp-area="Identity" asp-page="/Account/Login">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Log in
+                        </a>
+                    }
+                    else
+                    {
+                        <partial name="_LoginPartial" />
+                    }
+                </div>
+            </div>
         </div>
-        <div class="d-flex  align-items-center">
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <a class="btn btn-sm"
-                   style="background-color: #bae6fd; color: #000; box-shadow: 0 0.5rem 1rem rgba(186, 230, 253, 0.5);"
-                   asp-area="Identity" asp-page="/Account/Login">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Log in
+        <!-- ======= Main Header ======= -->
+
+        <header id="header" class="header d-flex align-items-center fixed-top" style="top: 90px;"> <!-- added style -->
+
+            <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+                <a href="/" class="logo d-flex align-items-center">
+                    <img src="~/assets/img/logo.png" alt="BankAB Logo" />
+                    <h1 class="sitename ms-2">NextGen Bank</h1>
                 </a>
-            }
-            else
-            {
-                <partial name="_LoginPartial" />
-            }
-        </div>
-    </div>
-</div>
-<!-- ======= Main Header ======= -->
 
-<header id="header" class="header d-flex align-items-center fixed-top" style="top: 90px;"> <!-- added style -->
+             <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a asp-page="/Index">Home</a></li>
 
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-        <a href="/" class="logo d-flex align-items-center">
-            <img src="~/assets/img/logo.png" alt="BankAB Logo" />
-            <h1 class="sitename ms-2">NextGen Bank</h1>
-        </a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                <a asp-page="/Customers">Customers</a>
+                            </li>
+                            <li>
+                                <a asp-page="/Privacy">Privacy</a>
+                            </li>
+                            <li>
+                                <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            </li>
+                        }
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a asp-page="/Index">Home</a></li>
-
-               @if (User.IsInRole("Admin"))
-               {
-                    <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-page="/Customers">Customers</a>
-        </li>
-        <li>
-            <a class="nav-link text-dark" asp-page="/Privacy">Privacy</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-               }
-                        
                                       
                  <li><a asp-page="/Index">Bank</a></li>
                  <li><a asp-page="/Index">Borrow</a></li>
@@ -113,7 +119,7 @@
 </header>
 
     <!-- ======= Main Content ======= -->
-<main id="main" class="flex-grow-1" style="margin-top: 180px;">
+<main id="main" class="flex-grow-1" style="margin-top: 120px;">
       @RenderBody()
     </main>
 
@@ -133,6 +139,9 @@
     <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="~/assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="~/assets/js/main.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

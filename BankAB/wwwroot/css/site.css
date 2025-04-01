@@ -87,3 +87,38 @@ body {
 .login-body {
     background-color: #f2f3f3; 
 }
+
+
+
+@keyframes floatUpDown {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.hero-img img {
+    animation: floatUpDown 3s ease-in-out infinite;
+}
+
+.sitename {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 32px; 
+    color: var(--heading-color); 
+    margin: 0;
+}
+
+.navmenu {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    color: var(--heading-color);
+}

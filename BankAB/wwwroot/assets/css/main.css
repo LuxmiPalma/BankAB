@@ -231,19 +231,21 @@ h6 {
     display: flex;
     list-style: none;
     align-items: center;
+
   }
 
-  .navmenu li {
-    position: relative;
-  }
+    .navmenu li {
+        position: relative;
+        color: var(--nav-color);
+    }
 
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-color);
     padding: 18px 12px;
-    font-size: 15px;
+    font-size: 17px;
     font-family: var(--nav-font);
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: space-between;
