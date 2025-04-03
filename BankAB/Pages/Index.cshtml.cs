@@ -11,7 +11,7 @@ namespace BankAB.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ICategoryService _categoryService;
 
-        public List<CategoryViewModel> Categories { get; set; }
+       public List<CategoryViewModel> Categories { get; set; }
         public IndexModel(ILogger<IndexModel> logger
             	, ICategoryService categoryService)
 
