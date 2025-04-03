@@ -15,9 +15,9 @@ namespace BankAB.Pages
         }
         public List<AccountsViewModel> Accounts { get; set; } = new();
 
-        public void OnGet()
+        public void OnGet(string sortColumn)
         {
-            Accounts = _dbContext.Accounts.Select(s => new AccountsViewModel
+            var query = _dbContext.Accounts.Select(s => new AccountsViewModel
             {
                 Id = s.AccountId,
                 Frequency = s.Frequency,
