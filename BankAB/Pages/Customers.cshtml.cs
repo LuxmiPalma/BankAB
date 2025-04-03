@@ -14,7 +14,7 @@ namespace BankAB.Pages
         {
             _dbContext = dbContext;
         }
-       
+
         public class CustomerViewModel
         {
 

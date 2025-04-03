@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace Services
 {
     public class AccountService:IAccountService
@@ -17,29 +19,17 @@ namespace Services
         }
         public List<Account> GetAccounts(string sortColumn, string sortOrder)
         {
-            IQueryable<Account> query = _dbContext.Accounts;
+            var query = _dbContext.Accounts.AsQueryable();
+           
 
-            // Basic sorting logic
-            sortColumn = sortColumn?.ToLower();
-            sortOrder = sortOrder?.ToLower();
-
-            switch (sortColumn)
-            {
-                case "balance":
-                    query = sortOrder == "desc" ? query.OrderByDescending(a => a.Balance) : query.OrderBy(a => a.Balance);
-                    break;
-                case "created":
-                    query = sortOrder == "desc" ? query.OrderByDescending(a => a.Created) : query.OrderBy(a => a.Created);
-                    break;
-                case "frequency":
-                    query = sortOrder == "desc" ? query.OrderByDescending(a => a.Frequency) : query.OrderBy(a => a.Frequency);
-                    break;
-                default:
-                    query = query.OrderBy(a => a.AccountId); // Default sort
-                    break;
-            }
+            if (sortColumn == "Frequency")
+                query = query.OrderBy(s => s.Created);
+            else if (sortColumn == "Created")
+                query = query.OrderBy(s => s.Balance);
 
             return query.ToList();
+
+
         }
 
     }

@@ -2,5 +2,11 @@
 @model BankAB.Pages.AccountModel
 @{
 }
-<h1>@Model.AccountId</h1>
+<h2>Account </h2>
+
+<p><strong>Id:</strong> @Model.Id</p>
+<p><strong>Balance:</strong> @Model.Balance</p>
+
+<a asp-page="/Accounts" class="btn btn-secondary">Back to List</a>
+
 

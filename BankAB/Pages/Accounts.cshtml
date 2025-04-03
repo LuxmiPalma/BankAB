@@ -9,15 +9,29 @@
     <thead>
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Frequency</th>
             <th scope="col">
-                Account Created 
+                Frequency
+                <a asp-page="/Accounts"
+                   asp-route-sortColumn="Frequency"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+                </a>
+                <a asp-page="/Accounts"
+                   asp-route-sortColumn="Frequency"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+
+            <th scope="col">
+                Account Created
                 <a asp-page="/Accounts"
                    asp-route-sortColumn="Created"
                    asp-route-sortOrder="asc"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
-
                 </a>
                 <a asp-page="/Accounts"
                    asp-route-sortColumn="Created"
@@ -26,14 +40,14 @@
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
             </th>
-            <th scope="col">
+
+           @*  <th scope="col">
                 Account Balance
                 <a asp-page="/Accounts"
                    asp-route-sortColumn="Balance"
                    asp-route-sortOrder="asc"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
-
                 </a>
                 <a asp-page="/Accounts"
                    asp-route-sortColumn="Balance"
@@ -41,7 +55,8 @@
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-down"></i>
                 </a>
-            </th>
+            </th> *@
+
             <th></th>
         </tr>
     </thead>
@@ -53,8 +68,8 @@
                 <td>@acc.Id</td>
                 <td>@acc.Frequency</td>
                 <td>@acc.Created</td>
-                <td>@acc.Balance</td>
-                <td><a asp-page="/Accounts" asp-route-id="@acc.Id" class="btn btn-primary">View</a></td>
+                @* <td>@acc.Balance</td> *@
+                <td><a asp-page="/Account" asp-route-id="@acc.Id" class="btn btn-primary">View</a></td>
             </tr>
         }
     </tbody>
