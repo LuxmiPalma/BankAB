@@ -3,6 +3,28 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<h1>All Categories</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                Category Type
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cat in Model.Categories)
+        {
+            <tr>
+                <td>@cat.GroupType</td>
+                <td>@cat.Description</td>
+                <td><a asp-page="/Category" asp-route-groupBy="@cat.GroupType" class="btn btn-primary">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <section id="hero" class="hero d-flex align-items-center">
     <div class="container">

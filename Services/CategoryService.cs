@@ -15,9 +15,10 @@ namespace Services
         {
             _dbContext = dbContext;
         }
-        public IEnumerable<Category> ReadCategories()
-        {
+        public IEnumerable<Customer> ReadCategories()
 
+        {
+            return _dbContext.Customers.ToList();
         }
 
     }
