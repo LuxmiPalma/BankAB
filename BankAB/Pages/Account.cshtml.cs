@@ -13,10 +13,6 @@ namespace BankAB.Pages
         {
             _dbContext = dbContext;
         }
-        public void OnGet(int id)
-        {
-            AccountId = _dbContext.Accounts.First(s => s.AccountId == id).Frequency;
-
-        }
+      
     }
 }

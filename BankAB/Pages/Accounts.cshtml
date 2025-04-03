@@ -10,8 +10,38 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Frequency</th>
-            <th scope="col">Created</th>
-            <th scope="col">Balance</th>
+            <th scope="col">
+                Account Created 
+                <a asp-page="/Accounts"
+                   asp-route-sortColumn="Created"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Accounts"
+                   asp-route-sortColumn="Created"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
+            <th scope="col">
+                Account Balance
+                <a asp-page="/Accounts"
+                   asp-route-sortColumn="Balance"
+                   asp-route-sortOrder="asc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-up"></i>
+
+                </a>
+                <a asp-page="/Accounts"
+                   asp-route-sortColumn="Balance"
+                   asp-route-sortOrder="desc"
+                   style="text-decoration:none">
+                    <i class="fa-solid fa-angle-down"></i>
+                </a>
+            </th>
             <th></th>
         </tr>
     </thead>

@@ -22,6 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<DataInitializer>();
 // Lägg till min CustomerService
 builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<IAccountService, AccountService>();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

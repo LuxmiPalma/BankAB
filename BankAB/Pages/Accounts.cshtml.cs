@@ -23,7 +23,14 @@ namespace BankAB.Pages
                 Frequency = s.Frequency,
                 Created = s.Created,
                 Balance = s.Balance
-            }).ToList();
+            });
+
+            if (sortColumn=="Created")
+                query=query.OrderBy(s => s.Created);
+            else if(sortColumn=="Balance")
+                query= query.OrderBy(s => s.Balance);
+
+            Accounts= query.ToList();
 
 
         }
