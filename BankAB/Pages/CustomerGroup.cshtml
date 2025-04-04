@@ -1,0 +1,72 @@
+﻿@page
+@model BankAB.Pages.CustomerGroupModel
+@{
+}
+<h1>All Customers in @Model.GroupBy: @Model.GroupValue</h1>
+<h3>Page @Model.PageNo</h3>
+
+<form method="get">
+    <input asp-for="Q" />
+    <input type="hidden" asp-for="GroupBy" />
+    <input type="hidden" asp-for="GroupValue" />
+    <input type="submit" value="Search" />
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Given Name
+                <a asp-page="/CustomerGroup"
+                   asp-route-q="@Model.Q"
+                   asp-route-groupBy="@Model.GroupBy"
+                   asp-route-groupValue="@Model.GroupValue"
+                   asp-route-sortColumn="Givenname"
+                   asp-route-sortOrder="asc">⬆️</a>
+                <a asp-page="/CustomerGroup"
+                   asp-route-q="@Model.Q"
+                   asp-route-groupBy="@Model.GroupBy"
+                   asp-route-groupValue="@Model.GroupValue"
+                   asp-route-sortColumn="Givenname"
+                   asp-route-sortOrder="desc">⬇️</a>
+            </th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cust in Model.Customers)
+        {
+            <tr>
+                <td>@cust.Givenname</td>
+                <td>@cust.City</td>
+                <td>@cust.Country</td>
+                <td>@cust.Gender</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @if (Model.PageNo > 1)
+    {
+        <a asp-page="/CustomerGroup"
+           asp-route-groupBy="@Model.GroupBy"
+           asp-route-groupValue="@Model.GroupValue"
+           asp-route-q="@Model.Q"
+           asp-route-pageNo="@(Model.PageNo - 1)"
+           asp-route-sortColumn="@Model.SortColumn"
+           asp-route-sortOrder="@Model.SortOrder"
+           class="btn btn-secondary">Prev</a>
+    }
+
+    <a asp-page="/CustomerGroup"
+       asp-route-groupBy="@Model.GroupBy"
+       asp-route-groupValue="@Model.GroupValue"
+       asp-route-q="@Model.Q"
+       asp-route-pageNo="@(Model.PageNo + 1)"
+       asp-route-sortColumn="@Model.SortColumn"
+       asp-route-sortOrder="@Model.SortOrder"
+       class="btn btn-secondary">Next</a>
+</div>

@@ -1,0 +1,48 @@
+﻿@page
+@model BankAB.Pages.CategoryModel
+@{
+    ViewData["Title"] = "Customer Categories";
+}
+<h2>Group Customers By</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Group Type</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>City</td>
+            <td>Group customers by city</td>
+            <td>
+                <a asp-page="/CustomerGroup"
+                   asp-route-groupBy="City"
+                   asp-route-groupValue="Stockholm"
+                   class="btn btn-primary">View</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Country</td>
+            <td>Group customers by country</td>
+            <td>
+                <a asp-page="/CustomerGroup"
+                   asp-route-groupBy="Country"
+                   asp-route-groupValue="Sweden"
+                   class="btn btn-primary">View</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>Group customers by gender</td>
+            <td>
+                <a asp-page="/CustomerGroup"
+                   asp-route-groupBy="Gender"
+                   asp-route-groupValue="Female"
+                   class="btn btn-primary">View</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

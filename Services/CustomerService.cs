@@ -28,7 +28,10 @@ namespace Services
                 {
                     CustomerId = c.CustomerId,
                     Givenname = c.Givenname,
-
+                    Surname = c.Surname,
+                    City = c.City,
+                    Country = c.Country,
+                    Gender = c.Gender
                 }).
                 ToList();
         }
