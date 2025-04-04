@@ -38,8 +38,15 @@ namespace BankAB.Pages
 
             if (!string.IsNullOrEmpty(Q))
             {
-                customers = customers.Where(c => c.Givenname.Contains(Q) || c.Surname.Contains(Q));
+                customers = customers.Where(c =>
+                (c.Givenname != null && c.Givenname.Contains(Q)) ||
+                (c.Surname != null && c.Surname.Contains(Q)) ||
+                (c.City != null && c.City.Contains(Q)) ||
+                (c.Country != null && c.Country.Contains(Q)) ||
+                (c.Gender != null && c.Gender.Contains(Q))
+                );
             }
+        
 
             if (SortColumn == "Givenname")
                 customers = SortOrder == "desc"
