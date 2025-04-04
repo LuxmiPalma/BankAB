@@ -51,7 +51,7 @@ namespace BankAB.Pages
                     ? customers.OrderByDescending(c => c.City)
                     : customers.OrderBy(c => c.City);
 
-            int pageSize = 5;
+            int pageSize = 10;
             Customers = customers
                 .Skip((PageNo - 1) * pageSize)
                 .Take(pageSize)

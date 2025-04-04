@@ -3,46 +3,99 @@
 @{
     ViewData["Title"] = "Customer Categories";
 }
-<h2>Group Customers By</h2>
+@if (!Model.ShowGroups)
+{
+    <h2>Group Customers By</h2>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Group Type</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>City</td>
-            <td>Group customers by city</td>
-            <td>
-                <a asp-page="/CustomerGroup"
-                   asp-route-groupBy="City"
-                   asp-route-groupValue="Stockholm"
-                   class="btn btn-primary">View</a>
-            </td>
-        </tr>
-        <tr>
-            <td>Country</td>
-            <td>Group customers by country</td>
-            <td>
-                <a asp-page="/CustomerGroup"
-                   asp-route-groupBy="Country"
-                   asp-route-groupValue="Sweden"
-                   class="btn btn-primary">View</a>
-            </td>
-        </tr>
-        <tr>
-            <td>Gender</td>
-            <td>Group customers by gender</td>
-            <td>
-                <a asp-page="/CustomerGroup"
-                   asp-route-groupBy="Gender"
-                   asp-route-groupValue="Female"
-                   class="btn btn-primary">View</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Group Type</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>City</td>
+                <td>View all customers grouped by city</td>
+                <td>
+                    <a asp-page="/Category"
+                       asp-route-groupBy="City"
+                       class="btn btn-primary">View</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>View all customers grouped by country</td>
+                <td>
+                    <a asp-page="/Category"
+                       asp-route-groupBy="Country"
+                       class="btn btn-primary">View</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>View all customers grouped by gender</td>
+                <td>
+                    <a asp-page="/Category"
+                       asp-route-groupBy="Gender"
+                       class="btn btn-primary">View</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>All @Model.SelectedGroupBy Values</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Model.SelectedGroupBy</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var value in Model.GroupValues)
+            {
+                <tr>
+                    <td>@value</td>
+                    <td>
+                        <a asp-page="/CustomerGroup"
+                           asp-route-groupBy="@Model.SelectedGroupBy"
+                           asp-route-groupValue="@value"
+                           class="btn btn-primary">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- Pagination Controls -->
+    <div class="d-flex justify-content-between mt-3">
+        @if (Model.PageNo > 1)
+        {
+            <a class="btn btn-outline-primary"
+               asp-page="/Category"
+               asp-route-groupBy="@Model.SelectedGroupBy"
+               asp-route-pageNo="@(Model.PageNo - 1)">
+                ⬅️ Prev
+            </a>
+        }
+
+        <span class="align-self-center">Page @Model.PageNo of @Model.TotalPages</span>
+
+        @if (Model.PageNo < Model.TotalPages)
+        {
+            <a class="btn btn-outline-primary"
+               asp-page="/Category"
+               asp-route-groupBy="@Model.SelectedGroupBy"
+               asp-route-pageNo="@(Model.PageNo + 1)">
+                Next ➡️
+            </a>
+        }
+    </div>
+
+    <a asp-page="/Category" class="btn btn-secondary mt-3">⬅️ Back to Categories</a>
+}
