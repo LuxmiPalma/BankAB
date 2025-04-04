@@ -2,6 +2,8 @@ using DataAccessLayer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
+using BankAB.Infrastructure.Paging;
+
 
 namespace BankAB.Pages
 {
@@ -19,12 +21,12 @@ namespace BankAB.Pages
         public int PageNo { get; set; }
         public string SortColumn { get; set; }
         public string SortOrder { get; set; }
-        public List<CustomerDTO> Customers { get; set; }
+        //public List<CustomerDTO> Customers { get; set; }
+        public PagedResult<CustomerDTO> PagedCustomers { get; set; }
 
-        public void OnGet(string groupBy, string groupValue, string q, int pageNo, string sortColumn, string sortOrder)
+        public void OnGet(string groupBy, string groupValue, string q, int pageNo = 1, string sortColumn = "Givenname", string sortOrder = "asc")
         {
             Q = q;
-            PageNo = pageNo == 0 ? 1 : pageNo;
             GroupBy = groupBy;
             GroupValue = groupValue;
             SortColumn = sortColumn ?? "Givenname";
@@ -58,11 +60,7 @@ namespace BankAB.Pages
                     ? customers.OrderByDescending(c => c.City)
                     : customers.OrderBy(c => c.City);
 
-            int pageSize = 10;
-            Customers = customers
-                .Skip((PageNo - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            PagedCustomers = customers.AsQueryable().GetPaged(pageNo, 10);
         }
     }
 }

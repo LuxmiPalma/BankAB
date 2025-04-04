@@ -3,99 +3,123 @@
 @{
     ViewData["Title"] = "Customer Categories";
 }
-@if (!Model.ShowGroups)
-{
-    <h2>Group Customers By</h2>
+<section class="py-5" style="background-color: #f4f8fb;">
+    <div class="container shadow-sm rounded bg-white p-4">
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Group Type</th>
-                <th>Description</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>City</td>
-                <td>View all customers grouped by city</td>
-                <td>
-                    <a asp-page="/Category"
-                       asp-route-groupBy="City"
-                       class="btn btn-primary">View</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Country</td>
-                <td>View all customers grouped by country</td>
-                <td>
-                    <a asp-page="/Category"
-                       asp-route-groupBy="Country"
-                       class="btn btn-primary">View</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Gender</td>
-                <td>View all customers grouped by gender</td>
-                <td>
-                    <a asp-page="/Category"
-                       asp-route-groupBy="Gender"
-                       class="btn btn-primary">View</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-}
-else
-{
-    <h2>All @Model.SelectedGroupBy Values</h2>
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>@Model.SelectedGroupBy</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var value in Model.GroupValues)
-            {
-                <tr>
-                    <td>@value</td>
-                    <td>
-                        <a asp-page="/CustomerGroup"
-                           asp-route-groupBy="@Model.SelectedGroupBy"
-                           asp-route-groupValue="@value"
-                           class="btn btn-primary">View</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <!-- Pagination Controls -->
-    <div class="d-flex justify-content-between mt-3">
-        @if (Model.PageNo > 1)
+        @if (!Model.ShowGroups)
         {
-            <a class="btn btn-outline-primary"
-               asp-page="/Category"
-               asp-route-groupBy="@Model.SelectedGroupBy"
-               asp-route-pageNo="@(Model.PageNo - 1)">
-                ⬅️ Prev
-            </a>
+            <h2 class="text-center mb-4">Group Customers By</h2>
+
+            <table class="table table-hover text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Group Type</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>City</td>
+                        <td>View all customers grouped by city</td>
+                        <td>
+                            <a asp-page="/Category"
+                               asp-route-groupBy="City"
+                               class="btn btn-info text-white">View</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>View all customers grouped by country</td>
+                        <td>
+                            <a asp-page="/Category"
+                               asp-route-groupBy="Country"
+                               class="btn btn-info text-white">View</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>View all customers grouped by gender</td>
+                        <td>
+                            <a asp-page="/Category"
+                               asp-route-groupBy="Gender"
+                               class="btn btn-info text-white">View</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         }
-
-        <span class="align-self-center">Page @Model.PageNo of @Model.TotalPages</span>
-
-        @if (Model.PageNo < Model.TotalPages)
+        else
         {
-            <a class="btn btn-outline-primary"
-               asp-page="/Category"
-               asp-route-groupBy="@Model.SelectedGroupBy"
-               asp-route-pageNo="@(Model.PageNo + 1)">
-                Next ➡️
-            </a>
+            <h2 class="text-center mb-4">All @Model.SelectedGroupBy Values</h2>
+
+            <table class="table table-striped text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>@Model.SelectedGroupBy</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var value in Model.GroupValues)
+                    {
+                        <tr>
+                            <td>@value</td>
+                            <td>
+                                <a asp-page="/CustomerGroup"
+                                   asp-route-groupBy="@Model.SelectedGroupBy"
+                                   asp-route-groupValue="@value"
+                                   class="btn btn-primary">View</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- 🌐 Pagination Controls -->
+            <nav aria-label="Group pagination">
+                <ul class="pagination justify-content-center mt-3">
+                    @if (Model.PageNo > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"
+                               asp-page="/Category"
+                               asp-route-groupBy="@Model.SelectedGroupBy"
+                               asp-route-pageNo="@(Model.PageNo - 1)">«</a>
+                        </li>
+                    }
+                    @{
+                        int startPage = Math.Max(1, Model.PageNo - 2);
+                        int endPage = Math.Min(Model.TotalPages, Model.PageNo + 2);
+                    }
+                    @for (int i = startPage; i <= endPage; i++)
+
+                    {
+                        var isActive = i == Model.PageNo ? "active" : "";
+                        <li class="page-item @isActive">
+                            <a class="page-link"
+                               asp-page="/Category"
+                               asp-route-groupBy="@Model.SelectedGroupBy"
+                               asp-route-pageNo="@i">@i</a>
+                        </li>
+                    }
+
+                    @if (Model.PageNo < Model.TotalPages)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"
+                               asp-page="/Category"
+                               asp-route-groupBy="@Model.SelectedGroupBy"
+                               asp-route-pageNo="@(Model.PageNo + 1)">»</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+
+            <div class="text-center">
+                <a asp-page="/Category"
+                   class="btn btn-outline-dark mt-4">⬅️ Back to Categories</a>
+            </div>
         }
     </div>
-
-    <a asp-page="/Category" class="btn btn-secondary mt-3">⬅️ Back to Categories</a>
-}
+</section>
