@@ -122,3 +122,15 @@ body {
     font-size: 32px;
     color: var(--heading-color);
 }
+
+
+/* Gradient background for the main header */
+header.header {
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(94,174,203,1) 99%) !important;
+}
+/* Gradient background for the top utility navbar */
+.top-utility-bar {
+    background: rgb(202,241,245);
+    background: linear-gradient(90deg, rgba(202,241,245,1) 0%, rgba(232,229,218,1) 48%, rgba(157,231,251,1) 100%) !important;
+}
