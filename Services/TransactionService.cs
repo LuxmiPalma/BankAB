@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BankAB.ViewModels;
 using DataAccessLayer.Models;
 
 namespace Services
@@ -17,9 +16,9 @@ namespace Services
             _context = context;
         }
 
-        public List<TransactionViewModel> GetAllTransactions(string? sortColumn = null, string? sortOrder = null)
+        public List<Transaction> GetAllTransactions(string? sortColumn = null, string? sortOrder = null)
         {
-            var query = _context.Transactions.Select(t => new TransactionViewModel
+            var query = _context.Transactions.Select(t => new Transaction
             {
                 TransactionId = t.TransactionId,
                 AccountId = t.AccountId,
@@ -37,11 +36,11 @@ namespace Services
             return query.ToList();
         }
 
-        public List<TransactionViewModel> SearchByTransactionId(int transactionId)
+        public List<Transaction> SearchByTransactionId(int transactionId)
         {
             return _context.Transactions
                 .Where(t => t.TransactionId == transactionId)
-                .Select(t => new TransactionViewModel
+                .Select(t => new Transaction
                 {
                     TransactionId = t.TransactionId,
                     AccountId = t.AccountId,

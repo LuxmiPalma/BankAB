@@ -10,7 +10,7 @@ namespace Services
 {
     public interface ITransactionService
     {
-        List<TransactionViewModel> GetAllTransactions(string? sortColumn = null, string? sortOrder = null);
-        List<TransactionViewModel> SearchByTransactionId(int transactionId);
+        List<Transaction> GetAllTransactions(string? sortColumn = null, string? sortOrder = null);
+        List<Transaction> SearchByTransactionId(int transactionId);
     }
 }

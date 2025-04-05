@@ -3,25 +3,32 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccessLayer.Models;
 using Services;
 using BankAB.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BankAB.Pages
 {
     public class TransactionsModel : PageModel
     {
-        private readonly ITransactionService _transactionService;
+        private readonly BankAppDataContext _context;
 
-        public TransactionsModel(ITransactionService transactionService)
+        public TransactionsModel(BankAppDataContext context)
         {
-            _transactionService = transactionService;
+            _context = context;
         }
 
         public List<TransactionViewModel> Transactions { get; set; } = new();
 
         public void OnGet()
         {
-            Transactions = _transactionService.GetAllTransactions();
-                
+            Transactions = _context.Transactions
+           .Select(t => new TransactionViewModel
+                            {
+                                TransactionId = t.TransactionId,
+                                AccountId = t.AccountId,
+                                Date = t.Date,
+                                Amount = t.Amount
+                            }).ToList();
         }
     }
 }
