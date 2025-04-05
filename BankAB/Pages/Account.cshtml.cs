@@ -8,7 +8,7 @@ namespace BankAB.Pages
     public class AccountModel : PageModel
     {
         private readonly BankAppDataContext _dbContext;
-        public string Id { get; set; }
+        public int Id { get; set; }
         public decimal Balance { get; set; }
 
         public AccountModel(BankAppDataContext dbContext)
@@ -20,7 +20,7 @@ namespace BankAB.Pages
         {
             var account = _dbContext.Accounts.FirstOrDefault(c => c.AccountId == id);
 
-            Id = account.AccountId.ToString();
+            Id = account.AccountId;
             Balance = account.Balance;
         }
 
