@@ -31,6 +31,16 @@ namespace Services
 
 
         }
+        public Account GetAccount(int accountId)
+        {
+            return _dbContext.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+        }
+
+        public void UpdateAccount(Account account)
+        {
+            _dbContext.SaveChanges();
+        }
+
 
     }
 }
