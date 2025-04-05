@@ -20,8 +20,10 @@ namespace BankAB.Pages.Account
         public decimal Amount { get; set; }
 
         public decimal CurrentBalance { get; set; }
-        public void OnGet()
+        public void OnGet(int accountId)
         {
+            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            CurrentBalance = account?.Balance ?? 0;
         }
     }
 }
