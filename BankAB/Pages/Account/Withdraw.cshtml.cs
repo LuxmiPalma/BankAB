@@ -25,5 +25,23 @@ namespace BankAB.Pages.Account
             var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
             CurrentBalance = account?.Balance ?? 0;
         }
+        public IActionResult OnPost(int accountId)
+        {
+            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            if (account == null) return NotFound();
+
+            if (account.Balance < Amount)
+            {
+                ModelState.AddModelError("Amount", "You don't have that much money!");
+                CurrentBalance = account.Balance;
+                return Page();
+            }
+
+            account.Balance -= Amount;
+            _context.SaveChanges();
+
+            return RedirectToPage("/Accounts");
+        }
     }
 }
+  
