@@ -7,6 +7,12 @@ namespace BankAB.Pages.Account
 {
     public class DepositModel : PageModel
     {
+        private readonly BankAppDataContext _context;
+
+        public DepositModel(BankAppDataContext context)
+        {
+            _context = context;
+        }
         public void OnGet()
         {
         }
