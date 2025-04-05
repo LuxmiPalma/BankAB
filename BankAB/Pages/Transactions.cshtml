@@ -1,0 +1,41 @@
+﻿@page
+@model BankAB.Pages.TransactionsModel
+@{
+    ViewData["Title"] = "Transactions";
+
+}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>Transactions</h2>
+        <h5>Total: @Model.Transactions.Count</h5>
+        <a href="/" class="btn btn-secondary">← Return</a>
+    </div>
+
+    <form method="get" class="mb-3 d-flex justify-content-center">
+        <input type="text" name="transactionId" class="form-control w-25 me-2" placeholder="Search Transaction ID" />
+        <button class="btn btn-primary">Search</button>
+    </form>
+
+    <table class="table table-bordered text-center table-striped">
+        <thead class="table-light">
+            <tr>
+                <th><a asp-route-sortColumn="TransactionId" asp-route-sortOrder="asc">Transaction ID</a></th>
+                <th><a asp-route-sortColumn="AccountId" asp-route-sortOrder="asc">Account ID</a></th>
+                <th><a asp-route-sortColumn="CustomerId" asp-route-sortOrder="asc">Customer ID</a></th>
+                <th><a asp-route-sortColumn="Date" asp-route-sortOrder="asc">Date</a></th>
+                <th><a asp-route-sortColumn="Amount" asp-route-sortOrder="asc">Amount</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var txn in Model.Transactions)
+            {
+                <tr>
+                    <td><a class="btn btn-outline-secondary"><i class="bi bi-eye"></i> @txn.TransactionId</a></td>
+                    <td>@txn.AccountId</td>
+                    <td>@txn.Date.ToString("yyyy-MM-dd")</td>
+                    <td>SEK: @txn.Amount.ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
