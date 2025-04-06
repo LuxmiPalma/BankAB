@@ -15,5 +15,6 @@ namespace DataAccessLayer.DTOs
         public string City { get; set; }
         public string Country { get; set; }
         public string Gender { get; set; }
+        public string Emailaddress { get; set; }
     }
 }

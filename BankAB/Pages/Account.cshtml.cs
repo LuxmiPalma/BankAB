@@ -2,26 +2,30 @@ using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Services;
 
 namespace BankAB.Pages
 {
     public class AccountModel : PageModel
     {
-        private readonly BankAppDataContext _dbContext;
+        private readonly IAccountService _accountService;
         public int Id { get; set; }
         public decimal Balance { get; set; }
 
-        public AccountModel(BankAppDataContext dbContext)
+        public AccountModel(IAccountService accountService)
         {
-            _dbContext = dbContext;
+            _accountService = accountService;
         }
 
         public void OnGet(int id)
         {
-            var account = _dbContext.Accounts.FirstOrDefault(c => c.AccountId == id);
+            var account = _accountService.GetAccount(id); // ? use service method
 
-            Id = account.AccountId;
-            Balance = account.Balance;
+            if (account != null)
+            {
+                Id = account.AccountId;
+                Balance = account.Balance;
+            }
         }
 
     }

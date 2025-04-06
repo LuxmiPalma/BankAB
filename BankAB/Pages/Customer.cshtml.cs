@@ -1,23 +1,26 @@
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Services;
 
 namespace BankAB.Pages
 {
     public class CustomerModel : PageModel
     {
-        private readonly BankAppDataContext _dbContext;
+        private readonly ICustomerService _customerService;
 
-        public CustomerModel(BankAppDataContext dbContext)
+        public CustomerModel(ICustomerService customerService)
         {
-            _dbContext = dbContext;
+            _customerService = customerService;
         }
         public string FullName { get; set; }
         public string Email { get; set; }
 
         public void OnGet(int id)
         {
-            var customer = _dbContext.Customers.FirstOrDefault(c => c.CustomerId == id);
+            var customer = _customerService
+                .GetCustomers()
+                .FirstOrDefault(c => c.CustomerId == id);
 
             if (customer != null)
             {
