@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -18,13 +19,16 @@ namespace Services
 
         public List<Transaction> GetAllTransactions(string? sortColumn = null, string? sortOrder = null)
         {
-            var query = _context.Transactions.Select(t => new Transaction
+            var query = _context.Transactions
+                .Include(t => t.AccountNavigation)
+                .Select(t => new Transaction
             {
                 TransactionId = t.TransactionId,
                 AccountId = t.AccountId,
                 Date = t.Date,
-                Amount = t.Amount
-            });
+                Amount = t.Amount,
+                  //CustomerId = t.AccountNavigation.CustomerId
+                });
 
             if (sortColumn == "TransactionId")
                 query = sortOrder == "desc" ? query.OrderByDescending(x => x.TransactionId) : query.OrderBy(x => x.TransactionId);

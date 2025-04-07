@@ -2,12 +2,21 @@
 @model BankAB.Pages.TransactionsModel
 @{
     ViewData["Title"] = "Transactions";
+    var sortColumn = ViewContext.HttpContext.Request.Query["sortColumn"];
+    var sortOrder = ViewContext.HttpContext.Request.Query["sortOrder"];
 
-}
+    Func<string, string> iconBaseClass = col => sortColumn == col ? "text-primary" : "text-muted";
+    Func<string, string, string> activeIconClass = (col, order) =>
+        sortColumn == col && sortOrder == order ? "fw-bold text-info" : "";
+    }
+
+<!-- Font Awesome (if not already included in layout) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <div class="container mt-5">
     <div class="text-center mb-4">
         <h2>Transactions</h2>
-        <h5>Total: @Model.Transactions.Count</h5>
+        <h5>Total: @Model.Result.RowCount</h5>
         <a href="/" class="btn btn-secondary">← Return</a>
     </div>
 
@@ -19,23 +28,120 @@
     <table class="table table-bordered text-center table-striped">
         <thead class="table-light">
             <tr>
-                <th><a asp-route-sortColumn="TransactionId" asp-route-sortOrder="asc">Transaction ID</a></th>
-                <th><a asp-route-sortColumn="AccountId" asp-route-sortOrder="asc">Account ID</a></th>
-                <th><a asp-route-sortColumn="CustomerId" asp-route-sortOrder="asc">Customer ID</a></th>
-                <th><a asp-route-sortColumn="Date" asp-route-sortOrder="asc">Date</a></th>
-                <th><a asp-route-sortColumn="Amount" asp-route-sortOrder="asc">Amount</a></th>
+                <th>
+                    Transaction ID
+                    <a asp-route-sortColumn="TransactionId" asp-route-sortOrder="asc" class="@iconBaseClass("TransactionId") @activeIconClass("TransactionId", "asc")">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </a>
+                    <a asp-route-sortColumn="TransactionId" asp-route-sortOrder="desc" class="@iconBaseClass("TransactionId") @activeIconClass("TransactionId", "desc")">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                </th>
+
+                <th>
+                    Account ID
+                    <a asp-route-sortColumn="AccountId" asp-route-sortOrder="asc" class="@iconBaseClass("AccountId") @activeIconClass("AccountId", "asc")">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </a>
+                    <a asp-route-sortColumn="AccountId" asp-route-sortOrder="desc" class="@iconBaseClass("AccountId") @activeIconClass("AccountId", "desc")">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                </th>
+                <th>
+                    Customer ID
+                    <a asp-route-sortColumn="CustomerId" asp-route-sortOrder="asc" class="@iconBaseClass("CustomerId") @activeIconClass("CustomerId", "asc")">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </a>
+                    <a asp-route-sortColumn="CustomerId" asp-route-sortOrder="desc" class="@iconBaseClass("CustomerId") @activeIconClass("CustomerId", "desc")">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                </th>
+                <th>
+                    Date
+                    <a asp-route-sortColumn="Date" asp-route-sortOrder="asc" class="@iconBaseClass("Date") @activeIconClass("Date", "asc")">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </a>
+                    <a asp-route-sortColumn="Date" asp-route-sortOrder="desc" class="@iconBaseClass("Date") @activeIconClass("Date", "desc")">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                </th>
+                <th>
+                    Amount
+                    <a asp-route-sortColumn="Amount" asp-route-sortOrder="asc" class="@iconBaseClass("Amount") @activeIconClass("Amount", "asc")">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </a>
+                    <a asp-route-sortColumn="Amount" asp-route-sortOrder="desc" class="@iconBaseClass("Amount") @activeIconClass("Amount", "desc")">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </a>
+                </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var txn in Model.Transactions)
+            @foreach (var txn in Model.Result.Results)
             {
                 <tr>
-                    <td><a class="btn btn-outline-secondary"><i class="bi bi-eye"></i> @txn.TransactionId</a></td>
+                    <td>
+                        <a class="btn btn-outline-secondary"><i class="bi bi-eye"></i> @txn.TransactionId</a>
+                    </td>
                     <td>@txn.AccountId</td>
+                    <td>N/A</td>
                     <td>@txn.Date.ToString("yyyy-MM-dd")</td>
-                    <td>SEK: @txn.Amount.ToString("N2")</td>
+                    <td>SEK: @txn.Amount.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <!-- 🔢 Pagination -->
+    <nav aria-label="Transaction pagination">
+        <ul class="pagination justify-content-center mt-4">
+            @if (Model.Result.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-page="/Transactions"
+                       asp-route-page="@(Model.Result.CurrentPage - 1)"
+                       asp-route-sortColumn="@sortColumn"
+                       asp-route-sortOrder="@sortOrder">
+                        «
+                    </a>
+                </li>
+            }
+
+            @{
+                int startPage = Math.Max(1, Model.Result.CurrentPage - 2);
+                int endPage = Math.Min(Model.Result.PageCount, Model.Result.CurrentPage + 2);
+            }
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == Model.Result.CurrentPage ? "active" : "")">
+                    <a class="page-link"
+                       asp-page="/Transactions"
+                       asp-route-page="@i"
+                       asp-route-sortColumn="@sortColumn"
+                       asp-route-sortOrder="@sortOrder">@i</a>
+                </li>
+            }
+
+            @if (Model.Result.CurrentPage < Model.Result.PageCount)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-page="/Transactions"
+                       asp-route-page="@(Model.Result.CurrentPage + 1)"
+                       asp-route-sortColumn="@sortColumn"
+                       asp-route-sortOrder="@sortOrder">
+                        »
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+    <div class="text-center mt-4">
+        <a asp-page="/Home" class="btn btn-outline-dark">
+            ⬅️ Back to Home
+        </a>
+    </div>
 </div>

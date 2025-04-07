@@ -4,31 +4,40 @@ using DataAccessLayer.Models;
 using Services;
 using BankAB.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using BankAB.Infrastructure.Paging;
+
 
 
 namespace BankAB.Pages
 {
     public class TransactionsModel : PageModel
     {
-        private readonly BankAppDataContext _context;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionsModel(BankAppDataContext context)
+        public TransactionsModel(ITransactionService transactionService)
         {
-            _context = context;
+            _transactionService = transactionService;
         }
 
         public List<TransactionViewModel> Transactions { get; set; } = new();
+        public PagedResult<TransactionViewModel> Result { get; set; }
 
-        public void OnGet()
+        public void OnGet(string sortColumn = "TransactionId", string sortOrder = "asc", int page = 1)
         {
-            Transactions = _context.Transactions
-           .Select(t => new TransactionViewModel
-                            {
-                                TransactionId = t.TransactionId,
-                                AccountId = t.AccountId,
-                                Date = t.Date,
-                                Amount = t.Amount
-                            }).ToList();
+            var query = _transactionService
+            .GetAllTransactions(sortColumn, sortOrder)
+            .Take(2000)
+            .Select(t => new TransactionViewModel
+        {
+            TransactionId = t.TransactionId,
+            AccountId = t.AccountId,
+            Date = t.Date,
+            Amount = t.Amount
+        })
+        .AsQueryable();
+
+            Result = query.GetPaged(page, 20);
         }
+
     }
 }

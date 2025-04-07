@@ -134,3 +134,10 @@ header.header {
     background: rgb(202,241,245);
     background: linear-gradient(90deg, rgba(202,241,245,1) 0%, rgba(232,229,218,1) 48%, rgba(157,231,251,1) 100%) !important;
 }
+
+
+
+.text-info.fw-bold {
+    text-shadow: 0 0 5px rgba(0, 123, 255, 0.6);
+}
+
