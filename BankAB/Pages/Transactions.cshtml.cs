@@ -22,11 +22,12 @@ namespace BankAB.Pages
         public List<TransactionViewModel> Transactions { get; set; } = new();
         public PagedResult<TransactionViewModel> Result { get; set; }
 
-        public void OnGet(string sortColumn = "TransactionId", string sortOrder = "asc", int page = 1)
+        public void OnGet(string sortColumn = "TransactionId", string sortOrder = "asc", int pageNo = 1)
         {
+            var maxRows = 2000;
+
             var query = _transactionService
             .GetAllTransactions(sortColumn, sortOrder)
-            .Take(2000)
             .Select(t => new TransactionViewModel
         {
             TransactionId = t.TransactionId,
@@ -36,7 +37,9 @@ namespace BankAB.Pages
         })
         .AsQueryable();
 
-            Result = query.GetPaged(page, 20);
+
+            var limitedQuery = query.Take(maxRows);
+            Result = limitedQuery.GetPaged(pageNo, 20);
         }
 
     }

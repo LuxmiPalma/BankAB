@@ -100,7 +100,7 @@
                 <li class="page-item">
                     <a class="page-link"
                        asp-page="/Transactions"
-                       asp-route-page="@(Model.Result.CurrentPage - 1)"
+                       asp-route-pageNo="@(Model.Result.CurrentPage - 1)"
                        asp-route-sortColumn="@sortColumn"
                        asp-route-sortOrder="@sortOrder">
                         «
@@ -118,7 +118,7 @@
                 <li class="page-item @(i == Model.Result.CurrentPage ? "active" : "")">
                     <a class="page-link"
                        asp-page="/Transactions"
-                       asp-route-page="@i"
+                       asp-route-pageNo="@i"
                        asp-route-sortColumn="@sortColumn"
                        asp-route-sortOrder="@sortOrder">@i</a>
                 </li>
@@ -129,7 +129,7 @@
                 <li class="page-item">
                     <a class="page-link"
                        asp-page="/Transactions"
-                       asp-route-page="@(Model.Result.CurrentPage + 1)"
+                       asp-route-pageNo="@(Model.Result.CurrentPage + 1)"
                        asp-route-sortColumn="@sortColumn"
                        asp-route-sortOrder="@sortOrder">
                         »
@@ -140,8 +140,7 @@
     </nav>
 
     <div class="text-center mt-4">
-        <a asp-page="/Home" class="btn btn-outline-dark">
-            ⬅️ Back to Home
-        </a>
+        <a asp-page="/Index" class="btn btn-outline-dark">⬅️ Back to Home</a>
+
     </div>
 </div>
