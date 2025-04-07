@@ -15,6 +15,8 @@ namespace Services
         void UpdateAccount(Account account);
 
         List<Account> GetAccounts(string sortColumn, string sortOrder);
+        ErrorCode Withdraw(int accountId, decimal amount);
+        ErrorCode Deposit(int accountId, decimal amount, string comment);
 
     }
 

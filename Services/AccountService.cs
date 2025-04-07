@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class AccountService:IAccountService
+    public class AccountService : IAccountService
     {
         private readonly BankAppDataContext _dbContext;
 
@@ -20,7 +20,7 @@ namespace Services
         public List<Account> GetAccounts(string sortColumn, string sortOrder)
         {
             var query = _dbContext.Accounts.AsQueryable();
-           
+
 
             if (sortColumn == "Frequency")
                 query = query.OrderBy(s => s.Created);
@@ -40,8 +40,51 @@ namespace Services
         {
             _dbContext.SaveChanges();
         }
+        // NEW: Withdraw
+        public ErrorCode Withdraw(int accountId, decimal amount)
+        {
+            var account = _dbContext.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            if (account == null) return ErrorCode.BalanceTooLow; // fallback
 
+            if (amount < 100 || amount > 10000)
+                return ErrorCode.IncorrectAmount;
 
+            if (account.Balance < amount)
+                return ErrorCode.BalanceTooLow;
 
+            account.Balance -= amount;
+            _dbContext.SaveChanges();
+            return ErrorCode.OK;
+        }
+
+        //  NEW: Deposit
+        public ErrorCode Deposit(int accountId, decimal amount, string comment)
+        {
+            var account = _dbContext.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            if (account == null) return ErrorCode.IncorrectAmount;
+
+            if (amount < 100 || amount > 10000)
+                return ErrorCode.IncorrectAmount;
+
+            if (string.IsNullOrWhiteSpace(comment))
+                return ErrorCode.CommentEmpty;
+
+            account.Balance += amount;
+            _dbContext.SaveChanges();
+            return ErrorCode.OK;
+        }
+    }
+    public enum ErrorCode
+    {
+        OK,
+        BalanceTooLow,
+        IncorrectAmount,
+        CommentEmpty
     }
 }
+
+
+
+
+    
+
