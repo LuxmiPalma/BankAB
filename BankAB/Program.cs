@@ -26,6 +26,7 @@ builder.Services.AddTransient<IAccountService, AccountService>();
 // Lägg till min CategoryService
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 
 var app = builder.Build();

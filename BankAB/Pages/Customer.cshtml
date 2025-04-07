@@ -1,10 +1,63 @@
-﻿@page
+﻿@page "{id:int}"
 @model BankAB.Pages.CustomerModel
 @{
+    ViewData["Title"] = "Customer Details";
 }
-<h2>Customer Details</h2>
 
-<p><strong>Name:</strong> @Model.FullName</p>
-<p><strong>Email:</strong> @Model.Email</p>
+@if (Model.SelectedCustomer != null)
+{
+    <div class="container my-5">
+        <div class="card shadow p-4">
+            <div class="d-flex align-items-center mb-3">
+                <i class="bi bi-person-fill fs-3 me-2"></i>
+                <h3 class="mb-0">@Model.SelectedCustomer.Givenname @Model.SelectedCustomer.Surname</h3>
+            </div>
 
-<a asp-page="/Customers" class="btn btn-secondary">Back to List</a>
+            <p><strong>Total Balance, SEK:</strong> <span class="text-success fw-bold">@Model.SelectedCustomer.TotalBalance?.ToString("N2") ?? "0.00"</span></p>
+
+            <p>
+                <a href="https://www.google.com/maps/search/@Model.SelectedCustomer.Streetaddress @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country" 
+                   target="_blank" class="text-decoration-none text-primary">
+                    <i class="bi bi-geo-alt-fill"></i> @Model.SelectedCustomer.Streetaddress, @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country
+                </a>
+            </p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Gender:</strong> @Model.SelectedCustomer.Gender</p>
+                    <p><strong>City:</strong> @Model.SelectedCustomer.City</p>
+                    <p><strong>Zip Code:</strong> @Model.SelectedCustomer.Zipcode</p>
+                    <p><strong>Country:</strong> @Model.SelectedCustomer.Country</p>
+                    <p><strong>National ID:</strong> @Model.SelectedCustomer.NationalId ?? "N/A"</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Country Code:</strong> @Model.SelectedCustomer.CountryCode</p>
+                    <p><strong>Birthday:</strong> @Model.SelectedCustomer.Birthday?.ToString("d")</p>
+                    <p><strong>Telephone Country Code:</strong> @Model.SelectedCustomer.Telephonecountrycode</p>
+                    <p><strong>Telephone Number:</strong> @Model.SelectedCustomer.Telephonenumber</p>
+                    <p><strong>Email:</strong> @Model.SelectedCustomer.Emailaddress</p>
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <a asp-page="CustomerEdit" asp-route-id="@Model.SelectedCustomer.CustomerId" class="btn btn-success">
+                    <i class="bi bi-pencil-square"></i> Edit Customer
+                </a>
+
+                <form method="post" asp-page-handler="Delete" asp-route-id="@Model.SelectedCustomer.CustomerId">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Delete Customer
+                    </button>
+                </form>
+
+                <a asp-page="/Accounts/New" asp-route-customerId="@Model.SelectedCustomer.CustomerId" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create New Account
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning mt-4">Customer not found.</div>
+}

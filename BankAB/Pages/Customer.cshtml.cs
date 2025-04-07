@@ -1,4 +1,4 @@
-using DataAccessLayer.Models;
+using DataAccessLayer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
@@ -8,25 +8,30 @@ namespace BankAB.Pages
     public class CustomerModel : PageModel
     {
         private readonly ICustomerService _customerService;
+        private readonly IPersonService _personService;
 
-        public CustomerModel(ICustomerService customerService)
+        public CustomerModel(ICustomerService customerService, IPersonService personService)
         {
             _customerService = customerService;
+            _personService = personService;
         }
-        public string FullName { get; set; }
-        public string Email { get; set; }
 
-        public void OnGet(int id)
+        public CustomerDTO? SelectedCustomer { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var customer = _customerService
-                .GetCustomers()
-                .FirstOrDefault(c => c.CustomerId == id);
+            SelectedCustomer = await _personService.GetCustomerDtoByIdAsync(id);
 
-            if (customer != null)
-            {
-                FullName = customer.Givenname + " " + customer.Surname;
-                Email = customer.Emailaddress;
-            }
+            if (SelectedCustomer == null)
+                return NotFound();
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            await _personService.DeleteCustomerAsync(id); 
+            return RedirectToPage("/Customers");
         }
     }
 }
