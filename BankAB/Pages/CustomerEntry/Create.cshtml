@@ -1,0 +1,77 @@
+﻿@page
+@model BankAB.Pages.CustomerEntry.CreateModel
+@using DataAccessLayer.Enum
+
+@{
+    ViewData["Title"] = "Create New Customer";
+}
+
+<h2>Create New Customer</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Customer.Givenname" class="form-label"></label>
+        <input asp-for="Customer.Givenname" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Customer.Surname" class="form-label"></label>
+        <input asp-for="Customer.Surname" class="form-control" />
+    </div>
+
+    <!-- Gender Dropdown -->
+    <div class="mb-3">
+        <label asp-for="Customer.Gender" class="form-label"></label>
+        <select asp-for="Customer.Gender" class="form-select">
+            @foreach (var gender in Enum.GetValues(typeof(DataAccessLayer.Enum.Gender)).Cast<DataAccessLayer.Enum.Gender>())
+            {
+                <option value="@gender">@gender</option>
+            }
+        </select>
+    </div>
+
+    <!-- Country Dropdown -->
+    <div class="mb-3">
+        <label asp-for="Customer.CountryId" class="form-label">Country</label>
+        <select asp-for="Customer.CountryId" class="form-select">
+            <option value="">Select Country</option>
+            @foreach (var country in Model.CountryList)
+            {
+                <option value="@country.Value">@country.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="mb-3">
+        <label>Date of Birth</label>
+        <div class="row">
+            <div class="col">
+                <select asp-for="BirthdayYear" class="form-select">
+                    @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
+                    {
+                        <option value="@year">@year</option>
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <select asp-for="BirthdayMonth" class="form-select">
+                    @for (int month = 1; month <= 12; month++)
+                    {
+                        <option value="@month">@month</option>
+                    }
+                </select>
+            </div>
+            <div class="col">
+                <select asp-for="BirthdayDay" class="form-select">
+                    @for (int day = 1; day <= 31; day++)
+                    {
+                        <option value="@day">@day</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
