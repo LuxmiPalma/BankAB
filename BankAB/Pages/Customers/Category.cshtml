@@ -1,5 +1,5 @@
 ﻿@page
-@model BankAB.Pages.CategoryModel
+@model BankAB.Pages.Customers.CategoryModel
 @{
     ViewData["Title"] = "Customer Categories";
 }
@@ -23,7 +23,7 @@
                         <td>City</td>
                         <td>View all customers grouped by city</td>
                         <td>
-                            <a asp-page="/Category"
+                            <a asp-page="/Customers/Category"
                                asp-route-groupBy="City"
                                class="btn btn-info text-white">View</a>
                         </td>
@@ -32,7 +32,7 @@
                         <td>Country</td>
                         <td>View all customers grouped by country</td>
                         <td>
-                            <a asp-page="/Category"
+                            <a asp-page="/Customers/Category"
                                asp-route-groupBy="Country"
                                class="btn btn-info text-white">View</a>
                         </td>
@@ -41,7 +41,7 @@
                         <td>Gender</td>
                         <td>View all customers grouped by gender</td>
                         <td>
-                            <a asp-page="/Category"
+                            <a asp-page="/Customers/Category"
                                asp-route-groupBy="Gender"
                                class="btn btn-info text-white">View</a>
                         </td>
@@ -66,7 +66,7 @@
                         <tr>
                             <td>@value</td>
                             <td>
-                                <a asp-page="/CustomerGroup"
+                                <a asp-page="/Customers/CustomerGroup"
                                    asp-route-groupBy="@Model.SelectedGroupBy"
                                    asp-route-groupValue="@value"
                                    class="btn btn-primary">View</a>
@@ -83,7 +83,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               asp-page="/Category"
+                               asp-page="/Customers/Category"
                                asp-route-groupBy="@Model.SelectedGroupBy"
                                asp-route-pageNo="@(Model.PageNo - 1)">«</a>
                         </li>
@@ -98,7 +98,7 @@
                         var isActive = i == Model.PageNo ? "active" : "";
                         <li class="page-item @isActive">
                             <a class="page-link"
-                               asp-page="/Category"
+                               asp-page="/Customers/Category"
                                asp-route-groupBy="@Model.SelectedGroupBy"
                                asp-route-pageNo="@i">@i</a>
                         </li>
@@ -108,7 +108,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               asp-page="/Category"
+                               asp-page="/Customers/Category"
                                asp-route-groupBy="@Model.SelectedGroupBy"
                                asp-route-pageNo="@(Model.PageNo + 1)">»</a>
                         </li>
@@ -117,7 +117,7 @@
             </nav>
 
             <div class="text-center">
-                <a asp-page="/Category"
+                <a asp-page="/Customers/Category"
                    class="btn btn-outline-dark mt-4">⬅️ Back to Categories</a>
             </div>
         }

@@ -1,5 +1,5 @@
 ﻿@page
-@model BankAB.Pages.AccountsModel
+@model BankAB.Pages.Accounts.AccountsModel
 @{
 }
 
@@ -11,13 +11,13 @@
             <th scope="col">Id</th>
             <th scope="col">
                 Frequency
-                <a asp-page="/Accounts"
+                <a asp-page="/Accounts/Accounts"
                    asp-route-sortColumn="Frequency"
                    asp-route-sortOrder="asc"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
                 </a>
-                <a asp-page="/Accounts"
+                <a asp-page="/Accounts/Accounts"
                    asp-route-sortColumn="Frequency"
                    asp-route-sortOrder="desc"
                    style="text-decoration:none">
@@ -27,13 +27,13 @@
 
             <th scope="col">
                 Account Created
-                <a asp-page="/Accounts"
+                <a asp-page="/Accounts/Accounts"
                    asp-route-sortColumn="Created"
                    asp-route-sortOrder="asc"
                    style="text-decoration:none">
                     <i class="fa-solid fa-angle-up"></i>
                 </a>
-                <a asp-page="/Accounts"
+                <a asp-page="/Accounts/Accounts"
                    asp-route-sortColumn="Created"
                    asp-route-sortOrder="desc"
                    style="text-decoration:none">
@@ -69,8 +69,9 @@
                 <td>@acc.Frequency</td>
                 <td>@acc.Created</td>
                 @* <td>@acc.Balance</td> *@
-                <td><a asp-page="/Account" asp-route-id="@acc.Id" class="btn btn-primary">View</a></td>
+                <td><a asp-page="/Accounts/Account" asp-route-id="@acc.Id" class="btn btn-primary">View</a></td>
             </tr>
         }
+        
     </tbody>
 </table>

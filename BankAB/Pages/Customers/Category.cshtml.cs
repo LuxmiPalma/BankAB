@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
 
-namespace BankAB.Pages
+namespace BankAB.Pages.Customers
 {
     public class CategoryModel : PageModel
     {
@@ -12,7 +12,7 @@ namespace BankAB.Pages
         {
             _customerService = customerService;
         }
-      
+
 
         public string SelectedGroupBy { get; set; }
         public List<string> GroupValues { get; set; } = new();

@@ -1,5 +1,5 @@
 ﻿@page
-@model BankAB.Pages.CustomersModel
+@model BankAB.Pages.Customers.CustomersModel
 @{
 }
 
@@ -17,13 +17,13 @@
                         <th scope="col">Id</th>
                         <th scope="col">
                             Surname
-                            <a asp-page="/Customers"
+                            <a asp-page="/Customers/Customers"
                                asp-route-sortColumn="Surname"
                                asp-route-sortOrder="asc"
                                style="text-decoration:none">
                                 <i class="fa-solid fa-angle-up"></i>
                             </a>
-                            <a asp-page="/Customers"
+                            <a asp-page="//CustomersCustomers"
                                asp-route-sortColumn="Surname"
                                asp-route-sortOrder="desc"
                                style="text-decoration:none">
@@ -32,13 +32,13 @@
                         </th>
                         <th scope="col">
                             City
-                            <a asp-page="/Customers"
+                            <a asp-page="/Customers/Customers"
                                asp-route-sortColumn="City"
                                asp-route-sortOrder="asc"
                                style="text-decoration:none">
                                 <i class="fa-solid fa-angle-up"></i>
                             </a>
-                            <a asp-page="/Customers"
+                            <a asp-page="/Customers/Customers"
                                asp-route-sortColumn="City"
                                asp-route-sortOrder="desc"
                                style="text-decoration:none">
@@ -47,13 +47,13 @@
                         </th>
                         <th scope="col">
                             Country
-                            <a asp-page="/Customers"
+                            <a asp-page="/Customers/Customers"
                                asp-route-sortColumn="Country"
                                asp-route-sortOrder="asc"
                                style="text-decoration:none">
                                 <i class="fa-solid fa-angle-up"></i>
                             </a>
-                            <a asp-page="/Customers"
+                            <a asp-page="/Customers/Customers"
                                asp-route-sortColumn="Country"
                                asp-route-sortOrder="desc"
                                style="text-decoration:none">
@@ -72,7 +72,7 @@
                             <td>@cus.City</td>
                             <td>@cus.Country</td>
                             <td>
-                                <a asp-page="/Customer" asp-route-id="@cus.Id" class="btn btn-sm btn-primary">
+                                <a asp-page="/Customers/Customer" asp-route-id="@cus.Id" class="btn btn-sm btn-primary">
                                     View
                                 </a>
                             </td>

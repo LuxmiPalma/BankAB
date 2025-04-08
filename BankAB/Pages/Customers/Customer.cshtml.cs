@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
 
-namespace BankAB.Pages
+namespace BankAB.Pages.Customers
 {
     public class CustomerModel : PageModel
     {
@@ -30,7 +30,7 @@ namespace BankAB.Pages
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
-            await _personService.DeleteCustomerAsync(id); 
+            await _personService.DeleteCustomerAsync(id);
             return RedirectToPage("/Customers");
         }
     }

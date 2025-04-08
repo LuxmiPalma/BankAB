@@ -1,5 +1,5 @@
 ﻿@page
-@model BankAB.Pages.CustomerGroupModel
+@model BankAB.Pages.Customers.CustomerGroupModel
 @{
     ViewData["Title"] = "Grouped Customers";
 }
@@ -26,13 +26,13 @@
                     <tr>
                         <th>
                             Given Name
-                            <a asp-page="/CustomerGroup"
+                            <a asp-page="/Customers/CustomerGroup"
                                asp-route-q="@Model.Q"
                                asp-route-groupBy="@Model.GroupBy"
                                asp-route-groupValue="@Model.GroupValue"
                                asp-route-sortColumn="Givenname"
                                asp-route-sortOrder="asc">⬆️</a>
-                            <a asp-page="/CustomerGroup"
+                            <a asp-page="/Customers/CustomerGroup"
                                asp-route-q="@Model.Q"
                                asp-route-groupBy="@Model.GroupBy"
                                asp-route-groupValue="@Model.GroupValue"
@@ -65,7 +65,7 @@
                 {
                     <li class="page-item">
                         <a class="page-link"
-                           asp-page="/CustomerGroup"
+                           asp-page="/Customers/CustomerGroup"
                            asp-route-groupBy="@Model.GroupBy"
                            asp-route-groupValue="@Model.GroupValue"
                            asp-route-q="@Model.Q"
@@ -84,7 +84,7 @@
                 {
                     <li class="page-item @(i == Model.PagedCustomers.CurrentPage ? "active" : "")">
                         <a class="page-link"
-                           asp-page="/CustomerGroup"
+                           asp-page="/Customers/CustomerGroup"
                            asp-route-groupBy="@Model.GroupBy"
                            asp-route-groupValue="@Model.GroupValue"
                            asp-route-q="@Model.Q"
@@ -98,7 +98,7 @@
                 {
                     <li class="page-item">
                         <a class="page-link"
-                           asp-page="/CustomerGroup"
+                           asp-page="/Customers/CustomerGroup"
                            asp-route-groupBy="@Model.GroupBy"
                            asp-route-groupValue="@Model.GroupValue"
                            asp-route-q="@Model.Q"
@@ -112,7 +112,7 @@
 
         <!-- ⬅️ Back to Category -->
         <div class="text-center mt-4">
-            <a asp-page="/Category"
+            <a asp-page="/Customers/Category"
                asp-route-groupBy="@Model.GroupBy"
                class="btn btn-outline-dark">
                 ⬅️ Back to @Model.GroupBy Categories

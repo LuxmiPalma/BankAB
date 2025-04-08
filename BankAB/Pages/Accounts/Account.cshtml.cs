@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Services;
 
-namespace BankAB.Pages
+namespace BankAB.Pages.Accounts
 {
     public class AccountModel : PageModel
     {

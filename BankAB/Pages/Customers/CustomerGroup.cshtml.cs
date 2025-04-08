@@ -5,7 +5,7 @@ using Services;
 using BankAB.Infrastructure.Paging;
 
 
-namespace BankAB.Pages
+namespace BankAB.Pages.Customers
 {
     public class CustomerGroupModel : PageModel
     {
@@ -34,21 +34,21 @@ namespace BankAB.Pages
 
             var customers = _customerService.GetCustomers()
                 .Where(c =>
-                    (groupBy == "City" && c.City == groupValue) ||
-                    (groupBy == "Country" && c.Country == groupValue) ||
-                    (groupBy == "Gender" && c.Gender == groupValue));
+                    groupBy == "City" && c.City == groupValue ||
+                    groupBy == "Country" && c.Country == groupValue ||
+                    groupBy == "Gender" && c.Gender == groupValue);
 
             if (!string.IsNullOrEmpty(Q))
             {
                 customers = customers.Where(c =>
-                (c.Givenname != null && c.Givenname.Contains(Q)) ||
-                (c.Surname != null && c.Surname.Contains(Q)) ||
-                (c.City != null && c.City.Contains(Q)) ||
-                (c.Country != null && c.Country.Contains(Q)) ||
-                (c.Gender != null && c.Gender.Contains(Q))
+                c.Givenname != null && c.Givenname.Contains(Q) ||
+                c.Surname != null && c.Surname.Contains(Q) ||
+                c.City != null && c.City.Contains(Q) ||
+                c.Country != null && c.Country.Contains(Q) ||
+                c.Gender != null && c.Gender.Contains(Q)
                 );
             }
-        
+
 
             if (SortColumn == "Givenname")
                 customers = SortOrder == "desc"

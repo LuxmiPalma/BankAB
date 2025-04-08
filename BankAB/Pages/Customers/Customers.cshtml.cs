@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
-namespace BankAB.Pages
+namespace BankAB.Pages.Customers
 {
     public class CustomersModel : PageModel
     {
@@ -25,7 +25,7 @@ namespace BankAB.Pages
         }
         public List<CustomerViewModel> Customers { get; set; }
 
-        public void OnGet(string sortColumn,string sortOrder)
+        public void OnGet(string sortColumn, string sortOrder)
         {
             var query = _dbContext.Customers
                 .Select(s => new CustomerViewModel

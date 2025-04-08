@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
 
-namespace BankAB.Pages
+
+namespace BankAB.Pages.Customers
 {
     public class CustomerEditModel : PageModel
     {
