@@ -23,7 +23,62 @@ namespace DataAccessLayer.Models
             _dbContext.Database.Migrate();
             SeedRoles();
             SeedUsers();
+            SeedCountries();
+            LinkCustomersToCountries();
         }
+        private void SeedCountries()
+        {
+            AddCountryIfDoesntExist("FI", "Finland");
+            AddCountryIfDoesntExist("DK", "Denmark");
+            AddCountryIfDoesntExist("NO", "Norway");
+            AddCountryIfDoesntExist("SE", "Sweden");
+
+        }
+        private void AddCountryIfDoesntExist(string code, string name)
+        {
+            if (_dbContext.Countries.Any(c => c.CountryCode == code)) return;
+            _dbContext.Countries.Add(new Country
+            {
+                CountryCode = code,
+                CountryName = name
+            });
+            _dbContext.SaveChanges();
+        }
+        private void LinkCustomersToCountries()
+        {
+            var countries = _dbContext.Countries.ToList();
+
+            var fi = countries.FirstOrDefault(c => c.CountryCode == "FI")?.Id ?? 0;
+            var dk = countries.FirstOrDefault(c => c.CountryCode == "DK")?.Id ?? 0;
+            var no = countries.FirstOrDefault(c => c.CountryCode == "NO")?.Id ?? 0;
+            var se = countries.FirstOrDefault(c => c.CountryCode == "SE")?.Id ?? 0;
+
+            if (fi == 0 || dk == 0 || no == 0 || se == 0) return; // Fail-safe if seed missing
+
+            var updates = new (string[] Cities, int CountryId)[]
+            {
+        (new[] { "JESSHEIM", "KRISTIANSAND S", "SKIEN" }, no),
+        (new[] { "København V" }, dk),
+        (new[] { "ESPOO", "JYVÄSKYLÄ", "KEMI", "HELSINKI", "KERIMÄKI", "TAMPERE", "SEINÄJOKI" }, fi),
+        (new[] { "VÄSTERVIK", "VEINGE", "STOCKHOLM", "GUNNARSBYN", "HAPARANDA" }, se)
+            };
+
+            foreach (var (cities, countryId) in updates)
+            {
+                var customersToUpdate = _dbContext.Customers
+                    .Where(c => cities.Contains(c.City.ToUpper()) && c.CountryId == null)
+                    .ToList();
+
+                foreach (var customer in customersToUpdate)
+                    customer.CountryId = countryId;
+                Console.WriteLine($"Updated {customersToUpdate.Count} customers with CountryId = {countryId}");
+
+
+                _dbContext.SaveChanges();
+            }
+        }
+
+
 
         // Här finns möjlighet att uppdatera dina användares loginuppgifter
         private void SeedUsers()

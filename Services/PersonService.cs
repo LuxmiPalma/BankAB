@@ -47,7 +47,7 @@ namespace Services
 
         public async Task<(Customer, List<string>)> UpdateCustomerAsync(
             int id, string gender, string givenName, string surname, string streetAddress, string city, string zipcode,
-            string country, string countryCode, string emailaddress, string telephoneCountryCode, string telephoneNumber,
+            int countryId,  string emailaddress, string telephoneCountryCode, string telephoneNumber,
             string? nationalId, int birthdayYear, int birthdayMonth, int birthdayDay)
         {
             var customerFromDb = await _context.Customers.FirstAsync(m => m.CustomerId == id);
@@ -65,8 +65,7 @@ namespace Services
             customerFromDb.Streetaddress = streetAddress;
             customerFromDb.City = city;
             customerFromDb.Zipcode = zipcode;
-            customerFromDb.Country = country;
-            customerFromDb.CountryCode = countryCode;
+            customerFromDb.CountryId = countryId;
             customerFromDb.Emailaddress = emailaddress;
             customerFromDb.Telephonecountrycode = telephoneCountryCode;
             customerFromDb.Telephonenumber = telephoneNumber;
@@ -114,8 +113,7 @@ namespace Services
                 Streetaddress = customer.Streetaddress,
                 City = customer.City,
                 Zipcode = customer.Zipcode,
-                Country = customer.Country,
-                CountryCode = customer.CountryCode,
+                Country = customer.Country?.CountryName ?? string.Empty,
                 Emailaddress = customer.Emailaddress,
                 Telephonecountrycode = customer.Telephonecountrycode,
                 Telephonenumber = customer.Telephonenumber,

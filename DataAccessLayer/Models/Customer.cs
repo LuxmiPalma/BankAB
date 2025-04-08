@@ -19,10 +19,6 @@ public partial class Customer
 
     public string Zipcode { get; set; } = null!;
 
-    public string Country { get; set; } = null!;
-
-    public string CountryCode { get; set; } = null!;
-
     public DateOnly? Birthday { get; set; }
 
     public string? NationalId { get; set; }
@@ -32,6 +28,10 @@ public partial class Customer
     public string? Telephonenumber { get; set; }
 
     public string? Emailaddress { get; set; }
+
+
+    public int? CountryId { get; set; } 
+    public virtual Country? Country { get; set; }
 
     public virtual ICollection<Disposition> Dispositions { get; set; } = new List<Disposition>();
 }

@@ -29,10 +29,12 @@ public partial class BankAppDataContext : IdentityDbContext
     public virtual DbSet<PermenentOrder> PermenentOrders { get; set; }
 
     public virtual DbSet<Transaction> Transactions { get; set; }
+    public virtual DbSet<Country> Countries { get; set; }
 
-   // public virtual DbSet<User> Users { get; set; }
 
-   
+    // public virtual DbSet<User> Users { get; set; }
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -69,8 +71,6 @@ public partial class BankAppDataContext : IdentityDbContext
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.City).HasMaxLength(100);
-            entity.Property(e => e.Country).HasMaxLength(100);
-            entity.Property(e => e.CountryCode).HasMaxLength(2);
             entity.Property(e => e.Emailaddress).HasMaxLength(100);
             entity.Property(e => e.Gender).HasMaxLength(6);
             entity.Property(e => e.Givenname).HasMaxLength(100);
@@ -80,6 +80,13 @@ public partial class BankAppDataContext : IdentityDbContext
             entity.Property(e => e.Telephonecountrycode).HasMaxLength(10);
             entity.Property(e => e.Telephonenumber).HasMaxLength(25);
             entity.Property(e => e.Zipcode).HasMaxLength(15);
+
+            entity.HasOne(c => c.Country)
+            .WithMany(c => c.Customers)
+            .HasForeignKey(c => c.CountryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
         });
 
         modelBuilder.Entity<Disposition>(entity =>

@@ -1,6 +1,7 @@
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace BankAB.Pages.Customers
@@ -28,12 +29,13 @@ namespace BankAB.Pages.Customers
         public void OnGet(string sortColumn, string sortOrder)
         {
             var query = _dbContext.Customers
-                .Select(s => new CustomerViewModel
+                .Include(c => c.Country)
+                .Select(c => new CustomerViewModel
                 {
-                    Id = s.CustomerId,
-                    Name = s.Surname,
-                    City = s.City,
-                    Country = s.Country
+                    Id = c.CustomerId,
+                    Name = c.Surname,
+                    City = c.City,
+                    Country = c.Country != null ? c.Country.CountryName : "Unknown"
                 });
             if (sortColumn == "Surname")
                 if (sortOrder == "asc")

@@ -30,7 +30,7 @@ namespace BankAB.Pages.Customers
         {
             (Customer updatedCustomer, List<string> changes) = await _personService.UpdateCustomerAsync(
         Customer.CustomerId, Customer.Gender, Customer.Givenname, Customer.Surname, Customer.Streetaddress,
-        Customer.City, Customer.Zipcode, Customer.Country, Customer.CountryCode,
+        Customer.City, Customer.Zipcode, Customer.CountryId ?? 0, 
         Customer.Emailaddress, Customer.Telephonecountrycode, Customer.Telephonenumber,
         Customer.NationalId, Customer.Birthday?.Year ?? 0, Customer.Birthday?.Month ?? 0, Customer.Birthday?.Day ?? 0);
 
