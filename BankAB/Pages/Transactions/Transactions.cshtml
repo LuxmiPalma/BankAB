@@ -81,7 +81,9 @@
             {
                 <tr>
                     <td>
-                        <a class="btn btn-outline-secondary"><i class="bi bi-eye"></i> @txn.TransactionId</a>
+                        <a asp-page="/Transactions/TransactionDetails" asp-route-id="@txn.TransactionId" class="btn btn-outline-secondary">
+                            <i class="bi bi-eye"></i> @txn.TransactionId
+                        </a>
                     </td>
                     <td>@txn.AccountId</td>
                     <td>N/A</td>
