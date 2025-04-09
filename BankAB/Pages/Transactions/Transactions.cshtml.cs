@@ -8,7 +8,7 @@ using BankAB.Infrastructure.Paging;
 
 
 
-namespace BankAB.Pages
+namespace BankAB.Pages.Transactions
 {
     public class TransactionsModel : PageModel
     {

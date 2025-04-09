@@ -1,5 +1,5 @@
 ﻿@page
-@model BankAB.Pages.TransactionsModel
+@model BankAB.Pages.Transactions.TransactionsModel
 @{
     ViewData["Title"] = "Transactions";
     var sortColumn = ViewContext.HttpContext.Request.Query["sortColumn"];
@@ -99,7 +99,7 @@
             {
                 <li class="page-item">
                     <a class="page-link"
-                       asp-page="/Transactions"
+                       asp-page="/Transactions/Transactions"
                        asp-route-pageNo="@(Model.Result.CurrentPage - 1)"
                        asp-route-sortColumn="@sortColumn"
                        asp-route-sortOrder="@sortOrder">
@@ -117,7 +117,7 @@
             {
                 <li class="page-item @(i == Model.Result.CurrentPage ? "active" : "")">
                     <a class="page-link"
-                       asp-page="/Transactions"
+                       asp-page="/Transactions/Transactions"
                        asp-route-pageNo="@i"
                        asp-route-sortColumn="@sortColumn"
                        asp-route-sortOrder="@sortOrder">@i</a>
@@ -128,7 +128,7 @@
             {
                 <li class="page-item">
                     <a class="page-link"
-                       asp-page="/Transactions"
+                       asp-page="/Transactions/Transactions"
                        asp-route-pageNo="@(Model.Result.CurrentPage + 1)"
                        asp-route-sortColumn="@sortColumn"
                        asp-route-sortOrder="@sortOrder">
