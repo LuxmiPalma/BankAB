@@ -31,10 +31,30 @@ namespace Services
 
 
         }
-        public Account GetAccount(int accountId)
+        public Account GetAccountWithCustomers(int accountId)
         {
-            return _dbContext.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            return _dbContext.Accounts
+                .Where(a => a.AccountId == accountId)
+                .Select(a => new Account
+                {
+                    AccountId = a.AccountId,
+                    Balance = a.Balance,
+                    Created = a.Created,
+                    Frequency = a.Frequency,
+                    Dispositions = a.Dispositions.Select(d => new Disposition
+                    {
+                        CustomerId = d.CustomerId,
+                        Type = d.Type,
+                        Customer = new Customer
+                        {
+                            Givenname = d.Customer.Givenname,
+                            Surname = d.Customer.Surname,
+                            CustomerId = d.Customer.CustomerId
+                        }
+                    }).ToList()
+                }).FirstOrDefault();
         }
+
 
         public void UpdateAccount(Account account)
         {

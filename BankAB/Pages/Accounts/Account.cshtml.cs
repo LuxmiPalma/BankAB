@@ -16,10 +16,11 @@ namespace BankAB.Pages.Accounts
         {
             _accountService = accountService;
         }
+        public Account Account { get; set; }
 
         public void OnGet(int id)
         {
-            var account = _accountService.GetAccount(id); // ? use service method
+            var account = _accountService.GetAccountWithCustomers(id);
 
             if (account != null)
             {
