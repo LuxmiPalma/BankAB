@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DataAccessLayer.Models;
 using Services;
-using BankAB.ViewModels;
+using Services.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using BankAB.Infrastructure.Paging;
+using Services.Infrastructure.Paging;
 
 
 
@@ -26,10 +26,14 @@ namespace BankAB.Pages.Transactions
         {
             List<Transaction> transactionList;
 
+
             if (customerId.HasValue)
                 transactionList = _transactionService.GetTransactionsByCustomerId(customerId.Value, sortColumn, sortOrder);
             else
                 transactionList = _transactionService.GetAllTransactions(sortColumn, sortOrder);
+
+            // then you use query.Select(...).GetPaged(...)
+
 
             var query = transactionList
                 .Select(t => new TransactionViewModel
@@ -45,8 +49,9 @@ namespace BankAB.Pages.Transactions
 
 
                 }).AsQueryable();
+            Result = _transactionService.GetPagedTransactions(pageNo, 20, sortColumn, sortOrder, customerId);
 
-            Result = query.GetPaged(pageNo, 20);
+
         }
     }
 }

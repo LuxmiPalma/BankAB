@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Services.Infrastructure.Paging;
+using Services.ViewModels;
+
+
 
 namespace Services
 {
@@ -75,6 +79,35 @@ namespace Services
                 query = sortOrder == "desc" ? query.OrderByDescending(t => t.TransactionId) : query.OrderBy(t => t.TransactionId);
 
             return query.ToList();
+        }
+        public PagedResult<TransactionViewModel> GetPagedTransactions(int pageNo, int pageSize, string? sortColumn, string? sortOrder, int? customerId = null)
+        {
+            var query = _context.Transactions
+                .AsNoTracking()
+                .Include(t => t.AccountNavigation)
+                    .ThenInclude(a => a.Dispositions)
+                .Where(t => customerId == null || t.AccountNavigation.Dispositions.Any(d => d.CustomerId == customerId));
+
+            // Sorting
+            if (sortColumn == "Date")
+                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Date) : query.OrderBy(t => t.Date);
+            else if (sortColumn == "Amount")
+                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Amount) : query.OrderBy(t => t.Amount);
+            else
+                query = sortOrder == "desc" ? query.OrderByDescending(t => t.TransactionId) : query.OrderBy(t => t.TransactionId);
+
+            // Projection before pagination
+            var projectedQuery = query.Select(t => new TransactionViewModel
+            {
+                TransactionId = t.TransactionId,
+                AccountId = t.AccountId,
+                Amount = t.Amount,
+                Date = t.Date,
+                CustomerId = t.AccountNavigation.Dispositions.FirstOrDefault().CustomerId,
+                Operation = t.Operation
+            });
+
+            return projectedQuery.GetPaged(pageNo, pageSize);
         }
 
     }

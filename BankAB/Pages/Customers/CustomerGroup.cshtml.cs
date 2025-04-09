@@ -2,7 +2,7 @@ using DataAccessLayer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
-using BankAB.Infrastructure.Paging;
+using Services.Infrastructure.Paging;
 
 
 namespace BankAB.Pages.Customers

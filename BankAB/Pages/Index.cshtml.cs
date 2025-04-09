@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
-using BankAB.ViewModels;
+using Services.ViewModels;
 using DataAccessLayer.Models;
 
 namespace BankAB.Pages

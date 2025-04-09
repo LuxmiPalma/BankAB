@@ -1,4 +1,4 @@
-using BankAB.ViewModels;
+using Services.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services;
