@@ -11,7 +11,7 @@ namespace Services
 {
     public interface IAccountService
     {
-        Account GetAccount(int accountId);
+        Account GetAccountWithCustomers(int accountId);
         void UpdateAccount(Account account);
 
         List<Account> GetAccounts(string sortColumn, string sortOrder);
