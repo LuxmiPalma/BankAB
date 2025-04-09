@@ -15,7 +15,7 @@ namespace BankAB.Pages.Transactions
         }
 
         public TransactionViewModel Transaction { get; set; }
-        public void OnGet()
+        public void OnGet(int id)
         {
         }
     }
