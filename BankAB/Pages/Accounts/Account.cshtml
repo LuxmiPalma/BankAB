@@ -1,15 +1,48 @@
-﻿@page
+﻿@page "{id:int}"
 @model BankAB.Pages.Accounts.AccountModel
 @{
+    ViewData["Title"] = "Account Details";
 }
-<h2>Account </h2>
 
-<p><strong>Id:</strong> @Model.Id</p>
-<p><strong>Balance:</strong> @Model.Balance</p>
+<div class="container mt-5">
+    <h2>Account Details</h2>
+    <a asp-page="/Accounts/Index" class="btn btn-secondary">← Return</a>
 
-<a asp-page="/Accounts/Accounts" class="btn btn-secondary">Back to List</a>
-
-<a asp-page="Accounts/Deposit" asp-route-accountId="@Model.Id" class="btn btn-success btn-sm">Deposit</a>
-<a asp-page="Accounts/Withdraw" asp-route-accountId="@Model.Id" class="btn btn-danger btn-sm">Withdraw</a>
-
-
+    <table class="table mt-3 table-bordered">
+        <thead>
+            <tr>
+                <th>Account ID</th>
+                <th>Frequency</th>
+                <th>Created</th>
+                <th>Balance</th>
+                <th>Customers</th>
+                <th>Transactions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Account.AccountId</td>
+                <td>@Model.Account.Frequency</td>
+                <td>@Model.Account.Created</td>
+                <td>@Model.Account.Balance.ToString("N2") SEK</td>
+                <td>
+                    @foreach (var d in Model.Account.Dispositions)
+                    {
+                        <div>
+                            <a class="text-primary"><i class="bi bi-eye"></i> @d.Customer.Givenname @d.Customer.Surname (@d.Type)</a>
+                        </div>
+                    }
+                </td>
+                <td>
+                    <a asp-page="/Transactions/Transactions" asp-route-accountId="@Model.Account.AccountId" class="btn btn-outline-secondary">View</a>
+                </td>
+                <td>
+                    <a asp-page="/Accounts/Deposit" asp-route-accountId="@Model.Account.AccountId" class="btn btn-success"><i class="bi bi-plus"></i></a>
+                    <a asp-page="/Accounts/Withdraw" asp-route-accountId="@Model.Account.AccountId" class="btn btn-warning"><i class="bi bi-arrow-left-right"></i></a>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
