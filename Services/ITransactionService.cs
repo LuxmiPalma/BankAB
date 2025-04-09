@@ -13,6 +13,8 @@ namespace Services
         List<Transaction> GetAllTransactions(string? sortColumn = null, string? sortOrder = null);
         List<Transaction> SearchByTransactionId(int transactionId);
         Transaction? GetTransactionById(int id);
+        List<Transaction> GetTransactionsByCustomerId(int customerId, string? sortColumn = null, string? sortOrder = null);
+
 
     }
 }

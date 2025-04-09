@@ -28,7 +28,7 @@ namespace Services
                 AccountId = t.AccountId,
                 Date = t.Date,
                 Amount = t.Amount,
-                AccountNavigation = t.AccountNavigation
+                 AccountNavigation = t.AccountNavigation
 
                     //CustomerId = t.AccountNavigation.CustomerId
                 });
@@ -59,6 +59,23 @@ namespace Services
         public Transaction? GetTransactionById(int id)
         {
             return _context.Transactions.FirstOrDefault(t => t.TransactionId == id);
+        }
+        public List<Transaction> GetTransactionsByCustomerId(int customerId, string? sortColumn = null, string? sortOrder = null)
+        {
+            var query = _context.Transactions
+                .AsNoTracking()
+                .Include(t => t.AccountNavigation)
+                    .ThenInclude(a => a.Dispositions)
+                .Where(t => t.AccountNavigation.Dispositions.Any(d => d.CustomerId == customerId));
+
+            if (sortColumn == "Date")
+                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Date) : query.OrderBy(t => t.Date);
+            else if (sortColumn == "Amount")
+                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Amount) : query.OrderBy(t => t.Amount);
+            else
+                query = sortOrder == "desc" ? query.OrderByDescending(t => t.TransactionId) : query.OrderBy(t => t.TransactionId);
+
+            return query.ToList();
         }
 
     }

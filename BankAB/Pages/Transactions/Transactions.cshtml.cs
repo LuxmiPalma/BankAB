@@ -24,24 +24,23 @@ namespace BankAB.Pages.Transactions
 
         public void OnGet(int? customerId, string sortColumn = "TransactionId", string sortOrder = "asc", int pageNo = 1)
         {
+            List<Transaction> transactionList;
 
-            var query = _transactionService
-            .GetAllTransactions(sortColumn, sortOrder)
-            .Where(t => !customerId.HasValue || t.AccountNavigation.Dispositions.Any(d => d.CustomerId == customerId))
-            .Select(t => new TransactionViewModel
-            {
-               TransactionId = t.TransactionId,
-               AccountId = t.AccountId,
-               Date = t.Date,
-               Amount = t.Amount
-            })
-            .AsQueryable();
+            if (customerId.HasValue)
+                transactionList = _transactionService.GetTransactionsByCustomerId(customerId.Value, sortColumn, sortOrder);
+            else
+                transactionList = _transactionService.GetAllTransactions(sortColumn, sortOrder);
 
-
-
+            var query = transactionList
+                .Select(t => new TransactionViewModel
+                {
+                    TransactionId = t.TransactionId,
+                    AccountId = t.AccountId,
+                    Date = t.Date,
+                    Amount = t.Amount
+                }).AsQueryable();
 
             Result = query.GetPaged(pageNo, 20);
         }
-
     }
 }
