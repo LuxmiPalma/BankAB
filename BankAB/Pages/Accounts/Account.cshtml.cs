@@ -20,13 +20,7 @@ namespace BankAB.Pages.Accounts
 
         public void OnGet(int id)
         {
-            var account = _accountService.GetAccountWithCustomers(id);
-
-            if (account != null)
-            {
-                Id = account.AccountId;
-                Balance = account.Balance;
-            }
+            Account = _accountService.GetAccountWithCustomers(id);
         }
 
     }
