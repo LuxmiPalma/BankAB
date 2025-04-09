@@ -24,7 +24,6 @@ namespace BankAB.Pages.Transactions
 
         public void OnGet(string sortColumn = "TransactionId", string sortOrder = "asc", int pageNo = 1)
         {
-            var maxRows = 2000;
 
             var query = _transactionService
             .GetAllTransactions(sortColumn, sortOrder)
@@ -38,8 +37,7 @@ namespace BankAB.Pages.Transactions
         .AsQueryable();
 
 
-            var limitedQuery = query.Take(maxRows);
-            Result = limitedQuery.GetPaged(pageNo, 20);
+            Result = query.GetPaged(pageNo, 20);
         }
 
     }

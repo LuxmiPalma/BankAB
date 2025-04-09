@@ -52,5 +52,11 @@ namespace Services
                     Amount = t.Amount
                 }).ToList();
         }
+
+        public Transaction? GetTransactionById(int id)
+        {
+            return _context.Transactions.FirstOrDefault(t => t.TransactionId == id);
+        }
+
     }
 }

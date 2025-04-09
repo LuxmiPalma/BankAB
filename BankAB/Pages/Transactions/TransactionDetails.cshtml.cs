@@ -15,8 +15,25 @@ namespace BankAB.Pages.Transactions
         }
 
         public TransactionViewModel Transaction { get; set; }
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
+            var transaction = _transactionService.GetTransactionById(id);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
+            Transaction = new TransactionViewModel
+            {
+                TransactionId = transaction.TransactionId,
+                AccountId = transaction.AccountId,
+                Amount = transaction.Amount,
+                Date = transaction.Date,
+                Operation = transaction.Operation
+            };
+
+            return Page();
         }
+
     }
 }
