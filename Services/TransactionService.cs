@@ -21,13 +21,16 @@ namespace Services
         {
             var query = _context.Transactions
                 .Include(t => t.AccountNavigation)
+                .ThenInclude(a => a.Dispositions)
                 .Select(t => new Transaction
             {
                 TransactionId = t.TransactionId,
                 AccountId = t.AccountId,
                 Date = t.Date,
                 Amount = t.Amount,
-                  //CustomerId = t.AccountNavigation.CustomerId
+                AccountNavigation = t.AccountNavigation
+
+                    //CustomerId = t.AccountNavigation.CustomerId
                 });
 
             if (sortColumn == "TransactionId")

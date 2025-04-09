@@ -30,12 +30,22 @@
                     @foreach (var d in Model.Account.Dispositions)
                     {
                         <div>
-                            <a class="text-primary"><i class="bi bi-eye"></i> @d.Customer.Givenname @d.Customer.Surname (@d.Type)</a>
+                            <a class="text-primary">
+                                <i class="bi bi-eye"></i> @d.Customer.Givenname @d.Customer.Surname (@d.Type)
+                            </a>
                         </div>
+
                     }
                 </td>
                 <td>
-                    <a asp-page="/Transactions/Transactions" asp-route-accountId="@Model.Account.AccountId" class="btn btn-outline-secondary">View</a>
+                    @foreach (var d in Model.Account.Dispositions)
+                    {
+                        <div>
+                            <a asp-page="/Transactions/Transactions" asp-route-customerId="@d.Customer.CustomerId" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-eye"></i> View @d.Customer.Givenname's Transactions
+                            </a>
+                        </div>
+                    }
                 </td>
                 <td>
                     <a asp-page="/Accounts/Deposit" asp-route-accountId="@Model.Account.AccountId" class="btn btn-success"><i class="bi bi-plus"></i></a>
