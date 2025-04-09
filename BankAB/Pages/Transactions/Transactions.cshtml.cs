@@ -37,7 +37,13 @@ namespace BankAB.Pages.Transactions
                     TransactionId = t.TransactionId,
                     AccountId = t.AccountId,
                     Date = t.Date,
-                    Amount = t.Amount
+                    Amount = t.Amount,
+                    CustomerId = t.AccountNavigation?.Dispositions.FirstOrDefault() != null
+                     ? t.AccountNavigation.Dispositions.First().CustomerId
+                    : 0
+
+
+
                 }).AsQueryable();
 
             Result = query.GetPaged(pageNo, 20);

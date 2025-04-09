@@ -28,9 +28,8 @@ namespace Services
                 AccountId = t.AccountId,
                 Date = t.Date,
                 Amount = t.Amount,
-                 AccountNavigation = t.AccountNavigation
+                 AccountNavigation = t.AccountNavigation,
 
-                    //CustomerId = t.AccountNavigation.CustomerId
                 });
 
             if (sortColumn == "TransactionId")

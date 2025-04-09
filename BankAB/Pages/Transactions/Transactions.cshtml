@@ -86,7 +86,18 @@
                         </a>
                     </td>
                     <td>@txn.AccountId</td>
-                    <td>N/A</td>
+                    <td>
+                        @if (txn.CustomerId != 0)
+                        {
+                            <a asp-page="/Customers/Customer" asp-route-id="@txn.CustomerId" class="btn btn-sm btn-primary">
+                                @txn.CustomerId
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">N/A</span>
+                        }
+                    </td>
                     <td>@txn.Date.ToString("yyyy-MM-dd")</td>
                     <td>SEK: @txn.Amount.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
                 </tr>
