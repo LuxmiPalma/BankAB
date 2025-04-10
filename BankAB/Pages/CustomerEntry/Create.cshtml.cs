@@ -17,8 +17,32 @@ namespace BankAB.Pages.CustomerEntry
             _context = context;
         }
 
+        public class CustomerInputModel
+        {
+            [Required]
+            public string Givenname { get; set; } = string.Empty;
+
+            [Required]
+            public string Surname { get; set; } = string.Empty;
+
+            [Required]
+            public string Gender { get; set; } = string.Empty;
+
+            [Required(ErrorMessage = "Country is required.")]
+            public int? CountryId { get; set; }
+
+            [Required]
+            public string City { get; set; } = string.Empty;
+
+            [Required]
+            public string Streetaddress { get; set; } = string.Empty;
+
+            [Required]
+            public string Zipcode { get; set; } = string.Empty;
+        }
+
         [BindProperty]
-        public Customer Customer { get; set; } = new();
+        public CustomerInputModel Input { get; set; } = new();
 
         [BindProperty]
         [Range(1900, 2100)]
@@ -30,7 +54,6 @@ namespace BankAB.Pages.CustomerEntry
         [BindProperty]
         public int? BirthdayDay { get; set; }
 
-        public List<SelectListItem> GenderList { get; set; } = new();
         public List<SelectListItem> CountryList { get; set; } = new();
 
         public void OnGet()
@@ -40,16 +63,27 @@ namespace BankAB.Pages.CustomerEntry
 
         public IActionResult OnPost()
         {
-            LoadDropdowns(); 
+            LoadDropdowns();
 
             if (!ModelState.IsValid)
                 return Page();
+
+            var customer = new Customer
+            {
+                Givenname = Input.Givenname,
+                Surname = Input.Surname,
+                Gender = Input.Gender,
+                CountryId = Input.CountryId,
+                City = Input.City,
+                Streetaddress = Input.Streetaddress,
+                Zipcode = Input.Zipcode
+            };
 
             if (BirthdayYear.HasValue && BirthdayMonth.HasValue && BirthdayDay.HasValue)
             {
                 try
                 {
-                    Customer.Birthday = new DateOnly(BirthdayYear.Value, BirthdayMonth.Value, BirthdayDay.Value);
+                    customer.Birthday = new DateOnly(BirthdayYear.Value, BirthdayMonth.Value, BirthdayDay.Value);
                 }
                 catch
                 {
@@ -58,22 +92,15 @@ namespace BankAB.Pages.CustomerEntry
                 }
             }
 
-            _context.Customers.Add(Customer);
+            _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            return RedirectToPage("/Customers/Index"); // Or wherever you list your customers
+            TempData["SuccessMessage"] = "? Customer created successfully!";
+            return RedirectToPage("/Customers/Customers");
         }
 
         private void LoadDropdowns()
         {
-            GenderList = Enum.GetValues(typeof(Gender))
-                .Cast<Gender>()
-                .Select(g => new SelectListItem
-                {
-                    Value = ((int)g).ToString(),
-                    Text = g.ToString()
-                }).ToList();
-
             CountryList = _context.Countries
                 .Select(c => new SelectListItem
                 {
@@ -83,4 +110,3 @@ namespace BankAB.Pages.CustomerEntry
         }
     }
 }
-   

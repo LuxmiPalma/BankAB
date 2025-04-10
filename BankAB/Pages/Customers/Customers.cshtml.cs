@@ -26,7 +26,7 @@ namespace BankAB.Pages.Customers
         }
         public List<CustomerViewModel> Customers { get; set; }
 
-        public void OnGet(string sortColumn, string sortOrder)
+        public void OnGet(string sortColumn, string q,string sortOrder)
         {
             var query = _dbContext.Customers
                 .Include(c => c.Country)
@@ -37,7 +37,23 @@ namespace BankAB.Pages.Customers
                     City = c.City,
                     Country = c.Country != null ? c.Country.CountryName : "Unknown"
                 });
-            if (sortColumn == "Surname")
+
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                query = query.Where(c =>
+                    c.Id.ToString().Contains(q) ||
+                    (c.Name != null && c.Name.Contains(q)) ||
+                    (c.City != null && c.City.Contains(q)) ||
+                    (c.Country != null && c.Country.Contains(q)));
+            }
+
+            if (sortColumn == "Id")
+                if (sortOrder == "asc")
+                    query = query.OrderBy(s => s.Id);
+                else if (sortOrder == "desc")
+                    query = query.OrderByDescending(s => s.Id);
+
+            if (sortColumn == "Surname" || sortColumn == "Name")
                 if (sortOrder == "asc")
                     query = query.OrderBy(s => s.Name);
                 else if (sortOrder == "desc")
