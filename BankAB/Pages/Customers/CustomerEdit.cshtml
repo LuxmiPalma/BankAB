@@ -4,24 +4,143 @@
     ViewData["Title"] = "Edit Customer";
 }
 
-<h2>Edit Customer</h2>
+<div class="container mt-5 pt-4">
+    <div class="card shadow rounded-4 mx-auto" style="max-width: 850px;">
+        <div class="card-body px-4 py-3">
+            <h3 class="text-center mb-4">✏️ Edit Customer</h3>
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Customer.Givenname"></label>
-        <input asp-for="Customer.Givenname" class="form-control" />
+            @if (Model.ChangeMessages?.Any() == true)
+            {
+                <div class="alert alert-info">
+                    <strong>Changes:</strong>
+                    <ul>
+                        @foreach (var msg in Model.ChangeMessages)
+                        {
+                            <li>@msg</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <form method="post">
+                <input type="hidden" asp-for="Customer.CustomerId" />
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Givenname" class="form-label">First Name</label>
+                        <input asp-for="Customer.Givenname" class="form-control" />
+                        <span asp-validation-for="Customer.Givenname" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Surname" class="form-label">Last Name</label>
+                        <input asp-for="Customer.Surname" class="form-control" />
+                        <span asp-validation-for="Customer.Surname" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Emailaddress" class="form-label">Email</label>
+                        <input asp-for="Customer.Emailaddress" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.City" class="form-label">City</label>
+                        <input asp-for="Customer.City" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Streetaddress" class="form-label">Street Address</label>
+                        <input asp-for="Customer.Streetaddress" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Zipcode" class="form-label">Zipcode</label>
+                        <input asp-for="Customer.Zipcode" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Gender" class="form-label">Gender</label>
+                        <select asp-for="Customer.Gender" class="form-select">
+                            @foreach (var gender in Enum.GetValues(typeof(DataAccessLayer.Enum.Gender)).Cast<DataAccessLayer.Enum.Gender>())
+                            {
+                                <option value="@gender">@gender</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.CountryId" class="form-label">Country</label>
+                        <select asp-for="Customer.CountryId" class="form-select">
+                            <option value="">Select Country</option>
+                            @foreach (var country in Model.CountryList)
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Telephonecountrycode" class="form-label">Country Code</label>
+                        <input asp-for="Customer.Telephonecountrycode" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.Telephonenumber" class="form-label">Phone</label>
+                        <input asp-for="Customer.Telephonenumber" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Customer.NationalId" class="form-label">National ID</label>
+                        <input asp-for="Customer.NationalId" class="form-control" />
+                    </div>
+
+                    <!-- Birthday -->
+                    <div class="col-md-12">
+                        <label class="form-label">Date of Birth</label>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <select asp-for="BirthdayYear" class="form-select">
+                                    <option value="">Year</option>
+                                    @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
+                                    {
+                                        <option value="@year" selected="@(Model.BirthdayYear == year)">@year</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select asp-for="BirthdayMonth" class="form-select">
+                                    <option value="">Month</option>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <option value="@month" selected="@(Model.BirthdayMonth == month)">@month</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select asp-for="BirthdayDay" class="form-select">
+                                    <option value="">Day</option>
+                                    @for (int day = 1; day <= 31; day++)
+                                    {
+                                        <option value="@day" selected="@(Model.BirthdayDay == day)">@day</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 text-center">
+                        <button type="submit" class="btn btn-primary px-5 fw-semibold">
+                            💾 Save Changes
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Customer.Surname"></label>
-        <input asp-for="Customer.Surname" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Customer.Emailaddress"></label>
-        <input asp-for="Customer.Emailaddress" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Customer.City"></label>
-        <input asp-for="Customer.City" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

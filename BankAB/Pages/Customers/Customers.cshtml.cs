@@ -1,86 +1,63 @@
+using Azure;
+using DataAccessLayer.DTOs;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Services;
+using Services.Infrastructure.Paging;
 
 namespace BankAB.Pages.Customers
 {
     public class CustomersModel : PageModel
     {
-        private readonly BankAppDataContext _dbContext;
+        private readonly ICustomerService _customerService;
 
 
-        public CustomersModel(BankAppDataContext dbContext)
+        public CustomersModel(ICustomerService customerService)
         {
-            _dbContext = dbContext;
+            _customerService = customerService;
         }
 
-        public class CustomerViewModel
-        {
 
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Country { get; set; }
-            public string City { get; set; }
-        }
-        public List<CustomerViewModel> Customers { get; set; }
+        public string Q { get; set; }
+        public string SortColumn { get; set; }
+        public string SortOrder { get; set; }
+        public int PageNo { get; set; }
 
-        public void OnGet(string sortColumn, string q,string sortOrder)
+        public PagedResult<CustomerDTO> PagedCustomers { get; set; }
+
+        public void OnGet(string q = "", string sortColumn = "CustomerId", string sortOrder = "desc", int pageNo = 1)
         {
-            var query = _dbContext.Customers
-                .Include(c => c.Country)
-                .Select(c => new CustomerViewModel
-                {
-                    Id = c.CustomerId,
-                    Name = c.Surname,
-                    City = c.City,
-                    Country = c.Country != null ? c.Country.CountryName : "Unknown"
-                });
+            Q = q;
+            SortColumn = sortColumn;
+            SortOrder = sortOrder;
+            PageNo = pageNo;
+
+            var customers = _customerService.GetCustomers().AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(q))
             {
-                query = query.Where(c =>
-                    c.Id.ToString().Contains(q) ||
-                    (c.Name != null && c.Name.Contains(q)) ||
+                customers = customers.Where(c =>
+                    c.CustomerId.ToString().Contains(q) ||
+                    (c.Surname != null && c.Surname.Contains(q)) ||
+                    (c.Givenname != null && c.Givenname.Contains(q)) ||
                     (c.City != null && c.City.Contains(q)) ||
                     (c.Country != null && c.Country.Contains(q)));
             }
 
-            if (sortColumn == "Id")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(s => s.Id);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(s => s.Id);
+            customers = SortColumn switch
+            {
+                "CustomerId" => SortOrder == "desc" ? customers.OrderByDescending(c => c.CustomerId) : customers.OrderBy(c => c.CustomerId),
+                "Surname" => SortOrder == "desc" ? customers.OrderByDescending(c => c.Surname) : customers.OrderBy(c => c.Surname),
+                "City" => SortOrder == "desc" ? customers.OrderByDescending(c => c.City) : customers.OrderBy(c => c.City),
+                "Country" => SortOrder == "desc" ? customers.OrderByDescending(c => c.Country) : customers.OrderBy(c => c.Country),
+                _ => customers.OrderByDescending(c => c.CustomerId)
+            };
 
-            if (sortColumn == "Surname" || sortColumn == "Name")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(s => s.Name);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(s => s.Name);
-
-            if (sortColumn == "Country")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(s => s.Country);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(s => s.Country);
-
-            if (sortColumn == "City")
-                if (sortOrder == "asc")
-                    query = query.OrderBy(s => s.City);
-                else if (sortOrder == "desc")
-                    query = query.OrderByDescending(s => s.City);
-
-
-            Customers = query.ToList();
-
-
-
-
-
-
-
-
+            PagedCustomers = customers.GetPaged(PageNo, 10);
         }
     }
 }

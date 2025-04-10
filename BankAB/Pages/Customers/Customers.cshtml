@@ -27,8 +27,8 @@
                     <tr>
                         <th scope="col">
                             Id
-                            <a asp-page="/Customers/Customers" asp-route-sortColumn="Id" asp-route-sortOrder="asc" asp-route-q="@q"><i class="fa-solid fa-angle-up"></i></a>
-                            <a asp-page="/Customers/Customers" asp-route-sortColumn="Id" asp-route-sortOrder="desc" asp-route-q="@q"><i class="fa-solid fa-angle-down"></i></a>
+                            <a asp-page="/Customers/Customers" asp-route-sortColumn="CustomerId" asp-route-sortOrder="asc" asp-route-q="@q"><i class="fa-solid fa-angle-up"></i></a>
+                            <a asp-page="/Customers/Customers" asp-route-sortColumn="CustomerId" asp-route-sortOrder="desc" asp-route-q="@q"><i class="fa-solid fa-angle-down"></i></a>
                         </th>
                         <th scope="col">
                             Surname
@@ -49,20 +49,65 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var cus in Model.Customers)
+                    @foreach (var c in Model.PagedCustomers.Results)
                     {
                         <tr>
-                            <td>@cus.Id</td>
-                            <td>@cus.Name</td>
-                            <td>@cus.City</td>
-                            <td>@cus.Country</td>
+                            <td>@c.CustomerId</td>
+                            <td>@c.Givenname @c.Surname</td>
+                            <td>@c.City</td>
+                            <td>@c.Country</td>
                             <td>
-                                <a asp-page="/Customers/Customer" asp-route-id="@cus.Id" class="btn btn-sm btn-primary">View</a>
+                                <a asp-page="/Customers/Customer" asp-route-id="@c.CustomerId" class="btn btn-sm btn-primary">View</a>
                             </td>
                         </tr>
                     }
+                    
+
+                    
                 </tbody>
             </table>
+            <nav aria-label="Customer pagination">
+                <ul class="pagination justify-content-center mt-4">
+                    @if (Model.PagedCustomers.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"
+                               asp-route-pageNo="@(Model.PagedCustomers.CurrentPage - 1)"
+                               asp-route-sortColumn="@Model.SortColumn"
+                               asp-route-sortOrder="@Model.SortOrder"
+                               asp-route-q="@Model.Q">«</a>
+                        </li>
+                    }
+
+                    @{
+                        int start = Math.Max(1, Model.PagedCustomers.CurrentPage - 2);
+                        int end = Math.Min(Model.PagedCustomers.PageCount, Model.PagedCustomers.CurrentPage + 2);
+                    }
+
+                    @for (int i = start; i <= end; i++)
+                    {
+                        <li class="page-item @(i == Model.PagedCustomers.CurrentPage ? "active" : "")">
+                            <a class="page-link"
+                               asp-route-pageNo="@i"
+                               asp-route-sortColumn="@Model.SortColumn"
+                               asp-route-sortOrder="@Model.SortOrder"
+                               asp-route-q="@Model.Q">@i</a>
+                        </li>
+                    }
+
+                    @if (Model.PagedCustomers.CurrentPage < Model.PagedCustomers.PageCount)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"
+                               asp-route-pageNo="@(Model.PagedCustomers.CurrentPage + 1)"
+                               asp-route-sortColumn="@Model.SortColumn"
+                               asp-route-sortOrder="@Model.SortOrder"
+                               asp-route-q="@Model.Q">»</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+
 
         </div>
     </div>

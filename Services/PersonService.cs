@@ -50,7 +50,9 @@ namespace Services
             int countryId,  string emailaddress, string telephoneCountryCode, string telephoneNumber,
             string? nationalId, int birthdayYear, int birthdayMonth, int birthdayDay)
         {
-            var customerFromDb = await _context.Customers.FirstAsync(m => m.CustomerId == id);
+            var customerFromDb = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
+            if (customerFromDb == null)
+                throw new InvalidOperationException($"Customer with ID {id} not found.");
 
             var oldValues = new
             {
@@ -125,6 +127,11 @@ namespace Services
 
              
         }
+        public async Task<List<Country>> GetCountriesAsync()
+        {
+            return await _context.Countries.ToListAsync();
+        }
+
     }
 }
    

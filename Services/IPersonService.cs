@@ -21,5 +21,7 @@ namespace Services
 
         Task<CustomerDTO?> GetCustomerDtoByIdAsync(int id);
         Task DeleteCustomerAsync(int id);
+        Task<List<Country>> GetCountriesAsync();
+
     }
 }
