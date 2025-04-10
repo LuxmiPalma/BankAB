@@ -153,3 +153,57 @@ header.header {
     }
 
 
+.btn-primary.hover-gray:hover {
+    background-color: #6c757d !important; /* Bootstrap gray */
+    border-color: #6c757d !important;
+    color: white !important;
+}
+
+
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #83a4d4 0%, #b6fbff 51%, #83a4d4 100%)
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #36D1DC 0%, #5B86E5 51%, #36D1DC 100%)
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #2C3E50 0%, #4CA1AF 51%, #2C3E50 100%)
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #757F9A 0%, #D7DDE8 51%, #757F9A 100%)
+}
+
+
+.btn-grad {
+    background-image: linear-gradient(to right, #24C6DC 0%, #514A9D 51%, #24C6DC 100%)
+}
+
+.btn-grad {
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+    .btn-grad:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+    }
+         
+         
+                  
