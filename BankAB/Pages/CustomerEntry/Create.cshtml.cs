@@ -39,6 +39,13 @@ namespace BankAB.Pages.CustomerEntry
 
             [Required]
             public string Zipcode { get; set; } = string.Empty;
+            public string? NationalId { get; set; }
+            public string? Emailaddress { get; set; }
+            public string? Telephonenumber { get; set; }
+            public string? Telephonecountrycode { get; set; }
+
+
+
         }
 
         [BindProperty]
@@ -55,6 +62,7 @@ namespace BankAB.Pages.CustomerEntry
         public int? BirthdayDay { get; set; }
 
         public List<SelectListItem> CountryList { get; set; } = new();
+        public bool Created { get; set; } = false;
 
         public void OnGet()
         {
@@ -76,7 +84,12 @@ namespace BankAB.Pages.CustomerEntry
                 CountryId = Input.CountryId,
                 City = Input.City,
                 Streetaddress = Input.Streetaddress,
-                Zipcode = Input.Zipcode
+                Zipcode = Input.Zipcode,
+                NationalId = Input.NationalId,
+                Emailaddress = Input.Emailaddress,
+                Telephonecountrycode = Input.Telephonecountrycode,
+                Telephonenumber = Input.Telephonenumber,
+
             };
 
             if (BirthdayYear.HasValue && BirthdayMonth.HasValue && BirthdayDay.HasValue)
@@ -95,8 +108,11 @@ namespace BankAB.Pages.CustomerEntry
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
-            TempData["SuccessMessage"] = "? Customer created successfully!";
-            return RedirectToPage("/Customers/Customers");
+            Created = true;
+            ModelState.Clear(); 
+            Input = new(); 
+            
+            return Page();
         }
 
         private void LoadDropdowns()

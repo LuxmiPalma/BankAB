@@ -6,121 +6,142 @@
     ViewData["Title"] = "Create New Customer";
 }
 
-<div class="container my-5">
-    <div class="card shadow-lg rounded-4">
-        <div class="card-body p-4">
+<div class="container mt-5 pt-4">
+    <div class="card shadow rounded-4 mx-auto" style="max-width: 850px;">
+        <div class="card-body px-4 py-3">
 
-            <h2 class="text-center mb-4">📝 Create New Customer</h2>
+            <h3 class="text-center mb-4">📝 Create New Customer</h3>
 
-            <form method="post">
-                <!-- Given Name -->
-                <div class="mb-3">
-                    <label asp-for="Input.Givenname" class="form-label"></label>
-                    <input asp-for="Input.Givenname" class="form-control" />
-                    <span asp-validation-for="Input.Givenname" class="text-danger"></span>
-                </div>
-
-                <!-- Surname -->
-                <div class="mb-3">
-                    <label asp-for="Input.Surname" class="form-label"></label>
-                    <input asp-for="Input.Surname" class="form-control" />
-                    <span asp-validation-for="Input.Surname" class="text-danger"></span>
-                </div>
-
-                <!-- Gender Dropdown -->
-                <div class="mb-3">
-                    <label asp-for="Input.Gender" class="form-label"></label>
-                    <select asp-for="Input.Gender" class="form-select">
-                        @foreach (var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>())
-                        {
-                            <option value="@gender">@gender</option>
-                        }
-                    </select>
-                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
-                </div>
-
-                <!-- Country Dropdown -->
-                <div class="mb-3">
-                    <label asp-for="Input.CountryId" class="form-label"></label>
-                    <select asp-for="Input.CountryId" class="form-select">
-                        <option value="">Select Country</option>
-                        @foreach (var country in Model.CountryList)
-                        {
-                            <option value="@country.Value">@country.Text</option>
-                        }
-                    </select>
-                    <span asp-validation-for="Input.CountryId" class="text-danger"></span>
-                </div>
-
-                <!-- Street Address -->
-                <div class="mb-3">
-                    <label asp-for="Input.Streetaddress" class="form-label"></label>
-                    <input asp-for="Input.Streetaddress" class="form-control" />
-                    <span asp-validation-for="Input.Streetaddress" class="text-danger"></span>
-                </div>
-
-                <!-- City -->
-                <div class="mb-3">
-                    <label asp-for="Input.City" class="form-label"></label>
-                    <input asp-for="Input.City" class="form-control" />
-                    <span asp-validation-for="Input.City" class="text-danger"></span>
-                </div>
-
-                <!-- Zipcode -->
-                <div class="mb-3">
-                    <label asp-for="Input.Zipcode" class="form-label"></label>
-                    <input asp-for="Input.Zipcode" class="form-control" />
-                    <span asp-validation-for="Input.Zipcode" class="text-danger"></span>
-                </div>
-
-                <!-- Birthday -->
-                <div class="mb-3">
-                    <label class="form-label">Date of Birth</label>
-                    <div class="row g-2">
-                        <div class="col-md-4">
-                            <select asp-for="BirthdayYear" class="form-select">
-                                <option value="">Year</option>
-                                @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
-                                {
-                                    <option value="@year">@year</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <select asp-for="BirthdayMonth" class="form-select">
-                                <option value="">Month</option>
-                                @for (int month = 1; month <= 12; month++)
-                                {
-                                    <option value="@month">@month</option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <select asp-for="BirthdayDay" class="form-select">
-                                <option value="">Day</option>
-                                @for (int day = 1; day <= 31; day++)
-                                {
-                                    <option value="@day">@day</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Submit -->
-                <div class="mt-4 d-flex justify-content-between">
-                    <a asp-page="/Customers/Customers" class="btn btn-outline-secondary">⬅️ Back</a>
-                    <button type="submit" class="btn btn-primary px-4">Create</button>
-                </div>
-            </form>
-
-            @if (TempData["SuccessMessage"] != null)
+            @if (Model.Created)
             {
-                <div class="alert alert-success mt-4">
-                    @TempData["SuccessMessage"]
+                <div class="alert alert-success text-center">
+                    ✅ Customer created successfully!
                 </div>
+
+                <div class="text-center mb-4">
+                    <a asp-page="/Customers/Customers" class="btn btn-outline-custom px-4 fw-semibold">
+                        🔁 Return to Customer List
+                    </a>
+                </div>
+
             }
 
+            <form method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="Input.Givenname" class="form-label">First Name</label>
+                        <input asp-for="Input.Givenname" class="form-control" />
+                        <span asp-validation-for="Input.Givenname" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.Surname" class="form-label">Last Name</label>
+                        <input asp-for="Input.Surname" class="form-control" />
+                        <span asp-validation-for="Input.Surname" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.Gender" class="form-label">Gender</label>
+                        <select asp-for="Input.Gender" class="form-select">
+                            @foreach (var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>())
+                            {
+                                <option value="@gender">@gender</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.CountryId" class="form-label">Country</label>
+                        <select asp-for="Input.CountryId" class="form-select">
+                            <option value="">Select Country</option>
+                            @foreach (var country in Model.CountryList)
+                            {
+                                <option value="@country.Value">@country.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Input.CountryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.Streetaddress" class="form-label">Street Address</label>
+                        <input asp-for="Input.Streetaddress" class="form-control" />
+                        <span asp-validation-for="Input.Streetaddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.City" class="form-label">City</label>
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.Zipcode" class="form-label">Zipcode</label>
+                        <input asp-for="Input.Zipcode" class="form-control" />
+                        <span asp-validation-for="Input.Zipcode" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.NationalId" class="form-label">National ID</label>
+                        <input asp-for="Input.NationalId" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Input.Emailaddress" class="form-label">Email</label>
+                        <input asp-for="Input.Emailaddress" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Input.Telephonecountrycode" class="form-label">Country Code</label>
+                        <input asp-for="Input.Telephonecountrycode" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Input.Telephonenumber" class="form-label">Phone</label>
+                        <input asp-for="Input.Telephonenumber" class="form-control" />
+                    </div>
+
+                    <!-- Birthday -->
+                    <div class="col-md-12">
+                        <label class="form-label">Date of Birth</label>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <select asp-for="BirthdayYear" class="form-select">
+                                    <option value="">Year</option>
+                                    @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
+                                    {
+                                        <option value="@year">@year</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select asp-for="BirthdayMonth" class="form-select">
+                                    <option value="">Month</option>
+                                    @for (int month = 1; month <= 12; month++)
+                                    {
+                                        <option value="@month">@month</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select asp-for="BirthdayDay" class="form-select">
+                                    <option value="">Day</option>
+                                    @for (int day = 1; day <= 31; day++)
+                                    {
+                                        <option value="@day">@day</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-4 text-center">
+                        <button type="submit" class="btn btn-primary px-5 fw-semibold">
+                            <i class="fa fa-user-plus me-2"></i> Create
+                        </button>
+                    </div>
+
+                </div>
+            </form>
         </div>
     </div>
 </div>
