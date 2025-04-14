@@ -1,0 +1,47 @@
+﻿@page "/Accounts/CreateAccount"
+@model BankAB.Pages.Accounts.CreateAccountModel
+@{
+    ViewData["Title"] = "Create New Account";
+}
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Create New Account</h2>
+        <h5>For Customer ID @Model.CustomerId</h5>
+        <a asp-page="/Customers/Customer" asp-route-id="@Model.CustomerId" class="btn btn-secondary mt-2">
+            ← Return to Customer
+        </a>
+    </div>
+
+    <div class="card p-4 shadow-lg rounded-4 mx-auto" style="max-width: 600px;">
+        <form method="post">
+            <input type="hidden" asp-for="CustomerId" />
+            <div class="mb-3">
+                <label asp-for="Frequency" class="form-label">Frequency</label>
+                <select asp-for="Frequency" class="form-select">
+                    <option value="">Select frequency...</option>
+                    <option>Daily</option>
+                    <option>Weekly</option>
+                    <option>Monthly</option>
+                </select>
+                <span asp-validation-for="Frequency" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Balance" class="form-label">Initial Deposit (Balance)</label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Create
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
