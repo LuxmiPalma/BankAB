@@ -30,5 +30,33 @@ namespace BankAB.Pages.Accounts
             return Page();
 
         }
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+                return Page();
+
+            var account = new Account
+            {
+                Balance = Balance,
+                Created = DateTime.Now,
+                Frequency = Frequency
+            };
+
+            _db.Accounts.Add(account);
+            _db.SaveChanges();
+
+            var disposition = new Disposition
+            {
+                AccountId = account.AccountId,
+                CustomerId = CustomerId,
+                Type = "OWNER"
+            };
+
+            _db.Dispositions.Add(disposition);
+            _db.SaveChanges();
+
+            return RedirectToPage("/Customers/Customer", new { id = CustomerId });
+        }
+
     }
 }
