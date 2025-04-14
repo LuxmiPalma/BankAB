@@ -31,7 +31,7 @@ namespace BankAB.Pages.Customers
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             await _personService.DeleteCustomerAsync(id);
-            return RedirectToPage("/Customers");
+            return RedirectToPage("/Customers/Customers");
         }
     }
 }

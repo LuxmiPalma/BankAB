@@ -43,16 +43,36 @@
                 <a asp-page="CustomerEdit" asp-route-id="@Model.SelectedCustomer.CustomerId" class="btn btn-success">
                     <i class="bi bi-pencil-square"></i> Edit Customer
                 </a>
+                <!-- Delete Trigger Button -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                    <i class="bi bi-trash"></i> Delete Customer
+                </button>
 
-                <form method="post" asp-page-handler="Delete" asp-route-id="@Model.SelectedCustomer.CustomerId">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="bi bi-trash"></i> Delete Customer
-                    </button>
-                </form>
 
                 <a asp-page="/Accounts/New" asp-route-customerId="@Model.SelectedCustomer.CustomerId" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Create New Account
                 </a>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to permanently delete <strong>@Model.SelectedCustomer.Givenname @Model.SelectedCustomer.Surname</strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@Model.SelectedCustomer.CustomerId">
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
