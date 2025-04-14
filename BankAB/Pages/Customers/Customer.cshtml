@@ -7,58 +7,78 @@
 @if (Model.SelectedCustomer != null)
 {
     <div class="container my-5">
-        <div class="card shadow p-4">
-            <div class="d-flex align-items-center mb-3">
-                <i class="bi bi-person-fill fs-3 me-2"></i>
-                <h3 class="mb-0">@Model.SelectedCustomer.Givenname @Model.SelectedCustomer.Surname</h3>
+        <div class="card shadow-lg rounded-4 p-4 mx-auto" style="max-width: 850px;">
+
+            <!-- Header with Name & Return -->
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-person-circle fs-2 text-primary me-2"></i>
+                    <h3 class="mb-0">@Model.SelectedCustomer.Givenname @Model.SelectedCustomer.Surname</h3>
+                </div>
+                <a asp-page="/Customers/Customers" class="btn btn-outline-primary fw-semibold">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Return to Customer List
+                </a>
             </div>
 
-            <p><strong>Total Balance, SEK:</strong> <span class="text-success fw-bold">@Model.SelectedCustomer.TotalBalance?.ToString("N2") </span></p>
+            <!-- Balance & Address -->
+            <div class="text-center mb-4">
+                <h5 class="fw-bold text-secondary">💰 Total Balance (SEK)</h5>
+                <h2 class="text-success fw-bold">@Model.SelectedCustomer.TotalBalance?.ToString("N2")</h2>
 
-            <p>
-                <a href="https://www.google.com/maps/search/@Model.SelectedCustomer.Streetaddress @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country" 
-                   target="_blank" class="text-decoration-none text-primary">
-                    <i class="bi bi-geo-alt-fill"></i> @Model.SelectedCustomer.Streetaddress, @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country
-                </a>
-            </p>
+                @if (!string.IsNullOrEmpty(Model.SelectedCustomer.Streetaddress))
+                {
+                    <a href="https://www.google.com/maps/search/@Model.SelectedCustomer.Streetaddress @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country"
+                       target="_blank" class="text-decoration-none text-info d-inline-block mt-2">
+                        <i class="bi bi-geo-alt-fill me-1"></i>
+                        @Model.SelectedCustomer.Streetaddress, @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country
+                    </a>
+                }
+            </div>
 
-            <div class="row">
-                <div class="col-md-6">
+            <!-- Info Grid -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-10">
+                    <div class="row g-4">
+                        <div class="col-md-6">
                     <p><strong>Gender:</strong> @Model.SelectedCustomer.Gender</p>
                     <p><strong>City:</strong> @Model.SelectedCustomer.City</p>
                     <p><strong>Zip Code:</strong> @Model.SelectedCustomer.Zipcode</p>
                     <p><strong>Country:</strong> @Model.SelectedCustomer.Country</p>
-                    <p><strong>National ID:</strong> @Model.SelectedCustomer.NationalId "N/A"</p>
+                    <p><strong>National ID:</strong> @(string.IsNullOrEmpty(Model.SelectedCustomer.NationalId) ? "N/A" : Model.SelectedCustomer.NationalId)</p>
                 </div>
                 <div class="col-md-6">
                     <p><strong>Country Code:</strong> @Model.SelectedCustomer.CountryCode</p>
-                    <p><strong>Birthday:</strong> @Model.SelectedCustomer.Birthday?.ToString("d")</p>
+                    <p><strong>Birthday:</strong> @Model.SelectedCustomer.Birthday?.ToString("yyyy-MM-dd")</p>
                     <p><strong>Telephone Country Code:</strong> @Model.SelectedCustomer.Telephonecountrycode</p>
                     <p><strong>Telephone Number:</strong> @Model.SelectedCustomer.Telephonenumber</p>
                     <p><strong>Email:</strong> @Model.SelectedCustomer.Emailaddress</p>
                 </div>
             </div>
+          </div>
+        </div>
+                    
 
-            <div class="mt-4 d-flex gap-2">
-                <a asp-page="CustomerEdit" asp-route-id="@Model.SelectedCustomer.CustomerId" class="btn btn-success">
-                    <i class="bi bi-pencil-square"></i> Edit Customer
+            <!-- Action Buttons -->
+            <div class="text-center mt-4 d-flex flex-wrap gap-3 justify-content-center">
+                <a asp-page="CustomerEdit" asp-route-id="@Model.SelectedCustomer.CustomerId" class="btn btn-success px-4">
+                    <i class="bi bi-pencil-fill me-1"></i> Edit
                 </a>
-                <!-- Delete Trigger Button -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                    <i class="bi bi-trash"></i> Delete Customer
+
+                <button type="button" class="btn btn-danger px-4" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                    <i class="bi bi-trash3 me-1"></i> Delete
                 </button>
 
-
-                <a asp-page="/Accounts/CreateAccount" asp-route-customerId="@Model.SelectedCustomer.CustomerId" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Create New Account
+                <a asp-page="/Accounts/CreateAccount" asp-route-customerId="@Model.SelectedCustomer.CustomerId" class="btn btn-info text-white px-4">
+                    <i class="bi bi-plus-circle me-1"></i> Create New Account
                 </a>
             </div>
         </div>
     </div>
-    <!-- Delete Confirmation Modal -->
+
+    <!-- Confirm Delete Modal -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg">
+            <div class="modal-content shadow">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -68,7 +88,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-
                     <form method="post" asp-page-handler="Delete" asp-route-id="@Model.SelectedCustomer.CustomerId">
                         <button type="submit" class="btn btn-danger">Yes, Delete</button>
                     </form>
@@ -79,5 +98,5 @@
 }
 else
 {
-    <div class="alert alert-warning mt-4">Customer not found.</div>
+    <div class="alert alert-warning text-center mt-5">⚠️ Customer not found.</div>
 }
