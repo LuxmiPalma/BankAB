@@ -7,11 +7,11 @@ namespace BankAB.Pages.Accounts
 {
     public class CreateAccountModel : PageModel
     {
-        private readonly BankAppDataContext _db;
+        private readonly BankAppDataContext _context;
 
-        public CreateAccountModel(BankAppDataContext db)
+        public CreateAccountModel(BankAppDataContext context)
         {
-            _db = db;
+            _context = context;
         }
 
         [BindProperty(SupportsGet = true)]
@@ -25,7 +25,7 @@ namespace BankAB.Pages.Accounts
         [Range(50, 50000, ErrorMessage = "Initial deposit must be between 50 and 50.000 SEK.")]
         public decimal Balance { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             return Page();
 
@@ -38,12 +38,12 @@ namespace BankAB.Pages.Accounts
             var account = new Account
             {
                 Balance = Balance,
-                Created = DateTime.Now,
+                Created = DateOnly.FromDateTime(DateTime.Now),
                 Frequency = Frequency
             };
 
-            _db.Accounts.Add(account);
-            _db.SaveChanges();
+            _context.Accounts.Add(account);
+            _context.SaveChanges();
 
             var disposition = new Disposition
             {
@@ -52,8 +52,8 @@ namespace BankAB.Pages.Accounts
                 Type = "OWNER"
             };
 
-            _db.Dispositions.Add(disposition);
-            _db.SaveChanges();
+            _context.Dispositions.Add(disposition);
+            _context.SaveChanges();
 
             return RedirectToPage("/Customers/Customer", new { id = CustomerId });
         }
