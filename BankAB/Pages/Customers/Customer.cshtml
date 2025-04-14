@@ -13,7 +13,7 @@
                 <h3 class="mb-0">@Model.SelectedCustomer.Givenname @Model.SelectedCustomer.Surname</h3>
             </div>
 
-            <p><strong>Total Balance, SEK:</strong> <span class="text-success fw-bold">@Model.SelectedCustomer.TotalBalance?.ToString("N2") ?? "0.00"</span></p>
+            <p><strong>Total Balance, SEK:</strong> <span class="text-success fw-bold">@Model.SelectedCustomer.TotalBalance?.ToString("N2") </span></p>
 
             <p>
                 <a href="https://www.google.com/maps/search/@Model.SelectedCustomer.Streetaddress @Model.SelectedCustomer.City, @Model.SelectedCustomer.Country" 
@@ -28,7 +28,7 @@
                     <p><strong>City:</strong> @Model.SelectedCustomer.City</p>
                     <p><strong>Zip Code:</strong> @Model.SelectedCustomer.Zipcode</p>
                     <p><strong>Country:</strong> @Model.SelectedCustomer.Country</p>
-                    <p><strong>National ID:</strong> @Model.SelectedCustomer.NationalId ?? "N/A"</p>
+                    <p><strong>National ID:</strong> @Model.SelectedCustomer.NationalId "N/A"</p>
                 </div>
                 <div class="col-md-6">
                     <p><strong>Country Code:</strong> @Model.SelectedCustomer.CountryCode</p>
@@ -49,7 +49,7 @@
                 </button>
 
 
-                <a asp-page="/Accounts/New" asp-route-customerId="@Model.SelectedCustomer.CustomerId" class="btn btn-primary">
+                <a asp-page="/Accounts/CreateAccount" asp-route-customerId="@Model.SelectedCustomer.CustomerId" class="btn btn-primary">
                     <i class="bi bi-plus-circle"></i> Create New Account
                 </a>
             </div>

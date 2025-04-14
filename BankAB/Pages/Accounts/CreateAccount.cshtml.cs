@@ -24,6 +24,8 @@ namespace BankAB.Pages.Accounts
         [BindProperty]
         [Range(50, 50000, ErrorMessage = "Initial deposit must be between 50 and 50.000 SEK.")]
         public decimal Balance { get; set; }
+        public bool Created { get; set; } = false;
+
 
         public IActionResult OnGet()
         {
@@ -55,7 +57,13 @@ namespace BankAB.Pages.Accounts
             _context.Dispositions.Add(disposition);
             _context.SaveChanges();
 
-            return RedirectToPage("/Customers/Customer", new { id = CustomerId });
+            Created = true;
+            ModelState.Clear(); // clear the form
+            Frequency = string.Empty;
+            Balance = 0;
+
+            return Page();
+
         }
 
     }
