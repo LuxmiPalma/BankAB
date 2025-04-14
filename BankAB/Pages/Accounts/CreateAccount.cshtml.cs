@@ -27,6 +27,8 @@ namespace BankAB.Pages.Accounts
 
         public void OnGet()
         {
+            return Page();
+
         }
     }
 }
