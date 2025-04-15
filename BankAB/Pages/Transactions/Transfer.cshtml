@@ -4,3 +4,15 @@
     ViewData["Title"] = "Transfer";
 
 }
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 p-4 mx-auto" style="max-width: 650px;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0"><i class="bi bi-arrow-left-right text-info me-2"></i> Transfer Funds</h3>
+            <a asp-page="/Accounts/Account" asp-route-id="@RouteData.Values["accountId"]" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left-circle"></i> Return
+            </a>
+        </div>
+
+        <p class="text-muted text-center">🚧 Transfer logic not yet implemented</p>
+    </div>
+</div>
