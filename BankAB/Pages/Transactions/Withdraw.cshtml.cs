@@ -20,28 +20,45 @@ namespace BankAB.Pages.Transactions
         public decimal Amount { get; set; }
 
         public decimal CurrentBalance { get; set; }
+        public Account? Account { get; set; }
+
         public void OnGet(int accountId)
         {
-            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
-            CurrentBalance = account?.Balance ?? 0;
+            Account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+            CurrentBalance = Account?.Balance ?? 0;
         }
+
         public IActionResult OnPost(int accountId)
         {
-            var account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
-            if (account == null) return NotFound();
+            Account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId); // ? assign to property
 
-            if (account.Balance < Amount)
+            if (Account == null) return NotFound();
+
+            if (Account.Balance < Amount)
             {
                 ModelState.AddModelError("Amount", "You don't have that much money!");
-                CurrentBalance = account.Balance;
+                CurrentBalance = Account.Balance;
                 return Page();
             }
 
-            account.Balance -= Amount;
+            Account.Balance -= Amount;
+
+            var transaction = new Transaction
+            {
+                AccountId = accountId,
+                Date = DateOnly.FromDateTime(DateTime.Today),
+                Amount = -Amount,
+                Operation = "Withdrawal",
+                Type = "Withdrawal",
+                Balance = Account.Balance
+            };
+
+            _context.Transactions.Add(transaction);
             _context.SaveChanges();
 
-            return RedirectToPage("/Accounts");
+            return RedirectToPage("/Accounts/Account", new { id = accountId });
         }
     }
 }
-  
+
+

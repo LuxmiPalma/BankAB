@@ -55,7 +55,8 @@
                 </td>
                 <td>
                     <a asp-page="/Transactions/Deposit" asp-route-accountId="@Model.Account.AccountId" class="btn btn-success"><i class="bi bi-plus"></i></a>
-                    <a asp-page="/Transactions/Withdraw" asp-route-accountId="@Model.Account.AccountId" class="btn btn-warning"><i class="bi bi-arrow-left-right"></i></a>
+                    <a asp-page="/Transactions/Withdraw" asp-route-accountId="@Model.Account.AccountId" class="btn btn-warning"><i class="bi bi-dash-circle"></i></a>
+                    <a asp-page="/Transactions/Transfer" asp-route-accountId="@Model.Account.AccountId" class="btn btn-warning"><i class="bi bi-arrow-left-right"></i></a>
                     <button class="btn btn-danger">Delete</button>
                 </td>
             </tr>
