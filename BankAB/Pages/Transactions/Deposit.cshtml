@@ -1,0 +1,46 @@
+﻿@page "{accountId:int}"
+@model BankAB.Pages.Accounts.DepositModel
+
+@{
+    ViewData["Title"] = "Deposit";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 p-4 mx-auto" style="max-width: 650px;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0"><i class="bi bi-piggy-bank-fill me-2 text-success"></i> Deposit Funds</h3>
+            <a asp-page="/Accounts/Account" asp-route-id="@RouteData.Values["accountId"]" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left-circle"></i> Return
+            </a>
+        </div>
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Amount" class="form-label fw-semibold">Amount</label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Comment" class="form-label fw-semibold">Comment</label>
+                <textarea asp-for="Comment" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DepositDate" class="form-label fw-semibold">Date</label>
+                <input asp-for="DepositDate" class="form-control" type="date" />
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success px-4" title="Click to deposit the amount">
+                    <i class="bi bi-cash-stack me-1"></i> Deposit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

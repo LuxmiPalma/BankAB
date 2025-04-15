@@ -62,7 +62,7 @@ namespace BankAB.Pages.Accounts
             Frequency = string.Empty;
             Balance = 0;
 
-            return Page();
+            return RedirectToPage("/Customers/Customer", new { id = CustomerId });
 
         }
 

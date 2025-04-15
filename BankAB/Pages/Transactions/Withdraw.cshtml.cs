@@ -4,7 +4,7 @@ using DataAccessLayer.Models;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace BankAB.Pages.Accounts
+namespace BankAB.Pages.Transactions
 {
     public class WithdrawModel : PageModel
     {

@@ -1,0 +1,42 @@
+﻿@page "{accountId:int}"
+@model BankAB.Pages.Transactions.WithdrawModel
+
+@{
+    ViewData["Title"] = "Withdraw";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 p-4 mx-auto" style="max-width: 650px;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0"><i class="bi bi-wallet2 text-warning me-2"></i> Withdraw Funds</h3>
+            <a asp-page="/Accounts/Account" asp-route-id="@RouteData.Values["accountId"]" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left-circle"></i> Return
+            </a>
+        </div>
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Amount" class="form-label fw-semibold">Amount</label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            @if (Model.CurrentBalance > 0)
+            {
+                <div class="mb-2 text-muted">
+                    💰 Available Balance: <strong>@Model.CurrentBalance.ToString("N2") SEK</strong>
+                </div>
+            }
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-warning px-4" title="Withdraw from this account">
+                    <i class="bi bi-arrow-down-circle me-1"></i> Withdraw
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
