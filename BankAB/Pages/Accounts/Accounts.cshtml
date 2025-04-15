@@ -1,91 +1,98 @@
 ﻿@page
 @model BankAB.Pages.Accounts.AccountsModel
 @{
+    var q = ViewContext.HttpContext.Request.Query["q"];
 }
 
-<h1>All Accounts</h1>
+<div class="container my-5">
+    <div class="card shadow rounded-4 p-4">
+        <h2 class="text-center mb-4 fw-bold text-primary">📒 All Accounts</h2>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">
-                Id
-                <a asp-page="/Accounts/Accounts"
-                   asp-route-sortColumn="Id"
-                   asp-route-sortOrder="asc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-                </a>
-                <a asp-page="/Accounts/Accounts"
-                   asp-route-sortColumn="Id"
-                   asp-route-sortOrder="desc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
-            </th>
-            <th scope="col">
-                Frequency
-                <a asp-page="/Accounts/Accounts"
-                   asp-route-sortColumn="Frequency"
-                   asp-route-sortOrder="asc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-                </a>
-                <a asp-page="/Accounts/Accounts"
-                   asp-route-sortColumn="Frequency"
-                   asp-route-sortOrder="desc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
-            </th>
+        <form method="get" class="d-flex justify-content-end mb-3">
+            <input type="text" name="q" value="@q" class="form-control w-25 me-2" placeholder="Search..." />
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
 
-            <th scope="col">
-                Account Created
-                <a asp-page="/Accounts/Accounts"
-                   asp-route-sortColumn="Created"
-                   asp-route-sortOrder="asc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-                </a>
-                <a asp-page="/Accounts/Accounts"
-                   asp-route-sortColumn="Created"
-                   asp-route-sortOrder="desc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
-            </th>
+        <!-- 📊 Accounts Table -->
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>
+                            ID
+                            <a asp-page="/Accounts/Accounts" asp-route-q="@q" asp-route-sortColumn="Id" asp-route-sortOrder="asc"><i class="fa fa-angle-up"></i></a>
+                            <a asp-page="/Accounts/Accounts" asp-route-q="@q" asp-route-sortColumn="Id" asp-route-sortOrder="desc"><i class="fa fa-angle-down"></i></a>
+                        </th>
+                        <th>
+                            Frequency
+                            <a asp-page="/Accounts/Accounts" asp-route-q="@q" asp-route-sortColumn="Frequency" asp-route-sortOrder="asc"><i class="fa fa-angle-up"></i></a>
+                            <a asp-page="/Accounts/Accounts" asp-route-q="@q" asp-route-sortColumn="Frequency" asp-route-sortOrder="desc"><i class="fa fa-angle-down"></i></a>
+                        </th>
+                        <th>
+                            Created
+                            <a asp-page="/Accounts/Accounts" asp-route-q="@q" asp-route-sortColumn="Created" asp-route-sortOrder="asc"><i class="fa fa-angle-up"></i></a>
+                            <a asp-page="/Accounts/Accounts" asp-route-q="@q" asp-route-sortColumn="Created" asp-route-sortOrder="desc"><i class="fa fa-angle-down"></i></a>
+                        </th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var acc in Model.PagedAccounts.Results)
+                    {
+                        <tr>
+                            <td>@acc.Id</td>
+                            <td>@acc.Frequency</td>
+                            <td>@acc.Created.ToString("yyyy-MM-dd")</td>
+                            <td class="text-center">
+                                <a asp-page="/Accounts/Account" asp-route-id="@acc.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-eye me-1"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- 🔢 Pagination -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                @if (Model.PagedAccounts.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           asp-page="/Accounts/Accounts"
+                           asp-route-pageNo="@(Model.PagedAccounts.CurrentPage - 1)"
+                           asp-route-sortColumn="@Model.SortColumn"
+                           asp-route-sortOrder="@Model.SortOrder"
+                           asp-route-q="@Model.Q">«</a>
+                    </li>
+                }
 
-           @*  <th scope="col">
-                Account Balance
-                <a asp-page="/Accounts"
-                   asp-route-sortColumn="Balance"
-                   asp-route-sortOrder="asc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-up"></i>
-                </a>
-                <a asp-page="/Accounts"
-                   asp-route-sortColumn="Balance"
-                   asp-route-sortOrder="desc"
-                   style="text-decoration:none">
-                    <i class="fa-solid fa-angle-down"></i>
-                </a>
-            </th> *@
+                @for (int i = Math.Max(1, Model.PagedAccounts.CurrentPage - 2); i <= Math.Min(Model.PagedAccounts.PageCount, Model.PagedAccounts.CurrentPage + 2); i++)
+                {
+                    <li class="page-item @(i == Model.PagedAccounts.CurrentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-page="/Accounts/Accounts"
+                           asp-route-pageNo="@i"
+                           asp-route-sortColumn="@Model.SortColumn"
+                           asp-route-sortOrder="@Model.SortOrder"
+                           asp-route-q="@Model.Q">@i</a>
+                    </li>
+                }
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var acc in Model.Accounts)
-        {
-            <tr>
-                <td>@acc.Id</td>
-                <td>@acc.Frequency</td>
-                <td>@acc.Created</td>
-                @* <td>@acc.Balance</td> *@
-                <td><a asp-page="/Accounts/Account" asp-route-id="@acc.Id" class="btn btn-primary">View</a></td>
-            </tr>
-        }
-        
-    </tbody>
-</table>
+                @if (Model.PagedAccounts.CurrentPage < Model.PagedAccounts.PageCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           asp-page="/Accounts/Accounts"
+                           asp-route-pageNo="@(Model.PagedAccounts.CurrentPage + 1)"
+                           asp-route-sortColumn="@Model.SortColumn"
+                           asp-route-sortOrder="@Model.SortOrder"
+                           asp-route-q="@Model.Q">»</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+   
