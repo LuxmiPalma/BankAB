@@ -44,7 +44,7 @@ namespace BankAB.Pages.Accounts
                 AccountId = Account.AccountId,
                 Amount = Amount,
                 Date = DateOnly.FromDateTime(DepositDate),
-                Type = "Deposit",
+                Type = "Credit",
                 Operation = Comment,
                 Balance = Account.Balance
             });

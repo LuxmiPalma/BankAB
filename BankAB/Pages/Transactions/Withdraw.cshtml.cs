@@ -18,6 +18,7 @@ namespace BankAB.Pages.Transactions
         [BindProperty]
         [Range(100, 10000)]
         public decimal Amount { get; set; }
+        public string Comment { get; set; }
 
         public decimal CurrentBalance { get; set; }
         public Account? Account { get; set; }
@@ -48,8 +49,8 @@ namespace BankAB.Pages.Transactions
                 AccountId = accountId,
                 Date = DateOnly.FromDateTime(DateTime.Today),
                 Amount = -Amount,
-                Operation = "Withdrawal",
-                Type = "Withdrawal",
+                Operation = "Comment",
+                Type = "Credit",
                 Balance = Account.Balance
             };
 

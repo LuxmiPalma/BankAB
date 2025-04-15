@@ -1,4 +1,4 @@
-using DataAccessLayer.Models;
+﻿using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -26,65 +26,58 @@ namespace BankAB.Pages.Transactions
         [Required(ErrorMessage = "Target account ID is required")]
         public int TargetAccountId { get; set; }
 
-        [BindProperty]
-        public string? Comment { get; set; }
         public Account? Account { get; set; }
+        public Account? TargetAccount { get; set; }
 
         public void OnGet(int accountId)
         {
+            AccountId = accountId;
             Account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
         }
 
-
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+            Account = _context.Accounts.FirstOrDefault(a => a.AccountId == AccountId);
+            TargetAccount = _context.Accounts.FirstOrDefault(a => a.AccountId == TargetAccountId);
+
+            if (!ModelState.IsValid || Account == null || TargetAccount == null)
                 return Page();
 
-            var sourceAccount = _context.Accounts.FirstOrDefault(a => a.AccountId == AccountId);
-            var targetAccount = _context.Accounts.FirstOrDefault(a => a.AccountId == TargetAccountId);
-
-            if (sourceAccount == null || targetAccount == null)
+            if (Account.Balance < Amount)
             {
-                ModelState.AddModelError("", "One or both accounts were not found.");
+                ModelState.AddModelError("", "Insufficient funds.");
                 return Page();
             }
 
-            if (sourceAccount.Balance < Amount)
-            {
-                ModelState.AddModelError("", "Insufficient funds in the source account.");
-                return Page();
-            }
+            Account.Balance -= Amount;
+            TargetAccount.Balance += Amount;
 
-            // Withdraw from source
-            sourceAccount.Balance -= Amount;
             _context.Transactions.Add(new Transaction
             {
-                AccountId = sourceAccount.AccountId,
+                AccountId = Account.AccountId,
                 Amount = -Amount,
                 Date = DateOnly.FromDateTime(DateTime.Now),
-                Type = "transfer",
-                Operation = "Transfer to account " + TargetAccountId,
-                Balance = sourceAccount.Balance,
+                Type = "Transfer",
+                Operation = $"To {TargetAccountId}",
+                Balance = Account.Balance
             });
 
-            // Deposit to target
-            targetAccount.Balance += Amount;
             _context.Transactions.Add(new Transaction
             {
-                AccountId = targetAccount.AccountId,
+                AccountId = TargetAccount.AccountId,
                 Amount = Amount,
                 Date = DateOnly.FromDateTime(DateTime.Now),
-                Type = "transfer",
-                Operation = "Transfer from account " + AccountId,
-                Balance = targetAccount.Balance,
+                Type = "Transfer",
+                Operation = $"From {AccountId}",
+                Balance = TargetAccount.Balance
             });
 
             _context.SaveChanges();
 
-            TempData["SuccessMessage"] = "? Transfer completed successfully!";
-            return RedirectToPage("/Accounts/Account", new { id = AccountId });
+            TargetAccount = _context.Accounts.FirstOrDefault(a => a.AccountId == TargetAccountId);
+
+            TempData["SuccessMessage"] = " Transfer completed successfully!";
+            return Page();
         }
     }
 }
-
