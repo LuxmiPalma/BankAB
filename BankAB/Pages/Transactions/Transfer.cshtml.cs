@@ -28,9 +28,15 @@ namespace BankAB.Pages.Transactions
 
         [BindProperty]
         public string? Comment { get; set; }
+        public Account? Account { get; set; }
 
-    
-      public IActionResult OnPost()
+        public void OnGet(int accountId)
+        {
+            Account = _context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+        }
+
+
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
                 return Page();
