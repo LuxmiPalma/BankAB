@@ -13,6 +13,30 @@
             </a>
         </div>
 
-        <p class="text-muted text-center">🚧 Transfer logic not yet implemented</p>
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="TargetAccountId" class="form-label fw-semibold">Target Account ID</label>
+                <input asp-for="TargetAccountId" class="form-control" />
+                <span asp-validation-for="TargetAccountId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Amount" class="form-label fw-semibold">Amount</label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-info text-white px-4" title="Transfer money to another account">
+                    <i class="bi bi-arrow-left-right me-1"></i> Transfer
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
