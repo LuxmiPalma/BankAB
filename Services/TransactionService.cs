@@ -71,12 +71,7 @@ namespace Services
                     .ThenInclude(a => a.Dispositions)
                 .Where(t => t.AccountNavigation.Dispositions.Any(d => d.CustomerId == customerId));
 
-            if (sortColumn == "Date")
-                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Date) : query.OrderBy(t => t.Date);
-            else if (sortColumn == "Amount")
-                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Amount) : query.OrderBy(t => t.Amount);
-            else
-                query = sortOrder == "desc" ? query.OrderByDescending(t => t.TransactionId) : query.OrderBy(t => t.TransactionId);
+           
 
             return query.ToList();
         }
@@ -88,15 +83,6 @@ namespace Services
                     .ThenInclude(a => a.Dispositions)
                 .Where(t => customerId == null || t.AccountNavigation.Dispositions.Any(d => d.CustomerId == customerId));
 
-            // Sorting
-            if (sortColumn == "Date")
-                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Date) : query.OrderBy(t => t.Date);
-            else if (sortColumn == "Amount")
-                query = sortOrder == "desc" ? query.OrderByDescending(t => t.Amount) : query.OrderBy(t => t.Amount);
-            else
-                query = sortOrder == "desc" ? query.OrderByDescending(t => t.TransactionId) : query.OrderBy(t => t.TransactionId);
-
-            // Projection before pagination
             var projectedQuery = query.Select(t => new TransactionViewModel
             {
                 TransactionId = t.TransactionId,
@@ -106,6 +92,34 @@ namespace Services
                 CustomerId = t.AccountNavigation.Dispositions.FirstOrDefault().CustomerId,
                 Operation = t.Operation
             });
+
+            if (!string.IsNullOrEmpty(sortColumn))
+            {
+                if (sortOrder == "desc")
+                {
+                    projectedQuery = sortColumn switch
+                    {
+                        "TransactionId" => projectedQuery.OrderByDescending(x => x.TransactionId),
+                        "AccountId" => projectedQuery.OrderByDescending(x => x.AccountId),
+                        "CustomerId" => projectedQuery.OrderByDescending(x => x.CustomerId),
+                        "Date" => projectedQuery.OrderByDescending(x => x.Date),
+                        "Amount" => projectedQuery.OrderByDescending(x => x.Amount),
+                        _ => projectedQuery.OrderByDescending(x => x.TransactionId)
+                    };
+                }
+                else
+                {
+                    projectedQuery = sortColumn switch
+                    {
+                        "TransactionId" => projectedQuery.OrderBy(x => x.TransactionId),
+                        "AccountId" => projectedQuery.OrderBy(x => x.AccountId),
+                        "CustomerId" => projectedQuery.OrderBy(x => x.CustomerId),
+                        "Date" => projectedQuery.OrderBy(x => x.Date),
+                        "Amount" => projectedQuery.OrderBy(x => x.Amount),
+                        _ => projectedQuery.OrderBy(x => x.TransactionId)
+                    };
+                }
+            }
 
             return projectedQuery.GetPaged(pageNo, pageSize);
         }

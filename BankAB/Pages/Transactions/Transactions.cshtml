@@ -8,8 +8,7 @@
     Func<string, string> iconBaseClass = col => sortColumn == col ? "text-primary" : "text-muted";
     Func<string, string, string> activeIconClass = (col, order) =>
         sortColumn == col && sortOrder == order ? "fw-bold text-info" : "";
-    }
-
+}
 
 <div class="container mt-5">
     <div class="text-center mb-4">
@@ -23,7 +22,7 @@
         <button class="btn btn-primary">Search</button>
     </form>
 
-    <table class="table table-bordered text-center table-striped">
+    <table class="table table-bordered text-center table-striped" id="transaction-table">
         <thead class="table-light">
             <tr>
                 <th>
@@ -35,7 +34,6 @@
                         <i class="fa-solid fa-angle-down"></i>
                     </a>
                 </th>
-
                 <th>
                     Account ID
                     <a asp-route-sortColumn="AccountId" asp-route-sortOrder="asc" class="@iconBaseClass("AccountId") @activeIconClass("AccountId", "asc")">
@@ -102,10 +100,9 @@
             }
         </tbody>
     </table>
-
     <!-- 🔢 Pagination -->
-    <nav aria-label="Transaction pagination">
-        <ul class="pagination justify-content-center mt-4">
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
             @if (Model.Result.CurrentPage > 1)
             {
                 <li class="page-item">
@@ -113,18 +110,11 @@
                        asp-page="/Transactions/Transactions"
                        asp-route-pageNo="@(Model.Result.CurrentPage - 1)"
                        asp-route-sortColumn="@sortColumn"
-                       asp-route-sortOrder="@sortOrder">
-                        «
-                    </a>
+                       asp-route-sortOrder="@sortOrder">«</a>
                 </li>
             }
 
-            @{
-                int startPage = Math.Max(1, Model.Result.CurrentPage - 2);
-                int endPage = Math.Min(Model.Result.PageCount, Model.Result.CurrentPage + 2);
-            }
-
-            @for (int i = startPage; i <= endPage; i++)
+            @for (int i = Math.Max(1, Model.Result.CurrentPage - 2); i <= Math.Min(Model.Result.PageCount, Model.Result.CurrentPage + 2); i++)
             {
                 <li class="page-item @(i == Model.Result.CurrentPage ? "active" : "")">
                     <a class="page-link"
@@ -142,16 +132,12 @@
                        asp-page="/Transactions/Transactions"
                        asp-route-pageNo="@(Model.Result.CurrentPage + 1)"
                        asp-route-sortColumn="@sortColumn"
-                       asp-route-sortOrder="@sortOrder">
-                        »
-                    </a>
+                       asp-route-sortOrder="@sortOrder">»</a>
                 </li>
             }
         </ul>
     </nav>
-
-    <div class="text-center mt-4">
-        <a asp-page="/Index" class="btn btn-outline-dark">⬅️ Back to Home</a>
-
-    </div>
 </div>
+</div>
+
+   
