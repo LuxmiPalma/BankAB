@@ -16,5 +16,14 @@ namespace BankAB.Pages.Transactions
         {
             CustomerId = customerId;
         }
+        public IActionResult OnGetShowMore(int customerId, int pageNo)
+        {
+            var pagedTransactions = _transactionService.GetPagedTransactions(pageNo, 5, null, null, customerId);
+
+            return new JsonResult(new
+            {
+                transactions = pagedTransactions.Results
+            });
+        }
     }
 }
