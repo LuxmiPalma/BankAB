@@ -12,8 +12,9 @@ namespace BankAB.Pages.Transactions
             _transactionService = transactionService;
         }
         public int CustomerId { get; set; }
-        public void OnGet()
+        public void OnGet(int customerId)
         {
+            CustomerId = customerId;
         }
     }
 }
