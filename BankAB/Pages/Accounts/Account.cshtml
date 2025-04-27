@@ -47,7 +47,7 @@
                     @foreach (var d in Model.Account.Dispositions)
                     {
                         <div>
-                            <a asp-page="/Transactions/Transactions" asp-route-customerId="@d.Customer.CustomerId" class="btn btn-outline-primary btn-sm">
+                            <a asp-page="/Transactions/CustomerTransactions" asp-route-customerId="@d.Customer.CustomerId" class="btn btn-outline-primary btn-sm">
                                 <i class="bi bi-eye"></i> View @d.Customer.Givenname's Transactions
                             </a>
                         </div>

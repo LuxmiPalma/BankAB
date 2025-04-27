@@ -1,4 +1,57 @@
-﻿@page
+﻿@page "{customerId:int}"
 @model BankAB.Pages.Transactions.CustomerTransactionsModel
+
 @{
+    
+}
+<div class="container mt-4">
+    <h2>Transactions for Customer @Model.CustomerId</h2>
+
+    <table class="table" id="transactions-table">
+        <thead>
+            <tr>
+                <th>Transaction Id</th>
+                <th>Account Id</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @* Data will be injected here by JS *@
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" onclick="showMore()">Show More</button>
+</div>
+
+@section Scripts {
+    <script>
+        let pageNo = 1;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            showMore();
+        });
+
+        function showMore() {
+        fetch(`?handler=ShowMore&pageNo=${pageNo}`)
+                .then(response => response.json())
+                .then(data => {
+                    pageNo++;
+                    data.transactions.forEach(drawTransaction);
+                });
+        }
+
+        function drawTransaction(txn) {
+            document.querySelector('#transactions-table tbody').innerHTML += `
+                <tr>
+                    <td>${txn.transactionId}</td>
+                    <td>${txn.accountId}</td>
+                    <td>SEK: ${txn.amount.toFixed(2)}</td>
+                    <td>${new Date(txn.date).toLocaleDateString()}</td>
+                    <td>${txn.operation}</td>
+                </tr>
+            `;
+        }
+    </script>
 }
