@@ -81,7 +81,12 @@
                             <i class="bi bi-eye"></i> @txn.TransactionId
                         </a>
                     </td>
-                    <td>@txn.AccountId</td>
+                    <td>
+                        <a asp-page="/Accounts/Account" asp-route-id="@txn.AccountId" class="btn btn-outline-success">
+                            @txn.AccountId
+                        </a>
+                    </td>
+
                     <td>
                         @if (txn.CustomerId != 0)
                         {
@@ -138,6 +143,6 @@
         </ul>
     </nav>
 </div>
-</div>
+
 
    
