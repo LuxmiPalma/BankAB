@@ -74,7 +74,7 @@ namespace BankAB.Pages.Transactions
                 AccountId = Account.AccountId,
                 Amount = -Amount,
                 Date = DateOnly.FromDateTime(DateTime.Now),
-                Type = "Transfer",
+                Type = "Credit",
                 Operation = $"To {TargetAccountId}",
                 Balance = Account.Balance
             });
@@ -84,7 +84,7 @@ namespace BankAB.Pages.Transactions
                 AccountId = TargetAccount.AccountId,
                 Amount = Amount,
                 Date = DateOnly.FromDateTime(DateTime.Now),
-                Type = "Transfer",
+                Type = "Debit",
                 Operation = $"From {AccountId}",
                 Balance = TargetAccount.Balance
             });
