@@ -1,0 +1,50 @@
+﻿@model DataAccessLayer.Models.Account
+
+<table class="table mt-3 table-bordered">
+    <thead>
+        <tr>
+            <th>Account ID</th>
+            <th>Frequency</th>
+            <th>Created</th>
+            <th>Balance</th>
+            <th>Customers</th>
+            <th>Transactions</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.AccountId</td>
+            <td>@Model.Frequency</td>
+            <td>@Model.Created</td>
+            <td>@Model.Balance.ToString("N2") SEK</td>
+            <td>
+                @foreach (var d in Model.Dispositions)
+                {
+                    <div>
+                        <a class="text-primary">
+                            <i class="bi bi-eye"></i> @d.Customer.Givenname @d.Customer.Surname (@d.Type)
+                        </a>
+                    </div>
+
+                }
+            </td>
+            <td>
+                @foreach (var d in Model.Dispositions)
+                {
+                    <div>
+                        <a asp-page="/Transactions/CustomerTransactions" asp-route-customerId="@d.Customer.CustomerId" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-eye"></i> View @d.Customer.Givenname's Transactions
+                        </a>
+                    </div>
+                }
+            </td>
+            <td>
+                <a asp-page="/Transactions/Deposit" asp-route-accountId="@Model.AccountId" class="btn btn-success"><i class="bi bi-plus"></i></a>
+                <a asp-page="/Transactions/Withdraw" asp-route-accountId="@Model.AccountId" class="btn btn-warning"><i class="bi bi-dash-circle"></i></a>
+                <a asp-page="/Transactions/Transfer" asp-route-accountId="@Model.AccountId" class="btn btn-warning"><i class="bi bi-arrow-left-right"></i></a>
+                <button class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
