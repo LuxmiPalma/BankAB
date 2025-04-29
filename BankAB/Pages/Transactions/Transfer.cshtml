@@ -21,10 +21,11 @@
 
         <form method="post">
             <div class="mb-3">
-                <label asp-for="TargetAccountId" class="form-label fw-semibold">From Account ID</label>
-                <input asp-for="TargetAccountId" class="form-control" />
-                <span asp-validation-for="TargetAccountId" class="text-danger"></span>
+                <label asp-for="AccountId" class="form-label fw-semibold">From Account ID</label>
+                <input asp-for="AccountId" class="form-control" readonly />
+                <span asp-validation-for="AccountId" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="TargetAccountId" class="form-label fw-semibold">To Account ID</label>
                 <input asp-for="TargetAccountId" class="form-control" />

@@ -50,7 +50,7 @@ namespace BankAB.Pages.Transactions
                 Date = DateOnly.FromDateTime(DateTime.Today),
                 Amount = -Amount,
                 Operation = "Comment",
-                Type = "Credit",
+                Type = "Debit",
                 Balance = Account.Balance
             };
 

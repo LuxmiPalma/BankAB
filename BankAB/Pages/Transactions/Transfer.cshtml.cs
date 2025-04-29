@@ -40,12 +40,29 @@ namespace BankAB.Pages.Transactions
             Account = _context.Accounts.FirstOrDefault(a => a.AccountId == AccountId);
             TargetAccount = _context.Accounts.FirstOrDefault(a => a.AccountId == TargetAccountId);
 
-            if (!ModelState.IsValid || Account == null || TargetAccount == null)
+            if (Account == null)
+            {
+                ModelState.AddModelError(nameof(AccountId), "From Account does not exist.");
+            }
+
+            if (TargetAccount == null)
+            {
+                ModelState.AddModelError(nameof(TargetAccountId), "To Account does not exist.");
+            }
+
+            if (AccountId == TargetAccountId)
+            {
+                ModelState.AddModelError(nameof(TargetAccountId), "From and To accounts must be different.");
+            }
+
+            if (!ModelState.IsValid)
+            {
                 return Page();
+            }
 
             if (Account.Balance < Amount)
             {
-                ModelState.AddModelError("", "Insufficient funds.");
+                ModelState.AddModelError("", "Insufficient funds for transfer.");
                 return Page();
             }
 
