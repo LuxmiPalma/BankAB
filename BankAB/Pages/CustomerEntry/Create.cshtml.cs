@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using DataAccessLayer.Enum;
 using Services.Infrastructure.Validation;
+using System.Reflection;
 
 
 namespace BankAB.Pages.CustomerEntry
@@ -66,16 +67,20 @@ namespace BankAB.Pages.CustomerEntry
         public int? BirthdayDay { get; set; }
 
         public List<SelectListItem> CountryList { get; set; } = new();
+        public List<SelectListItem> GenderList { get; set; } = new();
+
         public bool Created { get; set; } = false;
 
         public void OnGet()
         {
             LoadDropdowns();
+            LoadGenderDropdown();
         }
 
         public IActionResult OnPost()
         {
             LoadDropdowns();
+            LoadGenderDropdown();
 
             if (string.IsNullOrWhiteSpace(Input.Gender))
             {
@@ -143,5 +148,26 @@ namespace BankAB.Pages.CustomerEntry
                     Text = c.CountryName
                 }).ToList();
         }
+        private void LoadGenderDropdown()
+        {
+            GenderList = Enum.GetValues(typeof(Gender))
+                .Cast<Gender>()
+                .Where(g => g != Gender.Choose)
+                .Select(g => new SelectListItem
+                {
+                    Value = g.ToString(),
+                    Text = g.GetType()
+                    .GetMember(g.ToString())
+                    .First()
+                    .GetCustomAttribute<DisplayAttribute>()?.Name ?? g.ToString()
+                }).ToList();
+
+            GenderList.Insert(0, new SelectListItem
+            {
+                Value = "",
+                Text = "-- Select Gender --"
+            });
+        }
+
     }
 }
