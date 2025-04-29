@@ -16,8 +16,11 @@ namespace BankAB.Pages.Transactions
         }
 
         [BindProperty]
-        [Range(100, 10000)]
+        [Range(100, 10000, ErrorMessage = "Amount must be between 100 and 10,000 SEK.")]
         public decimal Amount { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Comment is required.")]
         public string Comment { get; set; }
 
         public decimal CurrentBalance { get; set; }
@@ -35,14 +38,19 @@ namespace BankAB.Pages.Transactions
 
             if (Account == null) return NotFound();
 
+            if (!ModelState.IsValid)
+            {
+                CurrentBalance = Account.Balance;
+                return Page();
+            }
             if (Account.Balance < Amount)
             {
                 ModelState.AddModelError("Amount", "You don't have that much money!");
                 CurrentBalance = Account.Balance;
                 return Page();
             }
-
             Account.Balance -= Amount;
+
 
             var transaction = new Transaction
             {
