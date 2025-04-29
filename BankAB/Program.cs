@@ -27,6 +27,7 @@ builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 
 var app = builder.Build();
