@@ -43,6 +43,7 @@
                     <div class="col-md-6">
                         <label asp-for="Input.Gender" class="form-label">Gender</label>
                         <select asp-for="Input.Gender" class="form-select">
+                            <option value="">-- Select Gender --</option>
                             @foreach (var gender in Enum.GetValues(typeof(Gender)).Cast<Gender>())
                             {
                                 <option value="@gender">@gender</option>

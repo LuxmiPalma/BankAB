@@ -77,6 +77,11 @@ namespace BankAB.Pages.CustomerEntry
         {
             LoadDropdowns();
 
+            if (string.IsNullOrWhiteSpace(Input.Gender))
+            {
+                ModelState.AddModelError("Input.Gender", "Gender is required.");
+            }
+
             if (Input.CountryId == null || Input.CountryId <= 0)
             {
                 ModelState.AddModelError("Input.CountryId", "Country selection is required.");
