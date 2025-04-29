@@ -20,30 +20,31 @@ namespace BankAB.Pages.CustomerEntry
 
         public class CustomerInputModel
         {
-            [Required]
+            [Required(ErrorMessage = "First name is required.")]
             public string Givenname { get; set; } = string.Empty;
 
-            [Required]
+            [Required(ErrorMessage = "Sur name is required.")]
             public string Surname { get; set; } = string.Empty;
 
-            [Required]
+            [Required(ErrorMessage = "Gender is required.")]
             public string Gender { get; set; } = string.Empty;
 
             [Required(ErrorMessage = "Country is required.")]
             public int? CountryId { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "City is required.")]
             public string City { get; set; } = string.Empty;
 
-            [Required]
+            [Required(ErrorMessage = "Streetaddress is required.")]
             public string Streetaddress { get; set; } = string.Empty;
 
-            [Required]
+            [Required(ErrorMessage = "Zipcode is required.")]
             public string Zipcode { get; set; } = string.Empty;
             public string? NationalId { get; set; }
 
             [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
             public string? Emailaddress { get; set; }
+            [PhoneNumber]
             public string? Telephonenumber { get; set; }
             public string? Telephonecountrycode { get; set; }
 
@@ -55,7 +56,7 @@ namespace BankAB.Pages.CustomerEntry
         public CustomerInputModel Input { get; set; } = new();
 
         [BindProperty]
-        [GoodNumber]
+        [Range(1900, 2100)]
         public int? BirthdayYear { get; set; }
 
         [BindProperty]
@@ -75,6 +76,16 @@ namespace BankAB.Pages.CustomerEntry
         public IActionResult OnPost()
         {
             LoadDropdowns();
+
+            if (Input.CountryId == null || Input.CountryId <= 0)
+            {
+                ModelState.AddModelError("Input.CountryId", "Country selection is required.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
 
             if (!ModelState.IsValid)
                 return Page();

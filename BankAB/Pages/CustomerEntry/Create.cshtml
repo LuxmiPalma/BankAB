@@ -54,7 +54,7 @@
                     <div class="col-md-6">
                         <label asp-for="Input.CountryId" class="form-label">Country</label>
                         <select asp-for="Input.CountryId" class="form-select">
-                            <option value="">Select Country</option>
+                            <option disabled selected value="">--Select Country--</option>
                             @foreach (var country in Model.CountryList)
                             {
                                 <option value="@country.Value">@country.Text</option>
@@ -99,6 +99,8 @@
                     <div class="col-md-3">
                         <label asp-for="Input.Telephonenumber" class="form-label">Phone</label>
                         <input asp-for="Input.Telephonenumber" class="form-control" />
+                        <span asp-validation-for="Input.Telephonenumber" class="text-danger"></span>
+
                     </div>
 
                     <!-- Birthday -->
@@ -108,12 +110,11 @@
                             <div class="col-md-4">
                                 <select asp-for="BirthdayYear" class="form-select">
                                     <option value="">Year</option>
-                                    @foreach (var year in new[] { 25, 50, 75, 100 })
+                                    @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
                                     {
                                         <option value="@year">@year</option>
                                     }
                                 </select>
-                                <span asp-validation-for="BirthdayYear" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <select asp-for="BirthdayMonth" class="form-select">
