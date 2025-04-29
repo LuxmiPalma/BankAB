@@ -89,6 +89,7 @@
                     <div class="col-md-6">
                         <label asp-for="Input.Emailaddress" class="form-label">Email</label>
                         <input asp-for="Input.Emailaddress" class="form-control" />
+                        <span asp-validation-for="Input.Emailaddress" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-3">
@@ -108,11 +109,12 @@
                             <div class="col-md-4">
                                 <select asp-for="BirthdayYear" class="form-select">
                                     <option value="">Year</option>
-                                    @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
+                                    @foreach (var year in new[] { 25, 50, 75, 100 })
                                     {
                                         <option value="@year">@year</option>
                                     }
                                 </select>
+                                <span asp-validation-for="BirthdayYear" class="text-danger"></span>
                             </div>
                             <div class="col-md-4">
                                 <select asp-for="BirthdayMonth" class="form-select">

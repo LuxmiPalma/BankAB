@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using DataAccessLayer.Enum;
+using Services.Infrastructure.Validation;
 
 
 namespace BankAB.Pages.CustomerEntry
@@ -40,6 +41,8 @@ namespace BankAB.Pages.CustomerEntry
             [Required]
             public string Zipcode { get; set; } = string.Empty;
             public string? NationalId { get; set; }
+
+            [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
             public string? Emailaddress { get; set; }
             public string? Telephonenumber { get; set; }
             public string? Telephonecountrycode { get; set; }
@@ -52,7 +55,7 @@ namespace BankAB.Pages.CustomerEntry
         public CustomerInputModel Input { get; set; } = new();
 
         [BindProperty]
-        [Range(1900, 2100)]
+        [GoodNumber]
         public int? BirthdayYear { get; set; }
 
         [BindProperty]
