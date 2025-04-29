@@ -43,16 +43,7 @@
                 <tbody>
                     @foreach (var acc in Model.PagedAccounts.Results)
                     {
-                        <tr>
-                            <td>@acc.Id</td>
-                            <td>@acc.Frequency</td>
-                            <td>@acc.Created.ToString("yyyy-MM-dd")</td>
-                            <td class="text-center">
-                                <a asp-page="/Accounts/Account" asp-route-id="@acc.Id" class="btn btn-sm btn-outline-primary">
-                                    <i class="fa fa-eye me-1"></i> View
-                                </a>
-                            </td>
-                        </tr>
+                        <partial name="_AccountTableRow" model="acc" />
                     }
                 </tbody>
             </table>
