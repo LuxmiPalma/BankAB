@@ -75,33 +75,8 @@
         <tbody>
             @foreach (var txn in Model.Result.Results)
             {
-                <tr>
-                    <td>
-                        <a asp-page="/Transactions/TransactionDetails" asp-route-id="@txn.TransactionId" class="btn btn-outline-secondary">
-                            <i class="bi bi-eye"></i> @txn.TransactionId
-                        </a>
-                    </td>
-                    <td>
-                        <a asp-page="/Accounts/Account" asp-route-id="@txn.AccountId" class="btn btn-outline-success">
-                            @txn.AccountId
-                        </a>
-                    </td>
 
-                    <td>
-                        @if (txn.CustomerId != 0)
-                        {
-                            <a asp-page="/Customers/Customer" asp-route-id="@txn.CustomerId" class="btn btn-sm btn-primary">
-                                @txn.CustomerId
-                            </a>
-                        }
-                        else
-                        {
-                            <span class="text-muted">N/A</span>
-                        }
-                    </td>
-                    <td>@txn.Date.ToString("yyyy-MM-dd")</td>
-                    <td>SEK: @txn.Amount.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
-                </tr>
+                <partial name="_TransactionRow" model="txn" />
             }
         </tbody>
     </table>

@@ -1,0 +1,29 @@
+﻿
+@model Services.ViewModels.TransactionViewModel
+
+<tr>
+    <td>
+        <a asp-page="/Transactions/TransactionDetails" asp-route-id="@Model.TransactionId" class="btn btn-outline-secondary">
+            <i class="bi bi-eye"></i> @Model.TransactionId
+        </a>
+    </td>
+    <td>
+        <a asp-page="/Accounts/Account" asp-route-id="@Model.AccountId" class="btn btn-outline-success">
+            @Model.AccountId
+        </a>
+    </td>
+    <td>
+        @if (Model.CustomerId != 0)
+        {
+            <a asp-page="/Customers/Customer" asp-route-id="@Model.CustomerId" class="btn btn-sm btn-primary">
+                @Model.CustomerId
+            </a>
+        }
+        else
+        {
+            <span class="text-muted">N/A</span>
+        }
+    </td>
+    <td>@Model.Date.ToString("yyyy-MM-dd")</td>
+    <td>SEK: @Model.Amount.ToString("N2", System.Globalization.CultureInfo.InvariantCulture)</td>
+</tr>
