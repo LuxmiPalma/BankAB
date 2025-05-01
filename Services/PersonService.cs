@@ -45,14 +45,11 @@ namespace Services
                 .FirstOrDefaultAsync(m => m.CustomerId == id);
         }
 
-        public async Task<(Customer, List<string>)> UpdateCustomerAsync(
-            int id, string gender, string givenName, string surname, string streetAddress, string city, string zipcode,
-            int countryId,  string emailaddress, string telephoneCountryCode, string telephoneNumber,
-            string? nationalId, int birthdayYear, int birthdayMonth, int birthdayDay)
+        public async Task<List<string>> UpdateCustomerAsync(Customer updatedCustomer)
         {
-            var customerFromDb = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == id);
+            var customerFromDb = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerId == updatedCustomer.CustomerId);
             if (customerFromDb == null)
-                throw new InvalidOperationException($"Customer with ID {id} not found.");
+                throw new InvalidOperationException($"Customer with ID {updatedCustomer.CustomerId} not found.");
 
             var oldValues = new
             {
@@ -61,28 +58,25 @@ namespace Services
                 customerFromDb.Emailaddress
             };
 
-            customerFromDb.Gender = gender;
-            customerFromDb.Givenname = givenName;
-            customerFromDb.Surname = surname;
-            customerFromDb.Streetaddress = streetAddress;
-            customerFromDb.City = city;
-            customerFromDb.Zipcode = zipcode;
-            customerFromDb.CountryId = countryId;
-            customerFromDb.Emailaddress = emailaddress;
-            customerFromDb.Telephonecountrycode = telephoneCountryCode;
-            customerFromDb.Telephonenumber = telephoneNumber;
-            customerFromDb.NationalId = nationalId;
+            // Update values
+            customerFromDb.Gender = updatedCustomer.Gender;
+            customerFromDb.Givenname = updatedCustomer.Givenname;
+            customerFromDb.Surname = updatedCustomer.Surname;
+            customerFromDb.Streetaddress = updatedCustomer.Streetaddress;
+            customerFromDb.City = updatedCustomer.City;
+            customerFromDb.Zipcode = updatedCustomer.Zipcode;
+            customerFromDb.CountryId = updatedCustomer.CountryId;
+            customerFromDb.Emailaddress = updatedCustomer.Emailaddress;
+            customerFromDb.Telephonecountrycode = updatedCustomer.Telephonecountrycode;
+            customerFromDb.Telephonenumber = updatedCustomer.Telephonenumber;
+            customerFromDb.NationalId = updatedCustomer.NationalId;
+            customerFromDb.Birthday = updatedCustomer.Birthday;
 
-
-            if (birthdayYear > 0 && birthdayMonth > 0 && birthdayDay > 0)
-            {
-                customerFromDb.Birthday = new DateOnly(birthdayYear, birthdayMonth, birthdayDay);
-            }
-
+            // Detect changes
             var changes = new List<string>();
-            if (oldValues.Givenname != givenName) changes.Add($"Givenname changed");
-            if (oldValues.Surname != surname) changes.Add($"Surname changed");
-            if (oldValues.Emailaddress != emailaddress) changes.Add($"Email changed");
+            if (oldValues.Givenname != updatedCustomer.Givenname) changes.Add("Givenname changed");
+            if (oldValues.Surname != updatedCustomer.Surname) changes.Add("Surname changed");
+            if (oldValues.Emailaddress != updatedCustomer.Emailaddress) changes.Add("Email changed");
 
             if (changes.Count > 0)
             {
@@ -90,8 +84,9 @@ namespace Services
                 await _context.SaveChangesAsync();
             }
 
-            return (customerFromDb, changes);
+            return changes;
         }
+
         public async Task<CustomerDTO?> GetCustomerDtoByIdAsync(int id)
         {
             var customer = await _context.Customers

@@ -1,8 +1,10 @@
+using AutoMapper;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services;
+using Services.ViewModels;
 
 
 namespace BankAB.Pages.Customers
@@ -10,33 +12,37 @@ namespace BankAB.Pages.Customers
     public class CustomerEditModel : PageModel
     {
         private readonly IPersonService _personService;
+        private readonly IMapper _mapper;
 
-        public CustomerEditModel(IPersonService personService)
+        public CustomerEditModel(IPersonService personService,IMapper mapper)
         {
             _personService = personService;
+            _mapper = mapper;
+
         }
 
 
-        [BindProperty] public Customer Customer { get; set; }
+        [BindProperty] public CustomerFormViewModel Input { get; set; }
 
-        [BindProperty] public int? BirthdayYear { get; set; }
-        [BindProperty] public int? BirthdayMonth { get; set; }
-        [BindProperty] public int? BirthdayDay { get; set; }
+       
 
         public List<SelectListItem> CountryList { get; set; } = new();
         public List<string> ChangeMessages { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Customer = await _personService.GetCustomerAsync(id);
-            if (Customer == null)
+            var customer = await _personService.GetCustomerAsync(id);
+            if (customer == null)
                 return NotFound();
 
-            if (Customer.Birthday.HasValue)
+            Input = _mapper.Map<CustomerFormViewModel>(customer);
+
+
+            if (customer.Birthday.HasValue)
             {
-                BirthdayYear = Customer.Birthday.Value.Year;
-                BirthdayMonth = Customer.Birthday.Value.Month;
-                BirthdayDay = Customer.Birthday.Value.Day;
+                Input.BirthdayYear = customer.Birthday.Value.Year;
+                Input.BirthdayMonth = customer.Birthday.Value.Month;
+                Input.BirthdayDay = customer.Birthday.Value.Day;
             }
 
             await LoadDropdowns();
@@ -45,11 +51,29 @@ namespace BankAB.Pages.Customers
 
         public async Task<IActionResult> OnPostAsync()
         {
-            (Customer updatedCustomer, List<string> changes) = await _personService.UpdateCustomerAsync(
-                Customer.CustomerId, Customer.Gender, Customer.Givenname, Customer.Surname, Customer.Streetaddress,
-                Customer.City, Customer.Zipcode, Customer.CountryId ?? 0,
-                Customer.Emailaddress, Customer.Telephonecountrycode, Customer.Telephonenumber,
-                Customer.NationalId, BirthdayYear ?? 0, BirthdayMonth ?? 0, BirthdayDay ?? 0);
+            if (!ModelState.IsValid)
+            {
+                await LoadDropdowns();
+                return Page();
+            }
+            var customer = _mapper.Map<Customer>(Input);
+            customer.CustomerId = Input.CustomerId; // manually set if not in viewmodel
+           
+            if (Input.BirthdayYear.HasValue && Input.BirthdayMonth.HasValue && Input.BirthdayDay.HasValue)
+            {
+                try
+                {
+                    customer.Birthday = new DateOnly(Input.BirthdayYear.Value, Input.BirthdayMonth.Value, Input.BirthdayDay.Value);
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Invalid birth date.");
+                    await LoadDropdowns();
+                    return Page();
+                }
+            }
+
+            List<string> changes = await _personService.UpdateCustomerAsync(customer);
 
             ChangeMessages = changes;
 
