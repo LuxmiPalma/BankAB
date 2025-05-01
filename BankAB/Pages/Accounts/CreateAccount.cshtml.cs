@@ -1,3 +1,4 @@
+using AutoMapper;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ namespace BankAB.Pages.Accounts
     public class CreateAccountModel : PageModel
     {
         private readonly BankAppDataContext _context;
+        private readonly IMapper _mapper;
 
         public CreateAccountModel(BankAppDataContext context)
         {
