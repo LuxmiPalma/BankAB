@@ -104,7 +104,7 @@
                         <label class="form-label">Date of Birth</label>
                         <div class="row g-2">
                             <div class="col-md-4">
-                                <select asp-for="BirthdayYear" class="form-select">
+                                <select asp-for="Input.BirthdayYear" class="form-select">
                                     <option value="">Year</option>
                                     @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
                                     {
@@ -113,7 +113,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select asp-for="BirthdayMonth" class="form-select">
+                                <select asp-for="Input.BirthdayMonth" class="form-select">
                                     <option value="">Month</option>
                                     @for (int month = 1; month <= 12; month++)
                                     {
@@ -122,7 +122,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select asp-for="BirthdayDay" class="form-select">
+                                <select asp-for="Input.BirthdayDay" class="form-select">
                                     <option value="">Day</option>
                                     @for (int day = 1; day <= 31; day++)
                                     {

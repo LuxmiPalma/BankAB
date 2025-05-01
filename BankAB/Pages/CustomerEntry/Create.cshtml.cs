@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using DataAccessLayer.Enum;
 using Services.Infrastructure.Validation;
 using System.Reflection;
+using AutoMapper;
+using Services.ViewModels;
+
 
 
 namespace BankAB.Pages.CustomerEntry
@@ -13,58 +16,19 @@ namespace BankAB.Pages.CustomerEntry
     public class CreateModel : PageModel
     {
         private readonly BankAppDataContext _context;
+        private readonly IMapper _mapper;
 
-        public CreateModel(BankAppDataContext context)
+        public CreateModel(BankAppDataContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public class CustomerInputModel
-        {
-            [Required(ErrorMessage = "First name is required.")]
-            public string Givenname { get; set; } = string.Empty;
-
-            [Required(ErrorMessage = "Sur name is required.")]
-            public string Surname { get; set; } = string.Empty;
-
-            [Required(ErrorMessage = "Gender is required.")]
-            public string Gender { get; set; } = string.Empty;
-
-            [Required(ErrorMessage = "Country is required.")]
-            public int? CountryId { get; set; }
-
-            [Required(ErrorMessage = "City is required.")]
-            public string City { get; set; } = string.Empty;
-
-            [Required(ErrorMessage = "Streetaddress is required.")]
-            public string Streetaddress { get; set; } = string.Empty;
-
-            [Required(ErrorMessage = "Zipcode is required.")]
-            public string Zipcode { get; set; } = string.Empty;
-            public string? NationalId { get; set; }
-
-            [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
-            public string? Emailaddress { get; set; }
-            [PhoneNumber]
-            public string? Telephonenumber { get; set; }
-            public string? Telephonecountrycode { get; set; }
-
-
-
-        }
-
+      
         [BindProperty]
-        public CustomerInputModel Input { get; set; } = new();
+        public CustomerFormViewModel Input { get; set; } = new();
 
-        [BindProperty]
-        [Range(1900, 2100)]
-        public int? BirthdayYear { get; set; }
-
-        [BindProperty]
-        public int? BirthdayMonth { get; set; }
-
-        [BindProperty]
-        public int? BirthdayDay { get; set; }
+       
 
         public List<SelectListItem> CountryList { get; set; } = new();
         public List<SelectListItem> GenderList { get; set; } = new();
@@ -100,27 +64,17 @@ namespace BankAB.Pages.CustomerEntry
             if (!ModelState.IsValid)
                 return Page();
 
-            var customer = new Customer
-            {
-                Givenname = Input.Givenname,
-                Surname = Input.Surname,
-                Gender = Input.Gender,
-                CountryId = Input.CountryId,
-                City = Input.City,
-                Streetaddress = Input.Streetaddress,
-                Zipcode = Input.Zipcode,
-                NationalId = Input.NationalId,
-                Emailaddress = Input.Emailaddress,
-                Telephonecountrycode = Input.Telephonecountrycode,
-                Telephonenumber = Input.Telephonenumber,
+            var customer = _mapper.Map<Customer>(Input);
+            
 
-            };
-
-            if (BirthdayYear.HasValue && BirthdayMonth.HasValue && BirthdayDay.HasValue)
+            if (Input.BirthdayYear.HasValue && Input.BirthdayMonth.HasValue && Input.BirthdayDay.HasValue)
             {
                 try
                 {
-                    customer.Birthday = new DateOnly(BirthdayYear.Value, BirthdayMonth.Value, BirthdayDay.Value);
+                    customer.Birthday = new DateOnly
+                        (Input.BirthdayYear.Value, 
+                        Input.BirthdayMonth.Value, 
+                        Input.BirthdayDay.Value);
                 }
                 catch
                 {

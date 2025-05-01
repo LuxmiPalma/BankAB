@@ -5,6 +5,7 @@ using Services;
 
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,7 +28,7 @@ builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(Services.Infrastructure.AutoMapperProfile));
 
 
 var app = builder.Build();

@@ -14,10 +14,12 @@ namespace Services.Infrastructure
     {
         public AutoMapperProfile()
         {
+            CreateMap<CustomerFormViewModel, Customer>().ReverseMap();
             CreateMap<Customer, CustomerDTO>();
             CreateMap<Customer, CustomerViewModel>()
                 .ForMember(dest => dest.Name,
                            opt => opt.MapFrom(src => src.Givenname + " " + src.Surname));
+
         }
     }
 }
