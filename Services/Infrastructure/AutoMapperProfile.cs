@@ -19,6 +19,8 @@ namespace Services.Infrastructure
             CreateMap<Customer, CustomerViewModel>()
                 .ForMember(dest => dest.Name,
                            opt => opt.MapFrom(src => src.Givenname + " " + src.Surname));
+            CreateMap<AccountsViewModel, Account>().ReverseMap();
+
 
         }
     }
