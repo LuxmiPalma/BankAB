@@ -28,20 +28,20 @@
         <div class="col-md-6">
             <form method="post" class="card p-4 shadow rounded-4 bg-white">
                 <div class="mb-3">
-                    <label asp-for="Frequency" class="form-label fw-semibold">Frequency</label>
-                    <select asp-for="Frequency" class="form-select">
+                    <label asp-for="Input.Frequency" class="form-label fw-semibold">Frequency</label>
+                            <select asp-for="Input.Frequency" class="form-select">
                         <option value="">Select frequency...</option>
                                 <option value="Weekly">Weekly</option>
                                 <option value="Monthly">Monthly</option>
                                 <option value="AfterTransaction">AfterTransaction</option>
                     </select>
-                    <span asp-validation-for="Frequency" class="text-danger"></span>
+                            <span asp-validation-for="Input.Frequency" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Balance" class="form-label fw-semibold">Initial Deposit (Balance)</label>
-                    <input asp-for="Balance" type="number" class="form-control" />
-                    <span asp-validation-for="Balance" class="text-danger"></span>
+                            <label asp-for="Input.Balance" class="form-label fw-semibold">Initial Deposit (Balance)</label>
+                            <input asp-for="Input.Balance" type="number" class="form-control" />
+                            <span asp-validation-for="Input.Balance" class="text-danger"></span>
                 </div>
 
                 <div class="text-center">

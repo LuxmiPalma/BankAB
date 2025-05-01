@@ -2,6 +2,7 @@ using AutoMapper;
 using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Services.ViewModels;
 using System.ComponentModel.DataAnnotations;
 
 namespace BankAB.Pages.Accounts
@@ -11,22 +12,20 @@ namespace BankAB.Pages.Accounts
         private readonly BankAppDataContext _context;
         private readonly IMapper _mapper;
 
-        public CreateAccountModel(BankAppDataContext context)
+        public CreateAccountModel(BankAppDataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [BindProperty(SupportsGet = true)]
         public int CustomerId { get; set; }
-
-        [BindProperty]
-        [Required(ErrorMessage = "Frequency is required")]
-        public string Frequency { get; set; }
-
-        [BindProperty]
-        [Range(50, 50000, ErrorMessage = "Initial deposit must be between 50 and 50.000 SEK.")]
-        public decimal Balance { get; set; }
         public bool Created { get; set; } = false;
+
+
+        [BindProperty]
+        public AccountsViewModel Input { get; set; } = new();
+
 
 
         public IActionResult OnGet()
@@ -39,12 +38,9 @@ namespace BankAB.Pages.Accounts
             if (!ModelState.IsValid)
                 return Page();
 
-            var account = new Account
-            {
-                Balance = Balance,
-                Created = DateOnly.FromDateTime(DateTime.Now),
-                Frequency = Frequency
-            };
+            var account = _mapper.Map<Account>(Input);
+            account.Created = DateOnly.FromDateTime(DateTime.Now);
+
 
             _context.Accounts.Add(account);
             _context.SaveChanges();
@@ -61,8 +57,7 @@ namespace BankAB.Pages.Accounts
 
             Created = true;
             ModelState.Clear(); // clear the form
-            Frequency = string.Empty;
-            Balance = 0;
+            Input = new();
 
             return RedirectToPage("/Customers/Customer", new { id = CustomerId });
 
