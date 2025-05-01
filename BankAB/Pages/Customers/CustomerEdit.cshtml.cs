@@ -73,8 +73,7 @@ namespace BankAB.Pages.Customers
                 }
             }
 
-            List<string> changes = await _personService.UpdateCustomerAsync(customer);
-
+            ChangeMessages = await _personService.UpdateCustomerAsync(customer);
             ChangeMessages = changes;
 
             await LoadDropdowns();
