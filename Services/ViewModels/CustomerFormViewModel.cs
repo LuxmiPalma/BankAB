@@ -11,6 +11,8 @@ namespace Services.ViewModels
 {
     public class CustomerFormViewModel
     {
+        public int CustomerId { get; set; }
+
         [Required(ErrorMessage = "First name is required.")]
         public string Givenname { get; set; } = string.Empty;
 

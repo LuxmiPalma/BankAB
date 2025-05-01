@@ -23,45 +23,45 @@
             }
 
             <form method="post">
-                <input type="hidden" asp-for="Customer.CustomerId" />
+                <input type="hidden" asp-for="Input.CustomerId" />
 
                 <div class="row g-3">
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Givenname" class="form-label">First Name</label>
-                        <input asp-for="Customer.Givenname" class="form-control" />
-                        <span asp-validation-for="Customer.Givenname" class="text-danger"></span>
+                        <label asp-for="Input.Givenname" class="form-label">First Name</label>
+                        <input asp-for="Input.Givenname" class="form-control" />
+                        <span asp-validation-for="Input.Givenname" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Surname" class="form-label">Last Name</label>
-                        <input asp-for="Customer.Surname" class="form-control" />
-                        <span asp-validation-for="Customer.Surname" class="text-danger"></span>
+                        <label asp-for="Input.Surname" class="form-label">Last Name</label>
+                        <input asp-for="Input.Surname" class="form-control" />
+                        <span asp-validation-for="Input.Surname" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Emailaddress" class="form-label">Email</label>
-                        <input asp-for="Customer.Emailaddress" class="form-control" />
+                        <label asp-for="Input.Emailaddress" class="form-label">Email</label>
+                        <input asp-for="Input.Emailaddress" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.City" class="form-label">City</label>
-                        <input asp-for="Customer.City" class="form-control" />
+                        <label asp-for="Input.City" class="form-label">City</label>
+                        <input asp-for="Input.City" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Streetaddress" class="form-label">Street Address</label>
-                        <input asp-for="Customer.Streetaddress" class="form-control" />
+                        <label asp-for="Input.Streetaddress" class="form-label">Street Address</label>
+                        <input asp-for="Input.Streetaddress" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Zipcode" class="form-label">Zipcode</label>
-                        <input asp-for="Customer.Zipcode" class="form-control" />
+                        <label asp-for="Input.Zipcode" class="form-label">Zipcode</label>
+                        <input asp-for="Input.Zipcode" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Gender" class="form-label">Gender</label>
-                        <select asp-for="Customer.Gender" class="form-select">
+                        <label asp-for="Input.Gender" class="form-label">Gender</label>
+                        <select asp-for="Input.Gender" class="form-select">
                             @foreach (var gender in Enum.GetValues(typeof(DataAccessLayer.Enum.Gender)).Cast<DataAccessLayer.Enum.Gender>())
                             {
                                 <option value="@gender">@gender</option>
@@ -70,8 +70,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.CountryId" class="form-label">Country</label>
-                        <select asp-for="Customer.CountryId" class="form-select">
+                        <label asp-for="Input.CountryId" class="form-label">Country</label>
+                        <select asp-for="Input.CountryId" class="form-select">
                             <option value="">Select Country</option>
                             @foreach (var country in Model.CountryList)
                             {
@@ -81,18 +81,18 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Telephonecountrycode" class="form-label">Country Code</label>
-                        <input asp-for="Customer.Telephonecountrycode" class="form-control" />
+                        <label asp-for="Input.Telephonecountrycode" class="form-label">Country Code</label>
+                        <input asp-for="Input.Telephonecountrycode" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.Telephonenumber" class="form-label">Phone</label>
-                        <input asp-for="Customer.Telephonenumber" class="form-control" />
+                        <label asp-for="Input.Telephonenumber" class="form-label">Phone</label>
+                        <input asp-for="Input.Telephonenumber" class="form-control" />
                     </div>
 
                     <div class="col-md-6">
-                        <label asp-for="Customer.NationalId" class="form-label">National ID</label>
-                        <input asp-for="Customer.NationalId" class="form-control" />
+                        <label asp-for="Input.NationalId" class="form-label">National ID</label>
+                        <input asp-for="Input.NationalId" class="form-control" />
                     </div>
 
                     <!-- Birthday -->
@@ -100,29 +100,29 @@
                         <label class="form-label">Date of Birth</label>
                         <div class="row g-2">
                             <div class="col-md-4">
-                                <select asp-for="BirthdayYear" class="form-select">
+                                <select asp-for="Input.BirthdayYear" class="form-select">
                                     <option value="">Year</option>
                                     @for (int year = DateTime.Now.Year - 100; year <= DateTime.Now.Year; year++)
                                     {
-                                        <option value="@year" selected="@(Model.BirthdayYear == year)">@year</option>
+                                        <option value="@year" selected="@(Model.Input.BirthdayYear == year)">@year</option>
                                     }
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select asp-for="BirthdayMonth" class="form-select">
+                                <select asp-for="Input.BirthdayMonth" class="form-select">
                                     <option value="">Month</option>
                                     @for (int month = 1; month <= 12; month++)
                                     {
-                                        <option value="@month" selected="@(Model.BirthdayMonth == month)">@month</option>
+                                        <option value="@month" selected="@(Model.Input.BirthdayMonth == month)">@month</option>
                                     }
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select asp-for="BirthdayDay" class="form-select">
+                                <select asp-for="Input.BirthdayDay" class="form-select">
                                     <option value="">Day</option>
                                     @for (int day = 1; day <= 31; day++)
                                     {
-                                        <option value="@day" selected="@(Model.BirthdayDay == day)">@day</option>
+                                        <option value="@day" selected="@(Model.Input.BirthdayDay == day)">@day</option>
                                     }
                                 </select>
                             </div>

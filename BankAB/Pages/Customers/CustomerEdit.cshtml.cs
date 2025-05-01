@@ -74,8 +74,6 @@ namespace BankAB.Pages.Customers
             }
 
             ChangeMessages = await _personService.UpdateCustomerAsync(customer);
-            ChangeMessages = changes;
-
             await LoadDropdowns();
             return Page();
         }
