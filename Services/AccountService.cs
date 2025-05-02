@@ -31,7 +31,7 @@ namespace Services
 
 
         }
-        public Account GetAccountWithCustomers(int accountId)
+        public Account? GetAccountWithCustomers(int accountId)
         {
             return _dbContext.Accounts
                 .Where(a => a.AccountId == accountId)
@@ -93,15 +93,43 @@ namespace Services
             _dbContext.SaveChanges();
             return ErrorCode.OK;
         }
+        public Dictionary<string, (int customers, int accounts, decimal totalBalance)> GetDataPerCountry()
+        {
+            return _dbContext.Customers
+                .Where(c => c.Country != null)
+                .Select(c => new
+                {
+                    CountryName = c.Country.CountryName,
+                    CustomerId = c.CustomerId,
+                    Accounts = c.Dispositions
+                                .Where(d => d.Account != null)
+                                .Select(d => d.Account)
+                                .Distinct()
+                })
+                .AsEnumerable()
+                .GroupBy(x => x.CountryName)
+                .ToDictionary(
+                    g => g.Key,
+                    g => (
+                        customers: g.Select(x => x.CustomerId).Distinct().Count(),
+                        accounts: g.SelectMany(x => x.Accounts).Distinct().Count(),
+                        totalBalance: g.SelectMany(x => x.Accounts).Sum(a => a!.Balance)
+                    )
+                );
+        }
     }
-    public enum ErrorCode
+}
+   
+
+public enum ErrorCode
     {
         OK,
         BalanceTooLow,
         IncorrectAmount,
         CommentEmpty
     }
-}
+
+
 
 
 

@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
+
 @* <h1>All Categories </h1> 
 
  <table class="table table-striped">
@@ -43,9 +44,89 @@
                 <img src="~/assets/img/hero-img.png" class="img-fluid" alt="Hero Image" />
             </div> *@
         </div>
-    </div>
-</section>
+        <!-- Live Bank Statistics Section -->
+        <div class="container mt-5">
+            <div class="bg-dark bg-opacity-75 rounded p-4">
+                <div class="row justify-content-center text-white text-center fw-semibold">
+                    <div class="col-md-2">
+                        <p class="text-success">Country</p>
+                        @foreach (var kvp in Model.DataPerCountry)
+                        {
+                            <a asp-page="/CountryDetails" asp-route-country="@kvp.Key" class="btn btn-outline-light btn-sm d-block mb-2">@kvp.Key</a>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <p>Customers</p>
+                        @foreach (var kvp in Model.DataPerCountry)
+                        {
+                            <div class="mb-2">@kvp.Value.customers</div>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <p>Accounts</p>
+                        @foreach (var kvp in Model.DataPerCountry)
+                        {
+                            <div class="mb-2">@kvp.Value.accounts</div>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        <p>Balance</p>
+                        @foreach (var kvp in Model.DataPerCountry)
+                        {
+                            <div class="mb-2">SEK: @kvp.Value.totalBalance.ToString("N1")</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- 🔥 Statistics section ends here -->
+    </div>
+
+
+</section>
+<!-- Services Section -->
+<section id="services" class="services section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Bank Statistics by Country</h2>
+        <p>Check Our Services<br></p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+        <div class="row gy-4">
+            @foreach (var item in Model.DataPerCountry)
+            {
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item item-cyan position-relative">
+                    <i class="bi bi-activity icon"></i>
+                        <h3>@item.Key</h3>
+                        <p>
+                            <strong>Customers:</strong> @item.Value.customers <br />
+                            <strong>Accounts:</strong> @item.Value.accounts <br />
+                            <strong>Balance:</strong> SEK @item.Value.totalBalance.ToString("N1")M
+                        </p>
+                        <a asp-page="/CountryDetails" asp-route-country="@item.Key" class="read-more stretched-link">
+                            <span>View Details</span> <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+            </div><!-- End Service Item -->
+            }
+
+           
+
+            
+
+           
+
+        </div>
+
+    </div>
+
+</section><!-- /Services Section -->
 <!-- About Section -->
 <section id="about" class="about section">
 
@@ -76,6 +157,10 @@
     </div>
 
 </section><!-- /About Section -->
+
+
+
+
 <!-- Values Section -->
 <section id="values" class="values section">
 
@@ -380,4 +465,5 @@
 
         </div>
     </div>
+    
 

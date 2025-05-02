@@ -11,6 +11,8 @@ namespace Services
 {
     public interface IAccountService
     {
+        Dictionary<string, (int customers, int accounts, decimal totalBalance)> GetDataPerCountry();
+
         Account GetAccountWithCustomers(int accountId);
         void UpdateAccount(Account account);
 
