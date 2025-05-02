@@ -29,6 +29,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddAutoMapper(typeof(Services.Infrastructure.AutoMapperProfile));
+builder.Services.AddResponseCaching();
 
 
 var app = builder.Build();
