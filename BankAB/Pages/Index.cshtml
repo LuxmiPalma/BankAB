@@ -44,43 +44,7 @@
                 <img src="~/assets/img/hero-img.png" class="img-fluid" alt="Hero Image" />
             </div> *@
         </div>
-        <!-- Live Bank Statistics Section -->
-        <div class="container mt-5">
-            <div class="bg-dark bg-opacity-75 rounded p-4">
-                <div class="row justify-content-center text-white text-center fw-semibold">
-                    <div class="col-md-2">
-                        <p class="text-success">Country</p>
-                        @foreach (var kvp in Model.DataPerCountry)
-                        {
-                            <a asp-page="/CountryDetails" asp-route-country="@kvp.Key" class="btn btn-outline-light btn-sm d-block mb-2">@kvp.Key</a>
-                        }
-                    </div>
-                    <div class="col-md-2">
-                        <p>Customers</p>
-                        @foreach (var kvp in Model.DataPerCountry)
-                        {
-                            <div class="mb-2">@kvp.Value.customers</div>
-                        }
-                    </div>
-                    <div class="col-md-2">
-                        <p>Accounts</p>
-                        @foreach (var kvp in Model.DataPerCountry)
-                        {
-                            <div class="mb-2">@kvp.Value.accounts</div>
-                        }
-                    </div>
-                    <div class="col-md-2">
-                        <p>Balance</p>
-                        @foreach (var kvp in Model.DataPerCountry)
-                        {
-                            <div class="mb-2">SEK: @kvp.Value.totalBalance.ToString("N1")</div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 🔥 Statistics section ends here -->
+       
     </div>
 
 
@@ -91,7 +55,7 @@
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Bank Statistics by Country</h2>
-        <p>Check Our Services<br></p>
+        <p>Financial & Banking Statistics<br></p>
     </div><!-- End Section Title -->
 
     <div class="container">
