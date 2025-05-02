@@ -60,6 +60,8 @@ app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
+app.UseResponseCaching();
+
 app.Run();
 
 
