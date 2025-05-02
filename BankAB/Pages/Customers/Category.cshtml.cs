@@ -4,6 +4,7 @@ using Services;
 
 namespace BankAB.Pages.Customers
 {
+    [ResponseCache(Duration = 30, VaryByQueryKeys = new[] { "groupBy" })]
     public class CategoryModel : PageModel
     {
         private readonly ICustomerService _customerService;
