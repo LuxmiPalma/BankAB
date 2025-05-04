@@ -3,6 +3,20 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@functions {
+    string GetCountryCode(string countryName)
+    {
+        return countryName.ToLower() switch
+        {
+            "sweden" => "se",
+            "norway" => "no",
+            "denmark" => "dk",
+            "finland" => "fi",
+            "iceland" => "is",
+            _ => "un" // 'un' for unknown
+        };
+    }
+}
 
 @* <h1>All Categories </h1> 
 
@@ -66,8 +80,10 @@
 
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-item item-cyan position-relative">
-                    <i class="bi bi-activity icon"></i>
-                        <h3>@item.Key</h3>
+                        <img src="@($"https://flagcdn.com/24x18/{GetCountryCode(item.Key)}.png")"
+                             alt="@item.Key Flag"
+                             class="mb-2"
+                             style="width: 24px; height: 18px;" />                        <h3>@item.Key</h3>
                         <p>
                             <strong>Customers:</strong> @item.Value.customers <br />
                             <strong>Accounts:</strong> @item.Value.accounts <br />
