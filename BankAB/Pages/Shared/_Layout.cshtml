@@ -38,7 +38,7 @@
         <div class="top-utility-bar py-3 border-bottom fixed-top" style="z-index: 1040;">
             <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
                 <div class="medium d-flex gap-3" style="color: #1e293b;">
-                    <a href="/NewMember" class="text-decoration-none" style="color: inherit;">New Member Info</a>
+                    @await Component.InvokeAsync("Weather")
                     <a href="#services" class="text-decoration-none" style="color: inherit;">Statistics</a>
                     <a href="/Index#stats" class="text-decoration-none" style="color: inherit;">Rates</a>
                 </div>
