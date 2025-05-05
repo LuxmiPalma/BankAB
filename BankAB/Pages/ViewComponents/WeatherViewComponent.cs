@@ -4,6 +4,12 @@ namespace BankAB.Pages.ViewComponents
 {
     public class WeatherViewComponent: ViewComponent
     {
+        private readonly HttpClient _httpClient;
+
+        public WeatherViewComponent()
+        {
+            _httpClient = new HttpClient();
+        }
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = new WeatherModel
