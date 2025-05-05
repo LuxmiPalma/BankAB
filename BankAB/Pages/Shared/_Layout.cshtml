@@ -37,11 +37,10 @@
         <!-- ======= Top Utility Navbar ======= -->
         <div class="top-utility-bar py-3 border-bottom fixed-top" style="z-index: 1040;">
             <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
-                <div class="medium text-white d-flex gap-3">
-                    <a href="/NewMember" class="text-decoration-none text-white">New Member Info</a>
-                    <a href="#services" class="text-decoration-none text-white">Statistics</a>
-                    <a href="/Rates" class="text-decoration-none text-white">Rates</a>
-                    <a href="/Help" class="text-decoration-none text-white">Help</a>
+                <div class="medium d-flex gap-3" style="color: #1e293b;">
+                    <a href="/NewMember" class="text-decoration-none" style="color: inherit;">New Member Info</a>
+                    <a href="#services" class="text-decoration-none" style="color: inherit;">Statistics</a>
+                    <a href="/Index#stats" class="text-decoration-none" style="color: inherit;">Rates</a>
                 </div>
                 <div class="d-flex  align-items-center">
                     @if (!User.Identity.IsAuthenticated)
