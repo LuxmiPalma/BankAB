@@ -8,15 +8,15 @@
         </a>
     </td>
     <td>
-        <a asp-page="/Accounts/Account" asp-route-id="@Model.AccountId" class="btn btn-outline-success">
-            @Model.AccountId
+        <a asp-page="/Accounts/Account" asp-route-id="@Model.AccountId" class="btn btn-outline-secondary">
+            <i class="bi bi-eye"></i>@Model.AccountId
         </a>
     </td>
     <td>
         @if (Model.CustomerId != 0)
         {
-            <a asp-page="/Customers/Customer" asp-route-id="@Model.CustomerId" class="btn btn-sm btn-primary">
-                @Model.CustomerId
+            <a asp-page="/Customers/Customer" asp-route-id="@Model.CustomerId" class="btn btn-outline-secondary">
+                <i class="bi bi-eye"></i> @Model.CustomerId
             </a>
         }
         else
