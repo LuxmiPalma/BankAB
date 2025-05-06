@@ -18,5 +18,15 @@ namespace BankAB.Pages.Users
         {
             Users = await _userManager.Users.ToListAsync();
         }
+        public async Task<IActionResult> OnPostDeleteAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null && user.Email != User.Identity.Name)
+            {
+                await _userManager.DeleteAsync(user);
+            }
+
+            return RedirectToPage();
+        }
     }
 }
