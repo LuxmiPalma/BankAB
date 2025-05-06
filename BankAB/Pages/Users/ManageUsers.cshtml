@@ -6,6 +6,12 @@
 
 @{
     ViewData["Title"] = "Manage Users";
+    // List of protected accounts (cannot be deleted)
+    var protectedEmails = new List<string>
+    {
+       "richard.chalk@admin.se",
+       "richard.chalk@cashier.se",
+    };
 }
 
 <h2 class="text-center">Manage Users</h2>
@@ -30,11 +36,10 @@
                 <td>@string.Join(", ", await UserManager.GetRolesAsync(user))</td>
                 <td>
                     <a asp-page="./EditUser" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary me-2">Edit</a>
-                    @if (user.Email != User.Identity.Name)
+
+                    @if (!protectedEmails.Contains(user.Email, StringComparer.OrdinalIgnoreCase))
                     {
-                        <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                        </form>
+                        <a asp-page="./DeleteUser" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Delete</a>
                     }
                     else
                     {
