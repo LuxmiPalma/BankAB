@@ -7,21 +7,26 @@
 <h2>Edit User</h2>
 
 <form method="post">
+    <input type="hidden" asp-for="Input.Id" />
+
     <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input class="form-control" value="@Model.User.Email" readonly />
+        <label asp-for="Input.Email" class="form-label">Email</label>
+        <input asp-for="Input.Email" class="form-control" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
     </div>
+
     <div class="mb-3">
-        <label class="form-label">Role</label>
-        <select class="form-select" asp-for="SelectedRole">
+        <label asp-for="Input.SelectedRole" class="form-label">Role</label>
+        <select asp-for="Input.SelectedRole" class="form-select">
             @foreach (var role in Model.AllRoles)
             {
-                <option value="@role" selected="@(role == Model.SelectedRole)">
-                    @role
-                </option>
+                <option value="@role">@role</option>
             }
         </select>
+        <span asp-validation-for="Input.SelectedRole" class="text-danger"></span>
     </div>
+
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-page="./ManageUsers" class="btn btn-secondary">Cancel</a>
 </form>
+

@@ -1,6 +1,8 @@
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace BankAB.Pages.Users
 {
@@ -15,33 +17,73 @@ namespace BankAB.Pages.Users
             _roleManager = roleManager;
         }
 
-        public IdentityUser User { get; set; }
         public List<string> AllRoles { get; set; }
 
         [BindProperty]
-        public string SelectedRole { get; set; }
+        public InputModel Input { get; set; }
+
+        public class InputModel
+        {
+            public string Id { get; set; }
+
+            [Required]
+            [EmailAddress]
+            public string Email { get; set; }
+
+            [Required]
+            public string SelectedRole { get; set; }
+        }
+
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            User = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id); 
             if (User == null) return NotFound();
 
-            AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
-            var userRoles = await _userManager.GetRolesAsync(User);
-            SelectedRole = userRoles.FirstOrDefault();
+            var userRoles = await _userManager.GetRolesAsync(user);
+            Input = new InputModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                SelectedRole = userRoles.FirstOrDefault()
+            };
 
+            AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
             return Page();
         }
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            if (!ModelState.IsValid)
+            {
+                AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+                return Page();
+            }
+
+            var user = await _userManager.FindByIdAsync(Input.Id);
             if (user == null) return NotFound();
 
+            // Update email
+            user.Email = Input.Email;
+            user.UserName = Input.Email;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error.Description);
+
+                AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+                return Page();
+            }
+
             var currentRoles = await _userManager.GetRolesAsync(user);
-            await _userManager.RemoveFromRolesAsync(user, currentRoles);
-            await _userManager.AddToRoleAsync(user, SelectedRole);
+            if (!currentRoles.Contains(Input.SelectedRole))
+            {
+                await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                await _userManager.AddToRoleAsync(user, Input.SelectedRole);
+            }
 
             return RedirectToPage("./ManageUsers");
         }
-
     }
+
+    
 }
