@@ -11,6 +11,8 @@ namespace BankAB.Pages.Users
         {
             _userManager = userManager;
         }
+        public IList<IdentityUser> Users { get; set; }
+
         public void OnGet()
         {
         }
