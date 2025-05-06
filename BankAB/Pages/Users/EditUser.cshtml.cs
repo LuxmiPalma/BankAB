@@ -20,8 +20,17 @@ namespace BankAB.Pages.Users
 
         [BindProperty]
         public string SelectedRole { get; set; }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync(string id)
         {
+            User = await _userManager.FindByIdAsync(id);
+            if (User == null) return NotFound();
+
+            AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+            var userRoles = await _userManager.GetRolesAsync(User);
+            SelectedRole = userRoles.FirstOrDefault();
+
+            return Page();
         }
+
     }
 }
