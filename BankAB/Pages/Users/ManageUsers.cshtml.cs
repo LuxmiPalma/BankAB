@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankAB.Pages.Users
 {
@@ -13,8 +14,9 @@ namespace BankAB.Pages.Users
         }
         public IList<IdentityUser> Users { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+            Users = await _userManager.Users.ToListAsync();
         }
     }
 }
