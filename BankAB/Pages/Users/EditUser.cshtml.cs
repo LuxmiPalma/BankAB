@@ -31,6 +31,17 @@ namespace BankAB.Pages.Users
 
             return Page();
         }
+        public async Task<IActionResult> OnPostAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return NotFound();
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            await _userManager.AddToRoleAsync(user, SelectedRole);
+
+            return RedirectToPage("./ManageUsers");
+        }
 
     }
 }
