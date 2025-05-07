@@ -85,10 +85,39 @@ namespace BankAB.Pages.Users
                 await _userManager.RemoveFromRolesAsync(user, currentRoles);
                 await _userManager.AddToRoleAsync(user, Input.SelectedRole);
             }
+            // Update password (only if provided)
+
+            if (!string.IsNullOrWhiteSpace(Input.NewPassword))
+            {
+                // First remove current password if set (Identity requires this)
+                var hasPassword = await _userManager.HasPasswordAsync(user);
+                if (hasPassword)
+                {
+                    var removeResult = await _userManager.RemovePasswordAsync(user);
+                    if (!removeResult.Succeeded)
+                    {
+                        foreach (var error in removeResult.Errors)
+                            ModelState.AddModelError(string.Empty, error.Description);
+
+                        AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+                        return Page();
+                    }
+                }
+                var addResult = await _userManager.AddPasswordAsync(user, Input.NewPassword);
+                if (!addResult.Succeeded)
+                {
+                    foreach (var error in addResult.Errors)
+                        ModelState.AddModelError(string.Empty, error.Description);
+
+                    AllRoles = _roleManager.Roles.Select(r => r.Name).ToList();
+                    return Page();
+                }
+            }
 
             return RedirectToPage("./ManageUsers");
+            }
         }
     }
 
     
-}
+
