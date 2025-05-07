@@ -33,7 +33,6 @@ namespace BankAB.Pages.Users
             [Required]
             public string SelectedRole { get; set; }
 
-            [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters.")]
             [DataType(DataType.Password)]
             [Display(Name = "New Password (leave blank to keep current)")]
             public string NewPassword { get; set; }
