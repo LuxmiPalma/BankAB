@@ -8,10 +8,15 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
+            <div class="text-center mb-3">
+                <a asp-page="./ManageUsers" class="btn btn-info">
+                    <i class="bi bi-arrow-left-circle"></i> Return to User List
+                </a>
+            </div>
             <div class="card shadow p-4">
                 <h4 class="text-center mb-4 text-primary">Edit User</h4>
 
-                <form method="post">
+                <form method="post" class="text-center">
                     <input type="hidden" asp-for="Input.Id" />
 
                     <div class="mb-3">

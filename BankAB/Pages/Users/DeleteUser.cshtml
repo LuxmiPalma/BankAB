@@ -3,13 +3,42 @@
 @{
     ViewData["Title"] = "Delete User";
 }
-<h2 class="text-danger">Are you sure you want to delete this user?</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <!-- 🔹 Return Button OUTSIDE the card -->
+            <div class="text-center mb-3">
+                <a asp-page="./ManageUsers" class="btn btn-info">
+                    <i class="bi bi-arrow-left-circle"></i> Return to User List
+                </a>
+            </div>
+            <div class="card border-danger shadow">
 
-<div class="mb-3">
-    <strong>Email:</strong> @Model.User.Email
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Confirm Delete</h5>
+                </div>
+
+                <div class="card-body">
+                    <p class="text-danger fw-bold text-center mb-4">
+                        Are you sure you want to delete this user?
+                    </p>
+
+                    <table class="table table-bordered text-center">
+                        <tr>
+                            <th>Email</th>
+                        </tr>
+                        <tr>
+                            <td>@Model.User.Email</td>
+                        </tr>
+                    </table>
+
+                    <form method="post" class="text-center">
+                        <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+                        <a asp-page="./ManageUsers" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
-
-<form method="post">
-    <button type="submit" class="btn btn-danger">Yes, Delete</button>
-    <a asp-page="./ManageUsers" class="btn btn-secondary">Cancel</a>
-</form>
