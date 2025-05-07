@@ -27,9 +27,10 @@
                             <div>
                                 <a asp-page="/Customers/Customer"
                                    asp-route-id="@d.Customer.CustomerId"
-                                   class="btn btn-outline-primary btn-sm title="View Customer Details">
+                                   class=" btn btn-primary btn-sm" title="View Customer Details">
                                     <i class="bi bi-eye me-1"></i>
                                     @d.Customer.Givenname @d.Customer.Surname (@d.Type)
+
                                 </a>
                             </div>
 
@@ -41,7 +42,7 @@
                 @foreach (var d in Model.Dispositions)
                 {
                     <div>
-                        <a asp-page="/Transactions/CustomerTransactions" asp-route-customerId="@d.Customer.CustomerId" class="btn btn-outline-primary btn-sm">
+                            <a asp-page="/Transactions/CustomerTransactions" asp-route-customerId="@d.Customer.CustomerId" class="btn btn-primary btn-sm">
                             <i class="bi bi-eye"></i> View @d.Customer.Givenname's Transactions
                         </a>
                     </div>
