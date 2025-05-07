@@ -204,6 +204,54 @@ header.header {
         color: #fff;
         text-decoration: none;
     }
-         
+
+/*    layout section
+*/
+@import url("https://fonts.googleapis.com/css?family=Varela+Round");
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding-left: 0;
+}
+
+    .menu li {
+        width: 125px;
+        height: 50px;
+        transition: background-position-x 0.9s linear;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .menu li a {
+            font-size: 18px;
+            color: #777;
+            text-decoration: none;
+            transition: all 0.45s;
+        }
+
+        .menu li:hover {
+            background: url("data:image/svg+xml;base64,...your-base64..."); /* keep as is */
+            animation: line 1s;
+        }
+
+            .menu li:hover a {
+                color: #0284c7;
+            }
+
+        .menu li:not(:last-child) {
+            margin-right: 30px;
+        }
+
+@keyframes line {
+    0% {
+        background-position-x: 390px;
+    }
+}
+
          
                   

@@ -1,15 +1,25 @@
 ﻿@page "{id:int}"
 @model BankAB.Pages.Transactions.TransactionDetailsModel
 
-<div class="container mt-5">
-    <h2>Transaction Details</h2>
-    <table class="table table-bordered">
-        <tr><th>Transaction ID</th><td>@Model.Transaction.TransactionId</td></tr>
-        <tr><th>Account ID</th><td>@Model.Transaction.AccountId</td></tr>
-        <tr><th>Amount</th><td>@Model.Transaction.Amount</td></tr>
-        <tr><th>Date</th><td>@Model.Transaction.Date.ToString("yyyy-MM-dd")</td></tr>
-        <tr><th>Operation</th><td>@Model.Transaction.Operation</td></tr>
-    </table>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="w-75">
+        <!-- Optional: You can adjust width like w-50 or w-100 -->
 
-    <a asp-page="/Transactions/Transactions" class="btn btn-secondary">← Back to Transactions</a>
+        <h2 style="font-size: 2.5rem; font-weight: 700;"class="text-center mb-4">Transaction Details</h2>
+
+        <table class="table table-bordered table-striped">
+            <tr><th>Transaction ID</th><td>@Model.Transaction.TransactionId</td></tr>
+            <tr><th>Account ID</th><td>@Model.Transaction.AccountId</td></tr>
+            <tr><th>Amount</th><td>SEK: @Model.Transaction.Amount.ToString("N2")</td></tr>
+            <tr><th>Date</th><td>@Model.Transaction.Date.ToString("yyyy-MM-dd")</td></tr>
+            <tr><th>Operation</th><td>@Model.Transaction.Operation</td></tr>
+        </table>
+
+        <div class="text-center mt-4">
+            <a asp-page="/Transactions/Transactions" class="btn btn-secondary">
+                ← Back to Transactions
+            </a>
+        </div>
+
+    </div>
 </div>
