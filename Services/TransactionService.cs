@@ -49,14 +49,10 @@ namespace Services
         public List<Transaction> SearchByTransactionId(int transactionId)
         {
             return _context.Transactions
+                .Include(t => t.AccountNavigation)
+            .ThenInclude(a => a.Dispositions)
                 .Where(t => t.TransactionId == transactionId)
-                .Select(t => new Transaction
-                {
-                    TransactionId = t.TransactionId,
-                    AccountId = t.AccountId,
-                    Date = t.Date,
-                    Amount = t.Amount
-                }).ToList();
+                .ToList();
         }
 
         public Transaction? GetTransactionById(int id)

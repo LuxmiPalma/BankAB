@@ -30,7 +30,7 @@
 
 </head>
 
-@* <body> *@
+   @* <body> *@
 <body class="@ViewData["BodyClass"]">
     <div class="d-flex flex-column min-vh-100">
 
@@ -62,13 +62,13 @@
 
         <header id="header" class="header d-flex align-items-center fixed-top" style="top: 63px;"> <!-- added style -->
 
-            <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
                 <a href="/" class="logo d-flex align-items-center">
                     <img src="~/assets/img/logo.png" alt="BankAB Logo" />
                     <h1 class="sitename ms-2">NextGen Bank</h1>
                 </a>
 
-             <nav id="navmenu" class="navmenu">
+            <nav id="navmenu" class="navmenu">
                     <ul>
                         <li><a asp-page="/Index">Home</a></li>
 
@@ -102,8 +102,8 @@
             </ul>
         </nav>
 
-        <!-- Right side: Search + Auth buttons -->
-        <div class="d-flex align-items-center gap-2">
+           <!-- Right side: Search + Auth buttons -->
+          <div class="d-flex align-items-center gap-2">
             <!-- Search bar -->
                     <form class="d-flex" method="get" action="/Customers/Customers">
                         <input class="form-control form-control-sm" type="search" name="q" placeholder="Search customers..." />
