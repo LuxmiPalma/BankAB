@@ -1,0 +1,15 @@
+﻿@page
+@model BankAB.Pages.Users.DeleteUserModel
+@{
+    ViewData["Title"] = "Delete User";
+}
+<h2 class="text-danger">Are you sure you want to delete this user?</h2>
+
+<div class="mb-3">
+    <strong>Email:</strong> @Model.User.Email
+</div>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-page="./ManageUsers" class="btn btn-secondary">Cancel</a>
+</form>
