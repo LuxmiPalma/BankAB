@@ -21,6 +21,10 @@ namespace BankAB.Pages.Accounts
         public void OnGet(int id)
         {
             Account = _accountService.GetAccountWithCustomers(id);
+            if (Account == null)
+            {
+                TempData["NoAccount"] = "This customer has no accounts yet.";
+            }
         }
 
     }

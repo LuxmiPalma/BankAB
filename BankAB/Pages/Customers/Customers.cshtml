@@ -26,10 +26,11 @@
                 <thead class="table-light">
                     <tr>
                         <th scope="col">
-                            Id
+                             Id
                             <a asp-page="/Customers/Customers" asp-route-sortColumn="CustomerId" asp-route-sortOrder="asc" asp-route-q="@Model.Q"><i class="fa-solid fa-angle-up"></i></a>
                             <a asp-page="/Customers/Customers" asp-route-sortColumn="CustomerId" asp-route-sortOrder="desc" asp-route-q="@Model.Q"><i class="fa-solid fa-angle-down"></i></a>
                         </th>
+                        
                         <th scope="col">
                             Surname
                             <a asp-page="/Customers/Customers" asp-route-sortColumn="Surname" asp-route-sortOrder="asc" asp-route-q="@Model.Q"><i class="fa-solid fa-angle-up"></i></a>
@@ -52,7 +53,17 @@
                     @foreach (var c in Model.PagedCustomers.Results)
                     {
                         <tr>
-                            <td>@c.CustomerId</td>
+                            <td>
+                                <a asp-page="/Customers/Customer"
+                                   asp-route-id="@c.CustomerId"
+                                   class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center"
+                                   title="View Account Details">
+                                    <i class="bi bi-eye me-1"></i> @c.CustomerId
+                                </a>
+                            </td>
+                            
+
+
                             <td>@c.Givenname @c.Surname</td>
                             <td>@c.City</td>
                             <td>@c.Country</td>
