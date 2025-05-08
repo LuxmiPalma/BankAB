@@ -15,6 +15,8 @@ namespace Services
 
         Account GetAccountWithCustomers(int accountId);
         void UpdateAccount(Account account);
+        void DeleteAccount(int id);
+
 
         List<Account> GetAccounts(string sortColumn, string sortOrder);
         ErrorCode Withdraw(int accountId, decimal amount);
