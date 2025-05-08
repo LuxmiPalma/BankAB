@@ -136,14 +136,18 @@
       @RenderBody()
     </main>
 
-    <!-- ======= Footer  ======= -->
-    <footer class="footer mt-auto bg-light text-muted">
-      <div class="container text-center py-3">
-                Copyright © 2025 -<strong>NextGen Bank</strong>- 
-                 by Luxmi Agnes Palma 
-      </div>
-    </footer>
-    </div>
+        <!-- ======= Footer ======= -->
+        <footer class="footer mt-auto bg-light text-muted">
+            <div class="container text-center py-3">
+                <div>Copyright © 2025 - <strong>NextGen Bank</strong></div>
+                <div>by Luxmi Agnes Palma</div>
+            </div>
+        </footer>
+        <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
+
+
 
     <!-- FlexStart JS Files -->
     <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -159,6 +163,18 @@
     <script>
         new PureCounter();
     </script>
+        <script>
+            window.addEventListener("scroll", function () {
+                const scrollBtn = document.getElementById("scroll-top");
+                scrollBtn.style.display = window.scrollY > 100 ? "flex" : "none";
+            });
+
+            document.getElementById("scroll-top").addEventListener("click", function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

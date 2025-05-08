@@ -4,27 +4,42 @@
     ViewData["Title"] = "Top Customers in " + Model.Country;
 }
 
-<h2>Top 10 Customers in @Model.Country</h2>
+<div class="container my-5 d-flex justify-content-center">
+    <div class="w-100 bg-white shadow-lg rounded-4 p-4" style="max-width: 900px;">
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Customer ID</th>
-            <th>Full Name</th>
-            <th>Total Balance (SEK)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.TopCustomers.Count; i++)
-        {
-            var c = Model.TopCustomers[i];
-            <tr>
-                <td>@(i + 1)</td>
-                <td>@c.CustomerId</td>
-                <td>@c.Givenname @c.Surname</td>
-                <td>@c.TotalBalance.ToString("N2")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <h2 class="text-center fw-bold mb-4" style="font-size: 2rem;">
+            🏆 Top 10 Customers in @Model.Country
+        </h2>
+
+        <div class="table-responsive">
+            <table class="table table-striped text-center align-middle table-hover shadow-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Total Balance (SEK)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.TopCustomers.Count; i++)
+                    {
+                        var c = Model.TopCustomers[i];
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@c.CustomerId</td>
+                            <td>@c.Givenname @c.Surname</td>
+                            <td>@c.TotalBalance.ToString("N2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a asp-page="/Index" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left-circle me-1"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
