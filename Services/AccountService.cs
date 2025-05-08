@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,22 @@ namespace Services
         {
             _dbContext.SaveChanges();
         }
+        public void DeleteAccount(int id)
+        {
+            var account = _dbContext.Accounts
+                .Include(a => a.Dispositions)
+                .Include(a => a.Transactions)
+                .FirstOrDefault(a => a.AccountId == id);
+
+            if (account != null)
+            {
+                _dbContext.Transactions.RemoveRange(account.Transactions);
+                _dbContext.Dispositions.RemoveRange(account.Dispositions);
+                _dbContext.Accounts.Remove(account);
+                _dbContext.SaveChanges();
+            }
+        }
+
         // NEW: Withdraw
         public ErrorCode Withdraw(int accountId, decimal amount)
         {
@@ -117,6 +134,8 @@ namespace Services
                     )
                 );
         }
+        
+
     }
 }
    
