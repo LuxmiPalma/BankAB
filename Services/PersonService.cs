@@ -116,8 +116,19 @@ namespace Services
                 Telephonenumber = customer.Telephonenumber,
                 NationalId = customer.NationalId,
                 Birthday = customer.Birthday,
-                TotalBalance = totalBalance
-            };
+                TotalBalance = totalBalance,
+
+                  Accounts = customer.Dispositions
+                 .Where(d => d.Account != null)
+                 .Select(d => new AccountDto
+                 {
+                   AccountId = d.Account.AccountId,
+                   Balance = d.Account.Balance,
+                    Created = d.Account.Created
+                 })
+                  .Distinct()
+                   .ToList()
+                    };
         
 
              

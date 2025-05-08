@@ -23,5 +23,8 @@ namespace DataAccessLayer.DTOs
         public string? NationalId { get; set; }
         public DateOnly? Birthday { get; set; }
         public decimal? TotalBalance { get; set; }
+
+        public List<AccountDto> Accounts { get; set; } = new();
+
     }
 }

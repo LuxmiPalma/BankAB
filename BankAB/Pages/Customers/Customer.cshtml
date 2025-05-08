@@ -62,7 +62,7 @@
             <!-- Action Buttons -->
             <div class="text-center mt-4 d-flex flex-wrap gap-3 justify-content-center">
                 <a asp-page="CustomerEdit" asp-route-id="@Model.SelectedCustomer.CustomerId" class="btn btn-success px-4">
-                    <i class="bi bi-pencil-fill me-1"></i> Edit
+                    <i class="bi bi-pencil-fill me-1"></i> Edit Customer
                 </a>
 
                 <button type="button" class="btn btn-danger px-4" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
@@ -101,3 +101,42 @@ else
 {
     <div class="alert alert-warning text-center mt-5">⚠️ Customer not found.</div>
 }
+@if (Model.SelectedCustomer.Accounts?.Any() == true)
+{
+    <div class="mt-5">
+        <h4 class="text-center fw-bold mb-3">📄 Customer Accounts</h4>
+
+        <table class="table table-bordered text-center table-hover shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Account ID</th>
+                    <th>Balance (SEK)</th>
+                    <th>Created</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var account in Model.SelectedCustomer.Accounts)
+                {
+                    <tr>
+                        <td>@account.AccountId</td>
+                        <td>@account.Balance.ToString("N2")</td>
+                        <td>@account.Created.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a asp-page="/Accounts/Account" asp-route-id="@account.AccountId" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-eye"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning text-center mt-4">
+        This customer does not have any accounts yet.
+    </div>
+}
+
