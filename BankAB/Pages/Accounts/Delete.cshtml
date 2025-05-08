@@ -1,4 +1,28 @@
-﻿@page
+﻿@page "{id:int}"
 @model BankAB.Pages.Accounts.DeleteModel
 @{
+    ViewData["Title"] = "Delete Account";
 }
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
+        <h2 class="text-center text-danger mb-4">⚠️ Delete Account</h2>
+
+        <p>Are you sure you want to delete the following account?</p>
+
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Account ID:</strong> @Model.Account.AccountId</li>
+            <li class="list-group-item"><strong>Balance:</strong> @Model.Account.Balance.ToString("N2")</li>
+            <li class="list-group-item"><strong>Created:</strong> @Model.Account.Created.ToString("yyyy-MM-dd")</li>
+        </ul>
+
+        <form method="post">
+            <button type="submit" asp-page-handler="Delete" asp-route-id="@Model.Account.AccountId" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Yes, Delete
+            </button>
+            <a asp-page="/Accounts/Account" asp-route-id="@Model.Account.AccountId" class="btn btn-secondary ms-2">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
