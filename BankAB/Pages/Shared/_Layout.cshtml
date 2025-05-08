@@ -45,12 +45,14 @@
                 <div class="d-flex  align-items-center">
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-sm"
-                        style="background-color: #bae6fd; color: #000; box-shadow: 0 0.5rem 1rem rgba(186, 230, 253, 0.5);"
-                        asp-area="Identity" asp-page="/Account/Login">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Log in
+                        <a class="btn btn-sm px-3 py-2 rounded-pill d-inline-flex align-items-center gap-1"
+                           style="background: linear-gradient(135deg, #38bdf8, #0ea5e9); color: white; box-shadow: 0 0.5rem 1rem rgba(56, 189, 248, 0.3); font-weight: 500;"
+                           asp-area="Identity" asp-page="/Account/Login">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>Log in</span>
                         </a>
                     }
+
                     else
                     {
                         <partial name="_LoginPartial" />
@@ -114,13 +116,16 @@
 
 
 
-            
 
-    <a class="btn btn-sm ms-1"
-       style="background-color: #bae6fd; color: #000; box-shadow: 0 0.5rem 1rem rgba(186, 230, 253, 0.5);"
-       asp-area="Identity" asp-page="/Account/Register">
-        <i class="bi bi-person-plus me-1"></i> Become a customer
-    </a>
+
+                    <a class="btn btn-sm px-3 py-2 rounded-pill d-inline-flex align-items-center gap-1 ms-1"
+                       style="background: linear-gradient(135deg, #0ea5e9, #06b6d4); color: white; box-shadow: 0 0.5rem 1rem rgba(52, 211, 153, 0.3); font-weight: 500;"
+                       asp-area="Identity" asp-page="/Account/Register">
+                        <i class="bi bi-person-plus"></i>
+                        <span>Become a customer</span>
+                    </a>
+                
+
            
         </div>
     </div>

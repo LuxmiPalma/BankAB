@@ -6,7 +6,7 @@
 }
 <div class="container pt-5 mt-4 text-center">
     <h2 class="fw-bold mb-3">Transactions for Customer @Model.CustomerId</h2>
-    <a asp-page="/Customers/CustomerDetails" asp-route-id="@Model.CustomerId" class="btn btn-info text-white mb-4">
+    <a asp-page="/Transactions/Transactions" asp-route-id="@Model.CustomerId" class="btn btn-info text-white mb-4">
         <i class="bi bi-arrow-left-circle"></i> Return
     </a>
 </div>
@@ -37,18 +37,33 @@
 @section Scripts {
     <script>
         let pageNo = 1;
-        const customerId = @Model.CustomerId;
+        const showMoreBtn = document.getElementById("show-more-btn");
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            showMore();
+        });
+
+        showMoreBtn.addEventListener("click", function () {
             showMore();
         });
 
         function showMore() {
-        fetch(`?handler=ShowMore&pageNo=${pageNo}&customerId=${customerId}`)
-                        .then(response => response.json())
+            fetch(`?handler=ShowMore&pageNo=${pageNo}`)
+                .then(response => response.json())
                 .then(data => {
+                    if (data.transactions.length === 0) {
+                        showMoreBtn.disabled = true;
+                        showMoreBtn.innerHTML = '<i class="bi bi-x-circle"></i> No More Transactions';
+                        return;
+                    }
+
                     pageNo++;
                     data.transactions.forEach(drawTransaction);
+                })
+                .catch(error => {
+                    console.error("Error loading transactions:", error);
+                    showMoreBtn.disabled = true;
+                    showMoreBtn.innerHTML = '<i class="bi bi-exclamation-circle"></i> Error Loading';
                 });
         }
 
