@@ -4,11 +4,16 @@
 @{
     
 }
-<div class="container mt-4">
-    <h2>Transactions for Customer @Model.CustomerId</h2>
+<div class="container pt-5 mt-4 text-center">
+    <h2 class="fw-bold mb-3">Transactions for Customer @Model.CustomerId</h2>
+    <a asp-page="/Customers/CustomerDetails" asp-route-id="@Model.CustomerId" class="btn btn-info text-white mb-4">
+        <i class="bi bi-arrow-left-circle"></i> Return
+    </a>
+</div>
 
-    <table class="table" id="transactions-table">
-        <thead>
+
+    <table class="table table-bordered table-hover" id="transactions-table">
+        <thead class="table-light">
             <tr>
                 <th>Transaction Id</th>
                 <th>Account Id</th>
@@ -18,11 +23,15 @@
             </tr>
         </thead>
         <tbody>
-            @* Data will be injected here by JS *@
+            @* Injected by JavaScript *@
         </tbody>
     </table>
 
-    <button class="btn btn-primary" onclick="showMore()">Show More</button>
+    <div class="text-center mt-4">
+        <button id="show-more-btn" class="btn btn-primary px-4 py-2">
+            <i class="bi bi-plus-circle"></i> Show More
+        </button>
+    
 </div>
 
 @section Scripts {
@@ -34,8 +43,8 @@
         });
 
         function showMore() {
-        fetch(`?handler=ShowMore&pageNo=${pageNo}`)
-                .then(response => response.json())
+        fetch(`?handler=ShowMore&pageNo=${pageNo}&customerId=${customerId}`)
+                        .then(response => response.json())
                 .then(data => {
                     pageNo++;
                     data.transactions.forEach(drawTransaction);
