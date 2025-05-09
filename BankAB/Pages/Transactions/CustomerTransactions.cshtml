@@ -4,7 +4,7 @@
 @{
     
 }
-<div class="container pt-5 mt-4 text-center">
+<div class="container pt-5 mb-4 text-center">
     <h2 class="fw-bold mb-3">Transactions for Customer @Model.CustomerId</h2>
     <a asp-page="/Transactions/Transactions" asp-route-id="@Model.CustomerId" class="btn btn-info text-white mb-4">
         <i class="bi bi-arrow-left-circle"></i> Return
@@ -33,6 +33,7 @@
         </button>
     
 </div>
+<div style="height: 80px;"></div>
 
 @section Scripts {
     <script>
