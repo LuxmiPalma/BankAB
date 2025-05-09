@@ -79,7 +79,7 @@ BankAB simulates the operations of a full-service banking system, including cust
 
 
 ## 🛠 Setup Instructions
-1. Clone the repo: `https://github.com/LuxmiPalma/BankAB.git `
+1. Clone the repo: **https://github.com/LuxmiPalma/BankAB.git** 
 2. Update `appsettings.json` with your SQL Server connection string.
 3. Run migrations (if needed): `dotnet ef database update`
 4. Launch with `dotnet run` or from Visual Studio.
