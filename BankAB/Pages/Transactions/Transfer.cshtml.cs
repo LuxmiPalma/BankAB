@@ -62,7 +62,7 @@ namespace BankAB.Pages.Transactions
 
             if (Account.Balance < Amount)
             {
-                ModelState.AddModelError("", "Insufficient funds for transfer.");
+                ModelState.AddModelError(nameof(Amount), $"Insufficient funds. Available balance: {Account.Balance:N2} SEK.");
                 return Page();
             }
 
