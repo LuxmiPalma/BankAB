@@ -34,6 +34,7 @@
 <body class="@ViewData["BodyClass"]">
     <div class="d-flex flex-column min-vh-100">
 
+
         <!-- ======= Top Utility Navbar ======= -->
         <div class="top-utility-bar py-3 border-bottom fixed-top" style="z-index: 1040;">
             <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
@@ -65,38 +66,65 @@
         <header id="header" class="header d-flex align-items-center fixed-top" style="top: 63px;"> <!-- added style -->
 
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+                <button class="btn d-md-none" id="mobileServicesToggle" onclick="toggleMobileServices()">
+                    <i class="bi bi-list fs-3"></i>
+                </button>
+               
+            
+                <!-- Mobile services menu -->
+                <div id="mobile-services-menu" class="d-none position-absolute top-100 start-0 bg-white w-100 shadow-sm z-3 p-3">
+                    <ul class="list-unstyled mb-0">
+                        <li><a asp-page="/Customers/Customers" class="d-block py-2">Customers</a></li>
+                        <li><a asp-page="/Accounts/Accounts" class="d-block py-2">Accounts</a></li>
+                        <li><a asp-page="/Customers/Category" class="d-block py-2">Customer Group</a></li>
+                        <li><a asp-page="/Transactions/Transactions" class="d-block py-2">Transactions</a></li>
+                    </ul>
+                </div>
+
                 <a href="/" class="logo d-flex align-items-center">
                     <img src="~/assets/img/logo.png" alt="BankAB Logo" />
                     <h1 class="sitename ms-2">NextGen Bank</h1>
                 </a>
 
-            <nav id="navmenu" class="navmenu">
+                <!-- Desktop navigation -->
+                <div class="d-none d-md-flex align-items-center justify-content-between w-100">
+                    <nav id="navmenu" class="navmenu">
+
                   <ul class="menu">
                         <li><a asp-page="/Index">Home</a></li>
 
                         @if (User.IsInRole("Admin"))
                         {
-                           
-                            <li>
+                              <li>
                                 <a asp-page="/Privacy">Privacy</a>
                             </li>
                             
                             <li>
                                 <a asp-page="/Users/ManageUsers">Manage Users</a>
                             </li>
+                           
+                          
                         }
+
                         <li><a asp-page="/AboutUs">About</a></li>
 
-
+                       
+                        <!-- Desktop view -->
                  
                         <li class="dropdown">
-                            <a href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <a 
+                                href="#"><span>Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i>
+                            </a>
+
                             <ul>
                                 <li><a asp-page="/Customers/Customers">Customers</a></li>
                                 <li><a asp-page="/Accounts/Accounts">Accounts</a></li>
                                 <li><a asp-page="/Customers/Category">Customer Group</a></li>
                                 <li><a asp-page="/Transactions/Transactions">Transactions</a></li>
                             </ul>
+                        </li>
+                            
 
 
 
@@ -107,12 +135,15 @@
            <!-- Right side: Search + Auth buttons -->
           <div class="d-flex align-items-center gap-2">
             <!-- Search bar -->
-                    <form class="d-flex" method="get" action="/Customers/Customers">
-                        <input class="form-control form-control-sm" type="search" name="q" placeholder="Search customers..." />
-                        <button class="btn btn-sm btn-outline-primary ms-1" type="submit">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </form>
+                    <div class="d-none d-md-flex">
+                        <form class="d-flex" method="get" action="/Customers/Customers">
+                            <input class="form-control form-control-sm" type="search" name="q" placeholder="Search customers..." />
+                            <button class="btn btn-sm btn-outline-primary ms-1" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                   
+                    </div>
 
 
 
@@ -128,8 +159,12 @@
 
            
         </div>
+                <!-- Mobile Nav Toggle Icons -->
+                <i class="mobile-nav-toggle mobile-nav-show bi bi-list d-md-none"></i>
+                <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x d-md-none"></i>
     </div>
 </header>
+        
 
     <!-- ======= Main Content ======= -->
 <main id="main" class="flex-grow-1" style="margin-top: 120px;">
@@ -164,6 +199,13 @@
         new PureCounter();
     </script>
         <script>
+            function toggleMobileServices() {
+                const menu = document.getElementById("mobile-services-menu");
+                menu.classList.toggle("d-none");
+            }
+        </script>
+
+        <script>
             window.addEventListener("scroll", function () {
                 const scrollBtn = document.getElementById("scroll-top");
                 scrollBtn.style.display = window.scrollY > 100 ? "flex" : "none";
@@ -174,6 +216,10 @@
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
         </script>
+
+        
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
