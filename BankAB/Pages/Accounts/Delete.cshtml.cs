@@ -29,6 +29,7 @@ namespace BankAB.Pages.Accounts
         public IActionResult OnPostDelete(int id)
         {
             _accountService.DeleteAccount(id);
+            TempData["SuccessMessage"] = $"Account {id} has been deleted successfully.";
             return RedirectToPage("/Accounts/Accounts");
         }
     }
