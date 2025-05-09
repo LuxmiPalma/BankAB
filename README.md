@@ -22,7 +22,7 @@ BankAB simulates the operations of a full-service banking system, including cust
 
 ---
 
-## 🚀 Live Website
+## 🌐 Live Website
 
 🌐 Deployed on Azure:  
 **https://nextgenbank-h2a2hxhqa4a2gbgx.swedencentral-01.azurewebsites.net/**
