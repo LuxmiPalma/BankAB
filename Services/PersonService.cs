@@ -92,6 +92,7 @@ namespace Services
             var customer = await _context.Customers
                 .Include(c => c.Dispositions)
                     .ThenInclude(d => d.Account)
+                    .Include(c => c.Country)
                 .FirstOrDefaultAsync(c => c.CustomerId == id);
 
             if (customer == null)
