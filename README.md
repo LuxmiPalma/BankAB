@@ -3,6 +3,19 @@
 Welcome to **BankAB**, a secure, modern, and data-rich digital banking platform built using **ASP.NET Core Razor Pages** and **Entity Framework Core**. This project was created for long-term educational and professional development as part of the .NET Full Stack program at KYH.
 
 ---
+## 📚 Table of Contents
+- [🚀 Project Overview](#-project-overview)
+- [🌐 Live Website](#-live-website)
+- [🧱 Tech Stack](#-tech-stack)
+- [⚙️ Architecture & Patterns](#️-architecture--patterns)
+- [🧩 Core Features](#-core-features)
+  - [👤 Customers (CRUD)](#-customers-crud)
+  - [💳 Accounts & Transactions (CRUD)](#-accounts--transactions-crud)
+  - [📊 Statistics & Analytics](#-statistics--analytics)
+  - [🔐 Identity & Authorization](#-identity--authorization)
+  - [🎨 UI Enhancements](#-ui-enhancements)
+- [🛠 Setup Instructions](#-setup-instructions)
+- [🙌 Contributors](#-contributors)
 
 ## 🚀 Project Overview
 BankAB simulates the operations of a full-service banking system, including customer management, account tracking, transactions, and administrative tools. It's designed for maintainability, scalability, and user-friendly interaction.
